@@ -1,0 +1,18 @@
+ng g c components/login
+ng g c components/forgot-passwordY
+ng g c components/not-found     
+
+ng g m modules/admin --routing   //for  with routing 
+
+ng g c modules/admin/components/admin-dashboard
+ng g c modules/admin/components/header 
+ng g c modules/admin/components/footer 
+ng g c modules/admin/components/home 
+ng g c modules/admin/components/about
+ng g c modules/admin/components/contact
+ng g c modules/admin/components/service
+
+
+
+ng add @ng-bootstrap/ng-bootstrap
+ng add @fortawesome/angular-fontawesome
