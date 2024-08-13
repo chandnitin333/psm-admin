@@ -1,6 +1,7 @@
 {
   "name": "psm",
   "version": "0.0.0",
+  "description": "Panchayat system management",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
