@@ -16,3 +16,34 @@ ng g c modules/admin/components/service
 
 ng add @ng-bootstrap/ng-bootstrap
 ng add @fortawesome/angular-fontawesome
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+############# ADMIN TEMPLATE  URL #########
+
+https://w3layouts.com/template/visitors-admin-panel-bootstrap-responsive-web-template/
+https://p.w3layouts.com/demos/modern_admin_panel/web/index.html
+https://themewagon.com/themes/kaiadmin/
+
+###########################################
