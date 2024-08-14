@@ -5,6 +5,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { ContactComponent } from './components/contact/contact.component';
 import { HomeComponent } from './components/home/home.component';
 import { ServiceComponent } from './components/service/service.component';
+import { DistrictComponent } from './components/district/district.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
       { path: 'about', component: AboutComponent },
       { path: 'services', component: ServiceComponent },
       { path: 'contact', component: ContactComponent },
+      { path: 'district', component: DistrictComponent },
       { path: '', redirectTo: '/admin/home', pathMatch: 'full' }
     ]
   },
