@@ -1,7 +1,7 @@
 ng g c components/login
 ng g c components/forgot-passwordY
 ng g c components/not-found     
-
+ ng g c components/sign-up      
 ng g m modules/admin --routing   //for  with routing 
 
 ng g c modules/admin/components/admin-dashboard
