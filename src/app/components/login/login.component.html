@@ -60,15 +60,15 @@
 
                             <h4 class="text-dark mb-6 text-center">Sign in for free</h4>
 
-                            <form action="/index.html">
+                            <form  [formGroup]="loginFrom" (ngSubmit)="onSubmit()">
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-4">
                                         <input type="email" class="form-control input-lg" id="email"
-                                            aria-describedby="emailHelp" placeholder="email">
+                                            aria-describedby="emailHelp" placeholder="email" formControlName="email" >
                                     </div>
                                     <div class="form-group col-md-12 ">
                                         <input type="password" class="form-control input-lg" id="password"
-                                            placeholder="Password">
+                                            placeholder="Password" formControlName="password" >
                                     </div>
                                     <div class="col-md-12">
 
@@ -80,14 +80,14 @@
                                                     me</label>
                                             </div>
 
-                                            <a class="text-color" href="#"> Forgot password? </a>
+                                            <a class="text-color" routerLink="../forgot-password"> Forgot password? </a>
 
                                         </div>
 
                                         <button type="submit" class="btn btn-primary btn-pill mb-4">Sign In</button>
 
                                         <p>Don't have an account yet ?
-                                            <a class="text-blue" href="sign-up.html">Sign Up</a>
+                                            <a class="text-blue" routerLink="../sign-up">Sign Up</a>
                                         </p>
                                     </div>
                                 </div>
