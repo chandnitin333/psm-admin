@@ -2,7 +2,7 @@
   <div id="sidebar" class="sidebar sidebar-with-footer">
     <!-- Aplication Brand -->
     <div class="app-brand">
-      <a href="/index.html">
+      <a routerLink="home">
         <img src="assets/gramvikas_images/gram_vikas.png" alt="gram vikar image" height="80%">
         <!-- <span class="brand-name">Panchayat Samiti</span> -->
       </a>
@@ -15,32 +15,69 @@
         <li>
           <a class="sidenav-item-link" routerLink="district" title="District">
             <i class="mdi mdi-map"></i>
-            <span class="nav-text">ज़िला</span>
+            <span class="nav-text">जिल्हा</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="Tahsil">
+          <a class="sidenav-item-link" routerLink="taluka" title="Tahsil">
             <i class="mdi mdi-map-marker"></i>
             <span class="nav-text">तालुका</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="Gram Panchayat">
+          <a class="sidenav-item-link" routerLink="gram-panchayat" title="Gram Panchayat">
             <i class="mdi mdi-flag"></i>
             <span class="nav-text text-wrap">ग्राम पंचायत</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="district" title="Gat Gram Panchayat">
+          <a class="sidenav-item-link" routerLink="gat-gram-panchayat" title="Gat Gram Panchayat">
             <i class="mdi mdi-flag"></i>
             <span class="nav-text text-wrap">गट ग्राम पंचायत</span>
           </a>
         </li>
 
-        <li>
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#users"
+            aria-expanded="false" aria-controls="users">
+            <i class="mdi mdi-account-plus"></i>
+            <span class="nav-text">यूजर</span> <b class="caret"></b>
+          </a>
+          <ul class="collapse" id="users" data-parent="#sidebar-menu">
+            <div class="sub-menu">
+              <li>
+                <a class="sidenav-item-link" routerLink="">
+                  <span class="nav-text text-wrap">नविन यूजर जोडा</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="">
+                  <span class="nav-text text-wrap">नविन यूजर एडिट जोडा</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="">
+                  <span class="nav-text text-wrap">नविन यूजर फेरफार जोडा</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="">
+                  <span class="nav-text text-wrap">नविन यूजर फेरफार पीडीएफ जोडा</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="">
+                  <span class="nav-text text-wrap">नविन यूजर वसुली जोडा</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+
+        <!-- <li>
           <a class="sidenav-item-link" routerLink="district" title="Add New User">
             <i class="mdi mdi-account-plus"></i>
             <span class="nav-text text-wrap">नविन यूजर जोडा</span>
@@ -73,44 +110,71 @@
             <i class="mdi mdi-account-plus"></i>
             <span class="nav-text">नविन यूजर वसुली जोडा</span>
           </a>
-        </li>
+        </li> -->
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="Floor">
+          <a class="sidenav-item-link" routerLink="floor" title="Floor">
             <i class="mdi mdi-office-building"></i>
             <span class="nav-text">फ्लोर</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="types">
+          <a class="sidenav-item-link" routerLink="prakar" title="types">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">प्रकार</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="types of Propoerty">
+          <a class="sidenav-item-link" routerLink="malmatteche-prakar" title="types of Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मालमत्तेचे प्रकार</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="Use of Propoerty">
+          <a class="sidenav-item-link" routerLink="milkat-vapar" title="Use of Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मिलकत वापर</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="" title="Propoerty">
+          <a class="sidenav-item-link" routerLink="malmatta" title="Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मालमत्ता</span>
           </a>
         </li>
 
-        <li>
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#tax"
+            aria-expanded="false" aria-controls="tax">
+            <i class="mdi mdi-ticket-percent"></i>
+            <span class="nav-text">टैक्स</span> <b class="caret"></b>
+          </a>
+          <ul class="collapse" id="tax" data-parent="#sidebar-menu">
+            <div class="sub-menu">
+              <li>
+                <a class="sidenav-item-link" routerLink="tax">
+                  <span class="nav-text">टैक्स</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="other-tax">
+                  <span class="nav-text">इतर टैक्स</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="annual-tax">
+                  <span class="nav-text">एनुअल टैक्स</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+
+        <!-- <li>
           <a class="sidenav-item-link" routerLink="" title="Tax">
             <i class="mdi mdi-ticket-percent"></i>
             <span class="nav-text">टैक्स</span>
@@ -129,16 +193,38 @@
             <i class="mdi mdi-ticket-percent"></i>
             <span class="nav-text">एनुअल टैक्स</span>
           </a>
-        </li>
+        </li> -->
 
         <li>
-          <a class="sidenav-item-link" routerLink="">
+          <a class="sidenav-item-link" routerLink="open-plots-list">
             <i class="mdi mdi-cash-multiple"></i>
             <span class="nav-text">ओपन प्लाट रेट्स</span>
           </a>
         </li>
 
-        <li>
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dar"
+            aria-expanded="false" aria-controls="dar">
+            <i class="mdi mdi-cash-multiple"></i>
+            <span class="nav-text">दर</span> <b class="caret"></b>
+          </a>
+          <ul class="collapse" id="dar" data-parent="#sidebar-menu">
+            <div class="sub-menu">
+              <li>
+                <a class="sidenav-item-link" routerLink="ghasara-dar">
+                  <span class="nav-text">घसारा दर</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="bharank-dar">
+                  <span class="nav-text">भारांक दर</span>
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+
+        <!-- <li>
           <a class="sidenav-item-link" routerLink="">
             <i class="mdi mdi-cash-multiple"></i>
             <span class="nav-text">घसारा दर</span>
@@ -150,16 +236,16 @@
             <i class="mdi mdi-cash-multiple"></i>
             <span class="nav-text">भारांक दर</span>
           </a>
-        </li>
+        </li> -->
 
         <li>
-          <a class="sidenav-item-link" routerLink="">
+          <a class="sidenav-item-link" routerLink="tower">
             <i class="mdi mdi-radio-tower"></i>
             <span class="nav-text">टावर</span>
           </a>
         </li>
 
-        <li>
+        <!-- <li>
           <a class="sidenav-item-link" routerLink="">
             <i class="mdi mdi-account-group"></i>
             <span class="nav-text">कार्यकारणी कमेटी</span>
@@ -171,6 +257,27 @@
             <i class="mdi mdi-account-group"></i>
             <span class="nav-text">कामकाज कमेटी</span>
           </a>
+        </li> -->
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#kameti"
+            aria-expanded="false" aria-controls="kameti">
+            <i class="mdi mdi-account-group"></i>
+            <span class="nav-text">कमेटी</span> <b class="caret"></b>
+          </a>
+          <ul class="collapse" id="kameti" data-parent="#sidebar-menu">
+            <div class="sub-menu">
+              <li>
+                <a class="sidenav-item-link" routerLink="karya-karani-kameti">
+                  <span class="nav-text">कार्यकारणी कमेटी</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="kamkaj-kameti">
+                  <span class="nav-text">कामकाज कमेटी</span>
+                </a>
+              </li>
+            </div>
+          </ul>
         </li>
 
         <li>
@@ -181,20 +288,20 @@
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="">
+          <a class="sidenav-item-link" routerLink="upload-file">
             <i class="mdi mdi-file-upload"></i>
             <span class="nav-text">अपलोड फाइल</span>
           </a>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="">
+          <a class="sidenav-item-link" routerLink="bdo">
             <i class="mdi mdi-account-plus"></i>
             <span class="nav-text">बी डी ओ नविन जोड़ा</span>
           </a>
         </li>
 
-        <li>
+        <!-- <li>
           <a class="sidenav-item-link" routerLink="">
             <i class="mdi mdi-image-filter"></i>
             <span class="nav-text">सचिव इमेजेस</span>
@@ -213,10 +320,36 @@
             <i class="mdi mdi-image-filter"></i>
             <span class="nav-text">उपसरपंच इमेजेस</span>
           </a>
+        </li> -->
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#images"
+            aria-expanded="false" aria-controls="images">
+            <i class="mdi mdi-image-filter"></i>
+            <span class="nav-text">इमेजेस</span> <b class="caret"></b>
+          </a>
+          <ul class="collapse" id="images" data-parent="#sidebar-menu">
+            <div class="sub-menu">
+              <li>
+                <a class="sidenav-item-link" routerLink="sachiv-list">
+                  <span class="nav-text">सचिव इमेजेस</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="sarpanch-list">
+                  <span class="nav-text">सरपंच इमेजेस</span>
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item-link" routerLink="oopsarpanch-list">
+                  <span class="nav-text">उपसरपंच इमेजेस</span>
+                </a>
+              </li>
+            </div>
+          </ul>
         </li>
 
         <li>
-          <a class="sidenav-item-link" routerLink="">
+          <a class="sidenav-item-link" routerLink="admin">
             <i class="mdi  mdi-account"></i>
             <span class="nav-text">एडमिन</span>
           </a>

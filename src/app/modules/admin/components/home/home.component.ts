@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -12,23 +13,23 @@ export class HomeComponent {
   public menus = [
     {
       "icon": "mdi mdi-map",
-      "label":"ज़िला",
-      "url": ""
+      "label":"जिल्हा",
+      "url": "/admin/district"
     },
     {
       "icon": "mdi mdi-map-marker",
       "label":"तालुका",
-      "url": ""
+      "url": "/admin/taluka"
     },
     {
       "icon": "mdi mdi-flag",
       "label":"ग्राम पंचायत",
-      "url": ""
+      "url": "/admin/gram-panchayat"
     },
     {
       "icon": "mdi mdi-flag",
       "label":"गट ग्राम पंचायत",
-      "url": ""
+      "url": "/admin/gat-gram-panchayat"
     },
     {
       "icon": "mdi mdi-account-plus",
@@ -58,72 +59,72 @@ export class HomeComponent {
     {
       "icon": "mdi mdi-office-building",
       "label":"फ्लोर",
-      "url": ""
+      "url": "/admin/floor"
     },
     {
       "icon": "mdi mdi-file",
       "label":"प्रकार",
-      "url": ""
+      "url": "/admin/prakar"
     },
     {
       "icon": "mdi mdi-file",
       "label":"मालमत्तेचे प्रकार",
-      "url": ""
+      "url": "/admin/malmatteche-prakar"
     },
     {
       "icon": "mdi mdi-file",
       "label":"मिलकत वापर",
-      "url": ""
+      "url": "/admin/milkat-vapar"
     },
     {
       "icon": "mdi mdi-file",
       "label":"मालमत्ता",
-      "url": ""
+      "url": "/admin/malmatta"
     },
     {
       "icon": "mdi mdi-ticket-percent",
       "label":"टैक्स",
-      "url": ""
+      "url": "/admin/tax"
     },
     {
       "icon": "mdi mdi-ticket-percent",
       "label":"इतर टैक्स",
-      "url": ""
+      "url": "/admin/other-tax"
     },
     {
       "icon": "mdi mdi-ticket-percent",
       "label":"एनुअल टैक्स",
-      "url": ""
+      "url": "/admin/annual-tax"
     },
     {
       "icon": "mdi mdi-cash-multiple",
       "label":"ओपन प्लाट रेट्स",
-      "url": ""
+      "url": "/admin/open-plots-list"
     },
     {
       "icon": "mdi mdi-cash-multiple",
       "label":"घसारा दर",
-      "url": ""
+      "url": "/admin/ghasara-dar"
     },
     {
       "icon": "mdi mdi-cash-multiple",
       "label":"भारांक दर",
-      "url": ""
+      "url": "/admin/bharank-dar"
     },
     {
       "icon": "mdi mdi-radio-tower",
       "label":"टावर",
-      "url": ""
+      "url": "/admin/tower"
     },
     {
       "icon": "mdi mdi-account-group",
       "label":"कार्यकारणी कमेटी",
-      "url": ""
+      "url": "/admin/karya-karani-kameti"
     },
     {
       "icon": "mdi mdi-account-group",
       "label":"कामकाज कमेटी",
-      "url": ""
+      "url": "/admin/kamkaj-kameti"
     },
     {
       "icon": "mdi mdi-google-maps",
@@ -133,32 +134,32 @@ export class HomeComponent {
     {
       "icon": "mdi mdi-file-upload",
       "label":"अपलोड फाइल",
-      "url": ""
+      "url": "/admin/upload-file"
     },
     {
       "icon": "mdi mdi-account-plus",
       "label":"बी डी ओ नविन जोड़ा",
-      "url": ""
+      "url": "admin/bdo"
     },
     {
       "icon": "mdi mdi-image-filter",
       "label":"सचिव इमेजेस",
-      "url": ""
+      "url": "/admin/sachiv-list"
     },
     {
       "icon": "mdi mdi-image-filter",
       "label":"सरपंच इमेजेस",
-      "url": ""
+      "url": "/admin/sarpanch-list"
     },
     {
       "icon": "mdi mdi-image-filter",
       "label":"उपसरपंच इमेजेस",
-      "url": ""
+      "url": "/adin/oopsarpanch-list"
     },
     {
       "icon": "mdi mdi-account",
       "label":"एडमिन",
-      "url": ""
+      "url": "/admin/admin"
     }
   ]
 }

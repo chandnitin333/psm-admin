@@ -30,19 +30,22 @@
               "src/assets/plugins/material/css/materialdesignicons.min.css",
               "src/assets/plugins/simplebar/simplebar.css",
               "src/assets/plugins/nprogress/nprogress.css",
+              "src/assets/plugins/prism/prism.css",
               "src/assets/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css",
               "src/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.css",
               "src/assets/plugins/daterangepicker/daterangepicker.css",
               "src/assets/css/quill.snow.css",
               "src/assets/plugins/toaster/toastr.min.css",
-              "src/assets/css/style.css"
+              "src/assets/css/style.css",
+              "src/assets/plugins/select2/css/select2.min.css"
             ],
             "scripts": [
-              "src/assets/plugins/nprogress/nprogress.js",
               "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/plugins/nprogress/nprogress.js",
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/plugins/simplebar/simplebar.min.js",
               "src/assets/js/hotkeys.min.js",
+              "src/assets/plugins/prism/prism.js",
               "src/assets/plugins/apexcharts/apexcharts.js",
               "src/assets/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js",
               "src/assets/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js",
@@ -50,6 +53,7 @@
               "src/assets/plugins/jvectormap/jquery-jvectormap-us-aea.js",
               "src/assets/plugins/daterangepicker/daterangepicker.js",
               "src/assets/js/quill.js",
+              "src/assets/plugins/select2/js/select2.min.js",
               "src/assets/plugins/toaster/toastr.min.js",
               "src/assets/js/mono.js",
               "src/assets/js/chart.js",
@@ -62,8 +66,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
