@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="row">
+    @for (menu of menus; track menu) {
+    <div class="col-xl-2 col-md-6">
+        <a routerLink="{{ menu.url }}" class="dashboard-card">
+            <div class="card card-default">
+                <div class="d-flex p-4 align-items-center flex-column">
+                    <div class="icon-sm">
+                        <i class="{{ menu.icon }}"></i>
+                    </div>
+                    <div class="text-center">
+                        <!-- <span>22</span> -->
+                        <p><strong>{{ menu.label}}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    }
+</div>

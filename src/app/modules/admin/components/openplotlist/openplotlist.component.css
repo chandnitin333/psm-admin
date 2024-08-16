@@ -1,0 +1,14 @@
+.card-default .card-header
+{
+    padding-top: 0.875rem;
+     padding-bottom: 1rem;
+}
+
+.card-header-label{
+    margin-top: 0.5rem;
+}
+
+.open-plot-add-btn{
+    font-size: 13px;
+    font-weight: bold;
+}
