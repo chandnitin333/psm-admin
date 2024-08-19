@@ -35,6 +35,7 @@ import { AddnewsarpanchComponent } from './components/sarpanchimages/addnewsarpa
 import { OopsarpanchimagesComponent } from './components/oopsarpanchimages/oopsarpanchimages.component';
 import { AddnewoopsarpanchComponent } from './components/oopsarpanchimages/addnewoopsarpanch/addnewoopsarpanch.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
       { path: 'taluka', component: TalukaComponent },
       { path: 'gram-panchayat', component: GrampanchayatComponent },
       { path: 'gat-gram-panchayat', component: GatgrampanchayatComponent },
-
+      { path: 'users', component: UsersComponent },
       { path: 'floor', component: FloorComponent },
       { path: 'prakar', component: PrakarComponent },
       { path: 'malmatteche-prakar', component: MalmattecheprakarComponent },
