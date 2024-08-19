@@ -4,48 +4,19 @@
         <button id="sidebar-toggler" class="sidebar-toggle" (click)="toggleSidebar()">
             <span class="sr-only">Toggle navigation</span>
         </button>
-        <span class="page-title">dashboard</span>
+        <!-- <span class="page-title">dashboard</span> -->
         <div class="navbar-right ">
             <!-- search form -->
-            <div class="search-form">
-                <form action="index.html" method="get">
-                    <div class="input-group input-group-sm" id="input-group-search">
-                        <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                            placeholder="Search..." />
-                        <div class="input-group-append">
-                            <button class="btn" type="button">/</button>
-                        </div>
-                    </div>
-                </form>
-                <ul class="dropdown-menu dropdown-menu-search">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Morbi leo risus</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Dapibus ac facilisis in</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Porta ac consectetur ac</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Vestibulum at eros</a>
-                    </li>
-                </ul>
-            </div>
+
             <ul class="nav navbar-nav">
                 <!-- Offcanvas -->
+
                 <li class="custom-dropdown">
-                    <a class="offcanvas-toggler active custom-dropdown-toggler" data-offcanvas="contact-off"
-                        href="javascript:">
-                        <i class="mdi mdi-contacts icon"></i>
-                    </a>
-                </li>
-                <li class="custom-dropdown">
-                    <button class="notify-toggler custom-dropdown-toggler">
+                    <button class="notify-toggler custom-dropdown-toggler" (click)="toggleNotification()">
                         <i class="mdi mdi-bell-outline icon"></i>
                         <span class="badge badge-xs rounded-circle">21</span>
                     </button>
-                    <div class="dropdown-notify">
+                    <div class="dropdown-notify" [ngStyle]="{'display': isNotificationOpen ? 'block' : 'none'}">
                         <header>
                             <div class="nav nav-underline" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active" id="all-tabs" data-toggle="tab" href="#all"

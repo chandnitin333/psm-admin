@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../../services/auth.service';
 import { DomService } from '../../../../services/dom.service';
+import { CommonModule } from '@angular/common';
 // import $ from 'jquery'; // Import jQuery
 declare var $: any;
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
  isSidebarOpen: boolean = true; // Track whether the sidebar is open
+ isNotificationOpen: boolean = false; // Track whether the notification panel is open
   constructor(private auth:AuthService,private domService: DomService){
 
   }
@@ -30,10 +32,21 @@ export class HeaderComponent {
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
+    this.isNotificationOpen = !this.isNotificationOpen;
     if(this.isSidebarOpen) {
       this.addClassToBody();
+      this.isNotificationOpen = false;
     } else {
       this.removeClassFromBody();
+      this.isNotificationOpen = true;
+    }
+  }
+  toggleNotification(): void {
+    this.isNotificationOpen = !this.isNotificationOpen;
+    if(this.isNotificationOpen) {
+      this.isSidebarOpen = false;
+    } else {
+      this.isSidebarOpen = true;
     }
   }
   
