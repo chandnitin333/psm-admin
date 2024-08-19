@@ -40,7 +40,7 @@
           </a>
         </li>
 
-        <li class="has-sub">
+        <li class="has-sub" #myUserElement (click)="toggleClass('user')">
           <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#users"
             aria-expanded="false" aria-controls="users">
             <i class="mdi mdi-account-plus"></i>
@@ -49,7 +49,7 @@
           <ul class="collapse" id="users" data-parent="#sidebar-menu">
             <div class="sub-menu">
               <li>
-                <a class="sidenav-item-link" routerLink="">
+                <a class="sidenav-item-link" routerLink="users">
                   <span class="nav-text text-wrap">नविन यूजर जोडा</span>
                 </a>
               </li>
@@ -147,7 +147,7 @@
           </a>
         </li>
 
-        <li class="has-sub">
+        <li class="has-sub" #myTaxElement (click)="toggleClass('tax')">
           <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#tax"
             aria-expanded="false" aria-controls="tax">
             <i class="mdi mdi-ticket-percent"></i>
@@ -202,7 +202,7 @@
           </a>
         </li>
 
-        <li class="has-sub">
+        <li class="has-sub" #myDarElement (click)="toggleClass('dar')">
           <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dar"
             aria-expanded="false" aria-controls="dar">
             <i class="mdi mdi-cash-multiple"></i>
@@ -258,7 +258,7 @@
             <span class="nav-text">कामकाज कमेटी</span>
           </a>
         </li> -->
-        <li class="has-sub">
+        <li class="has-sub" #myCamiteeElement (click)="toggleClass('camitee')">
           <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#kameti"
             aria-expanded="false" aria-controls="kameti">
             <i class="mdi mdi-account-group"></i>
@@ -321,7 +321,7 @@
             <span class="nav-text">उपसरपंच इमेजेस</span>
           </a>
         </li> -->
-        <li class="has-sub">
+        <li class="has-sub" #myImagesElement (click)="toggleClass('images')">
           <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#images"
             aria-expanded="false" aria-controls="images">
             <i class="mdi mdi-image-filter"></i>

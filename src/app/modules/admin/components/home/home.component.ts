@@ -34,7 +34,7 @@ export class HomeComponent {
     {
       "icon": "mdi mdi-account-plus",
       "label":"नविन यूजर जोडा",
-      "url": ""
+      "url": "/admin/users"
     },
     {
       "icon": "mdi mdi-account-edit",
