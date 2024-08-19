@@ -32,13 +32,10 @@ export class HeaderComponent {
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
-    this.isNotificationOpen = !this.isNotificationOpen;
     if(this.isSidebarOpen) {
       this.addClassToBody();
-      this.isNotificationOpen = false;
     } else {
       this.removeClassFromBody();
-      this.isNotificationOpen = true;
     }
   }
   toggleNotification(): void {
