@@ -11,7 +11,7 @@ declare var $: any;
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
- isSidebarOpen: boolean = false; // Track whether the sidebar is open
+ isSidebarOpen: boolean = true; // Track whether the sidebar is open
   constructor(private auth:AuthService,private domService: DomService){
 
   }
