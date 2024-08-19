@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,7 +10,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+constructor(private titleService: Title) {}
   public menus = [
     {
       "icon": "mdi mdi-map",
@@ -162,8 +163,9 @@ export class HomeComponent {
       "url": "/admin/admin"
     }
   ]
-}
 
-//,  , , , , , , , , , , ,
-// , , ,   
+  ngOnInit(): void {
+    this.titleService.setTitle('Home');
+  }
+}
 

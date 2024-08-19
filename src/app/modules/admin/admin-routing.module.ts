@@ -36,11 +36,12 @@ import { OopsarpanchimagesComponent } from './components/oopsarpanchimages/oopsa
 import { AddnewoopsarpanchComponent } from './components/oopsarpanchimages/addnewoopsarpanch/addnewoopsarpanch.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { UsersComponent } from './components/users/users.component';
+import { TitleService } from '../../services/title.service';
 
 const routes: Routes = [
   {
     path: '', component: AdminDashboardComponent, children: [
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent},
       { path: 'about', component: AboutComponent },
       { path: 'services', component: ServiceComponent },
       { path: 'contact', component: ContactComponent },
@@ -83,6 +84,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [TitleService]
 })
 export class AdminRoutingModule { }

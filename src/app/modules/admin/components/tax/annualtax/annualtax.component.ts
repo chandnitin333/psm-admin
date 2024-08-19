@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import $ from 'jquery'; // Import jQuery
 
 @Component({
@@ -10,6 +11,10 @@ import $ from 'jquery'; // Import jQuery
 })
 export class AnnualtaxComponent {
 
+  constructor(private titleService: Title) {}
+   ngOnInit(): void {
+    this.titleService.setTitle('Annual Tax');
+  }
  ngAfterViewInit(): void {
     // Initialize jQuery click handlers
     this.initializeCollapsibleRows();
