@@ -36,26 +36,26 @@ export class HomeComponent {
       "label":"नविन यूजर जोडा",
       "url": "/admin/users"
     },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर एडिट जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर फेरफार जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर फेरफार पीडीएफ जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर वसुली जोडा",
-      "url": ""
-    },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर एडिट जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर फेरफार जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर फेरफार पीडीएफ जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर वसुली जोडा",
+    //   "url": ""
+    // },
     {
       "icon": "mdi mdi-office-building",
       "label":"फ्लोर",
