@@ -3,15 +3,15 @@ import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-sarpanchimages',
+  selector: 'app-users',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './sarpanchimages.component.html',
-  styleUrl: './sarpanchimages.component.css'
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.css'
 })
-export class SarpanchimagesComponent {
+export class UsersComponent {
 constructor(private titleService: Title) {}
    ngOnInit(): void {
-    this.titleService.setTitle('SarpanchImages List');
+    this.titleService.setTitle('Users');
   }
 }

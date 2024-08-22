@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,7 +10,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+constructor(private titleService: Title) {}
   public menus = [
     {
       "icon": "mdi mdi-map",
@@ -34,28 +35,28 @@ export class HomeComponent {
     {
       "icon": "mdi mdi-account-plus",
       "label":"नविन यूजर जोडा",
-      "url": ""
+      "url": "/admin/users"
     },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर एडिट जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर फेरफार जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर फेरफार पीडीएफ जोडा",
-      "url": ""
-    },
-    {
-      "icon": "mdi mdi-account-edit",
-      "label":"नविन यूजर वसुली जोडा",
-      "url": ""
-    },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर एडिट जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर फेरफार जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर फेरफार पीडीएफ जोडा",
+    //   "url": ""
+    // },
+    // {
+    //   "icon": "mdi mdi-account-edit",
+    //   "label":"नविन यूजर वसुली जोडा",
+    //   "url": ""
+    // },
     {
       "icon": "mdi mdi-office-building",
       "label":"फ्लोर",
@@ -162,8 +163,9 @@ export class HomeComponent {
       "url": "/admin/admin"
     }
   ]
-}
 
-//,  , , , , , , , , , , ,
-// , , ,   
+  ngOnInit(): void {
+    this.titleService.setTitle('Home');
+  }
+}
 

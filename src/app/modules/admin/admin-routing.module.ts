@@ -35,11 +35,13 @@ import { AddnewsarpanchComponent } from './components/sarpanchimages/addnewsarpa
 import { OopsarpanchimagesComponent } from './components/oopsarpanchimages/oopsarpanchimages.component';
 import { AddnewoopsarpanchComponent } from './components/oopsarpanchimages/addnewoopsarpanch/addnewoopsarpanch.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { UsersComponent } from './components/users/users.component';
+import { TitleService } from '../../services/title.service';
 
 const routes: Routes = [
   {
     path: '', component: AdminDashboardComponent, children: [
-      { path: 'home', component: HomeComponent },
+      { path: 'home', component: HomeComponent},
       { path: 'about', component: AboutComponent },
       { path: 'services', component: ServiceComponent },
       { path: 'contact', component: ContactComponent },
@@ -47,7 +49,7 @@ const routes: Routes = [
       { path: 'taluka', component: TalukaComponent },
       { path: 'gram-panchayat', component: GrampanchayatComponent },
       { path: 'gat-gram-panchayat', component: GatgrampanchayatComponent },
-
+      { path: 'users', component: UsersComponent },
       { path: 'floor', component: FloorComponent },
       { path: 'prakar', component: PrakarComponent },
       { path: 'malmatteche-prakar', component: MalmattecheprakarComponent },
@@ -82,6 +84,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [TitleService]
 })
 export class AdminRoutingModule { }

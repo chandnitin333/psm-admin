@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,5 +10,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './district.component.css'
 })
 export class DistrictComponent {
-
+constructor(private titleService: Title) {}
+   ngOnInit(): void {
+    this.titleService.setTitle('District');
+  }
 }

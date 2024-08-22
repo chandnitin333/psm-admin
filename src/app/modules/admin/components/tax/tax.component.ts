@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tax',
@@ -8,5 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './tax.component.css'
 })
 export class TaxComponent {
-
+constructor(private titleService: Title) {}
+   ngOnInit(): void {
+    this.titleService.setTitle('Tax');
+  }
 }

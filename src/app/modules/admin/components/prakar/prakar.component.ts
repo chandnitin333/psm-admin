@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-prakar',
@@ -8,5 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './prakar.component.css'
 })
 export class PrakarComponent {
-
+constructor(private titleService: Title) {}
+   ngOnInit(): void {
+    this.titleService.setTitle('Prakar');
+  }
 }
