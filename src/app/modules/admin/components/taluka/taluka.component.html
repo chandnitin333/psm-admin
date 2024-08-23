@@ -18,7 +18,7 @@
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="district" name="district" placeholder="उदा. रामटेक" [(ngModel)]="englishText" (input)="translateText($event)">
+                        <input type="text" class="form-control" id="district" name="district" placeholder="उदा. रामटेक" [(ngModel)]="englishText" (keyup.enter)="translateText($event)">
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
         <form action="#" method="get">
             <div class="col-md-4" id="input-group-search">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..."  [(ngModel)]="searchValue" (keyup)="search()"  (input)="translateText($event)">
+                    placeholder="Search..."  [(ngModel)]="searchValue" (keyup.enter)="search()"  (keyup.enter)="translateText($event)">
             </div>
         </form>
         <br>
@@ -57,8 +57,8 @@
                     <tr *ngFor="let item of paginatedItems let i = index">
                      
                         <td>{{ getSerialNumber(i) }}</td> 
-                        <td>{{ item.name }}</td> 
                         <td>{{ item.district.name }}</td> 
+                        <td>{{ item.name }}</td> 
                         <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
                             class="mdi mdi-square-edit-outline"></i>
                         एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i

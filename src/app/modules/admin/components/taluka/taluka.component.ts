@@ -28,7 +28,7 @@ export class TalukaComponent {
   searchValue: string = '';
   totalItems: number = 0;
   commonText: string = ''
-
+  debounceTimeout: any;
   constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService) { }
   ngOnInit(): void {
     this.titleService.setTitle('Taluka');
@@ -39,35 +39,50 @@ export class TalukaComponent {
 
 
   translateText(event: Event) {
-    console.log('Translating text:', this.englishText);
+
     const input = event.target as HTMLInputElement;
+
     let text = input.value;
-    this.translate.translate(text).subscribe({
-      next: (res: any) => {
+    input.value = (text.trim() != '') ? text : ' ';
+    console.log('Translating text:', text);
 
-        if (res && res.data && res.data.translations && res.data.translations.length > 0) {
-          this.marathiText = res.data.translations[0].translatedText;
+    // Debouncing logic
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = setTimeout(() => {
+      if (text.trim() != '') {
+        this.translate.translate(text).subscribe({
+          next: (res: any) => {
 
-          setTimeout(() => {
-            this.updateText(this.marathiText, input);
-          }, 2000);
-        } else {
-          console.error('Unexpected API response format:', res);
-        }
-      },
-      error: (err) => {
-        console.error('Translation API error:', err);
-      },
-      complete: () => {
-        console.log('Translation completed');
+            if (res && res.data && res.data.translations && res.data.translations.length > 0) {
+              this.marathiText = res.data.translations[0].translatedText;
+
+              setTimeout(() => {
+                this.updateText(this.marathiText, input);
+              }, 400);
+            } else {
+              console.error('Unexpected API response format:', res);
+            }
+          },
+          error: (err) => {
+            console.error('Translation API error:', err);
+          },
+          complete: () => {
+            console.log('Translation completed');
+          }
+        });
       }
-    });
+    }, 200); // Adjust the debounce delay as per your requirement
   }
 
+
   updateText(text: string, field: any) {
+    this.commonText = '';
+    field.value = '';
     console.log('Updating text:', text);
     field.value = text;
     this.commonText = text;
+    this.marathiText = '';
+
   }
 
 
@@ -105,6 +120,7 @@ export class TalukaComponent {
   }
 
   search(): void {
+    clearTimeout(this.debounceTimeout);
     setTimeout(() => {
       this.searchValue = this.commonText;
       this.getTalukas();
