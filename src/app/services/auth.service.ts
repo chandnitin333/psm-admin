@@ -1,13 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-
-    constructor(private router: Router) { }
+    apiUrl: string = 'http://localhost:4444/api';
+    constructor(private router: Router, private http: HttpClient) { }
 
     setToken(token: string): void {
         localStorage.setItem('token', token);
@@ -26,12 +27,16 @@ export class AuthService {
         this.router.navigate(['login']);
     }
 
-    login({ email, password }: any): Observable<any> {
-        // just temporary now
-        if (email === 'admin@gmail.com' && password === 'admin123') {
-            this.setToken('abcdefghijklmnopqrstuvwxyz');
-            return of({ name: 'Nitin Chand', email: 'admin@gmail.com' });
+    login({ username, password }: any): Observable<any> {
+        if (username !== '' && password !== '') {
+            this.http.post<any>(`${this.apiUrl}/user/login`, { username, password }).subscribe((res) => {
+                this.setToken(res.token);
+                this.router.navigate(['admin']);
+            });
+        } else {
+            this.router.navigate(['login']);
+            return throwError(new Error('Failed to login'));
         }
-        return throwError(new Error('Failed to login'));
+        return new Observable<any>(); // Add a return statement at the end of the function.
     }
 }

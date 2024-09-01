@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
 import { TranslateService } from '../../../../services/translate.service';
 import { PaginationComponent } from '../pagination/pagination.component';
-declare var $: any;
+
 
 @Component({
   selector: 'app-taluka',
@@ -29,14 +29,20 @@ export class TalukaComponent {
   totalItems: number = 0;
   commonText: string = ''
   debounceTimeout: any;
+  districts: any = [];
+  selectedOption = "";
   constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService) { }
   ngOnInit(): void {
     this.titleService.setTitle('Taluka');
-
     this.getTalukas();
+    this.getAllDistricts();
+
   }
 
+  ngAfterViewInit() {
+    // Use jQuery to select the element and initialize Select2
 
+  }
 
   translateText(event: Event) {
 
@@ -126,5 +132,18 @@ export class TalukaComponent {
       this.getTalukas();
     }, 3000);
 
+  }
+
+  getAllDistricts() {
+    // Get all districts
+    this.apiService.get('district/districts_ddl').subscribe({
+      next: (res: any) => {
+        this.districts = res.data;
+
+      },
+      error: (err: Error) => {
+        console.error('Error getting districts:', err);
+      }
+    });
   }
 }
