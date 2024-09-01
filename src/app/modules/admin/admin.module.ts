@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpHeaderInterceptor } from '../../http.interceptor';
 import { ApiService } from '../../services/api.service';
 import { AdminRoutingModule } from './admin-routing.module';
+import { TalukaService } from '../../services/taluka.service';
 
 
 
@@ -17,6 +18,7 @@ import { AdminRoutingModule } from './admin-routing.module';
   ],
   providers: [
     ApiService,
+    TalukaService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,

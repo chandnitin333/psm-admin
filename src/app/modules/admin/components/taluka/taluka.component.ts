@@ -2,10 +2,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap } from 'rxjs';
 import { ApiService } from '../../../../services/api.service';
+import { TalukaService } from '../../../../services/taluka.service';
 import { TranslateService } from '../../../../services/translate.service';
 import { PaginationComponent } from '../pagination/pagination.component';
 
@@ -13,7 +15,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 @Component({
   selector: 'app-taluka',
   standalone: true,
-  imports: [RouterLink, FormsModule, HttpClientModule, PaginationComponent, CommonModule],
+  imports: [RouterLink, FormsModule, HttpClientModule, PaginationComponent, CommonModule, ReactiveFormsModule],
   templateUrl: './taluka.component.html',
   styleUrl: './taluka.component.css'
 })
@@ -31,11 +33,23 @@ export class TalukaComponent {
   debounceTimeout: any;
   districts: any = [];
   selectedOption = "";
-  constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService) { }
+  searchControl = new FormControl();
+  private searchTerms = new Subject<string>();
+  private subscription: Subscription = new Subscription();
+  constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService) { }
   ngOnInit(): void {
     this.titleService.setTitle('Taluka');
     this.getTalukas();
     this.getAllDistricts();
+
+    this.subscription = this.searchControl.valueChanges.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((query) => this.talukaService.getTalukas({ pageNumber: this.currentPage, searchText: this.searchValue })) // Switch to new observable
+    ).subscribe(item => {
+      let data = item as any;
+      this.items = data?.data?.talukas;
+    });
 
   }
 
@@ -93,11 +107,10 @@ export class TalukaComponent {
 
 
   getTalukas(pageNumber: number = 1) {
-    this.apiService.post('taluka/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
+    this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
       next: (res: any) => {
         this.items = res?.data?.talukas;
         this.totalItems = res?.data?.totalCount;
-
       },
       error: (err) => {
         console.error('API error:', err);
@@ -126,17 +139,19 @@ export class TalukaComponent {
   }
 
   search(): void {
-    clearTimeout(this.debounceTimeout);
-    setTimeout(() => {
-      this.searchValue = this.commonText;
-      this.getTalukas();
-    }, 3000);
+    console.log('Search value:', this.searchValue);
 
+    // clearTimeout(this.debounceTimeout);
+    // setTimeout(() => {
+    //   this.searchValue = (this.commonText != '') ? this.commonText : this.searchValue;
+    //   this.getTalukas();
+    // }, 3000);
+    this.searchTerms.next("search"); // 
   }
 
   getAllDistricts() {
     // Get all districts
-    this.apiService.get('district/districts_ddl').subscribe({
+    this.apiService.get('/districts_ddl').subscribe({
       next: (res: any) => {
         this.districts = res.data;
 
@@ -145,5 +160,8 @@ export class TalukaComponent {
         console.error('Error getting districts:', err);
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Clean up the subscription on component destroy
   }
 }

@@ -8,7 +8,7 @@
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                                 <select class="form-control select2" [(ngModel)]="selectedOption" name="selectedOption" [appSelect2]="">
+                                 <select class="form-control select2" [(ngModel)]="selectedOption" name="selectedOption" >
               
                             <option value="">-- जिल्हा निवडा -- </option>
                             <option *ngFor="let district of districts" [value]="district.id">{{ district.name }}</option>
@@ -38,7 +38,7 @@
         <form action="#" method="get">
             <div class="col-md-4" id="input-group-search">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..."  [(ngModel)]="searchValue" (keyup.enter)="search()"  (keyup.enter)="translateText($event)">
+                    placeholder="Search..."  [(ngModel)]="searchValue" [formControl]="searchControl" (input)="search()"  (keyup.enter)="translateText($event)">
             </div>
         </form>
         <br>

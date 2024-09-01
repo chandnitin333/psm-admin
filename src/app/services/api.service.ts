@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl: string = 'http://localhost:4444/api';
+  private baseUrl: string = 'http://localhost:4444/api/admin';
   constructor(private http: HttpClient) { }
 
   // GET request
