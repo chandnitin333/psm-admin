@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -38,6 +38,10 @@ export class TalukaComponent {
 	isSubmitted: boolean = false;
 	isEdit: boolean = false;
 	modifyTaluka: any = {};
+	talukaForm = new FormGroup({
+		district_id: new FormControl(''),
+		name: new FormControl('')
+	});
 	constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService, private toastr: ToastrService) { }
 	ngOnInit(): void {
 		this.titleService.setTitle('Taluka');
@@ -66,9 +70,7 @@ export class TalukaComponent {
 
 		let text = input.value;
 		input.value = (text.trim() != '') ? text : ' ';
-		console.log('Translating text:', text);
 
-		// Debouncing logic
 		clearTimeout(this.debounceTimeout);
 		this.debounceTimeout = setTimeout(() => {
 			if (text.trim() != '') {
@@ -96,21 +98,53 @@ export class TalukaComponent {
 		}, 200); // Adjust the debounce delay as per your requirement
 	}
 
+	onKeydown(event: KeyboardEvent, controlName: string) {
+		if (event.key === 'Enter') {
+			event.preventDefault(); // Prevent the default Enter key behavior
+			const control = this.talukaForm.get(controlName) as FormControl;
+			const text = control.value;
+
+			if (text && text.trim() !== '') {
+				clearTimeout(this.debounceTimeout);
+				this.debounceTimeout = setTimeout(() => {
+					this.translate.translate(text).subscribe({
+						next: (res: any) => {
+							if (res && res.data && res.data.translations && res.data.translations.length > 0) {
+								const translatedText = res.data.translations[0].translatedText;
+								this.updateText1(translatedText, control);
+							} else {
+								console.error('Unexpected API response format:', res);
+							}
+						},
+						error: (err) => {
+							console.error('Translation API error:', err);
+						},
+						complete: () => {
+							console.log('Translation completed');
+						}
+					});
+				}, 200); // Adjust the debounce delay as per your requirement
+			}
+		}
+	}
+
+	updateText1(text: string, field: FormControl) {
+		field.setValue(text); // Set the new value
+		field.markAsDirty(); // Mark the field as dirty
+		field.markAsTouched(); // Mark the field as touched
+	}
 
 	updateText(text: string, field: any) {
 		this.commonText = '';
 		field.value = '';
-		console.log('Updating text:', text);
 		field.value = text;
 		this.commonText = text;
 		this.marathiText = '';
-
 	}
 
 
 	getTalukas(pageNumber: number = 1) {
 		this.searchValue = (this.commonText != '') ? this.commonText : this.searchValue;
-		console.log("getTalukas called", this.searchValue);
 		setTimeout(() => {
 			this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
 				next: (res: any) => {
@@ -165,38 +199,34 @@ export class TalukaComponent {
 	}
 
 	addTaluka() {
-		this.isSubmitted = true;
-		if (this.selectedDistrict == '' || this.talukaName == '') {
+		if (this.talukaForm.valid) {
+			let params = this.talukaForm.value;
+			this.apiService.post('create-taluka', params).subscribe({
+				next: (res: any) => {
+					this.getTalukas();
+					this.reset();
+					this.isSubmitted = true;
+					this.toastr.success('Taluka has been successfully added.', 'Success');
+				},
+				error: (err: Error) => {
+					console.error('Error adding taluka:', err);
+					this.toastr.error('There was an error adding the taluka.', 'Error');
+				}
+			});
+		} else {
 			this.toastr.warning('Please fill all required fields.', 'warning');
 			return;
 		}
-		let data = {
-			district_id: parseInt(this.selectedDistrict),
-			name: this.talukaName
-		}
-
-		this.apiService.post('/create-taluka', data).subscribe({
-			next: (res: any) => {
-				this.getTalukas();
-				this.reset();
-				this.toastr.success('Taluka has been successfully added.', 'Success');
-			},
-			error: (err: Error) => {
-				console.error('Error adding taluka:', err);
-				this.toastr.error('There was an error adding the taluka.', 'Error');
-			}
-		});
 	}
 
 	getTaluka(id: number) {
-
 		let taluka = this.items.find((item) => item.id == id);
 		if (!taluka) {
 			this.toastr.error('Taluka not found.', 'Error');
 			return;
 		}
 		this.isEdit = true;
-		this.selectedDistrict = '' + id;
+		this.selectedDistrict = taluka.district_id;
 		this.talukaName = taluka.name;
 		this.modifyTaluka = {
 			id: id,
@@ -205,6 +235,7 @@ export class TalukaComponent {
 		};
 		console.log('Taluka:', this.modifyTaluka);
 	}
+
 	reset() {
 		this.selectedDistrict = '';
 		this.talukaName = '';
@@ -213,10 +244,11 @@ export class TalukaComponent {
 	editTaluka() {
 
 		let data = {
-			id : this.modifyTaluka.id,
-			district_id: parseInt(this.selectedDistrict),
-			name: this.talukaName
+			id: this.modifyTaluka.id,
+			district_id: this.talukaForm?.value?.district_id,
+			name: this.talukaForm?.value?.name,
 		};
+
 		this.apiService.put('update-taluka', data).subscribe({
 			next: (res: any) => {
 				this.getTalukas();
@@ -234,7 +266,7 @@ export class TalukaComponent {
 		if (!confirm('Are you sure you want to delete this taluka?')) {
 			return;
 		}
-		if(id == 0){
+		if (id == 0) {
 			this.toastr.error('This taluka cannot be deleted.', 'Error');
 			return;
 		}
