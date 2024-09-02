@@ -31,7 +31,9 @@
               "src/assets/plugins/simplebar/simplebar.css",
               "src/assets/css/style.css",
                "src/assets/plugins/nprogress/nprogress.css",
-              "src/assets/plugins/select2/css/select2.min.css"
+              "src/assets/plugins/select2/css/select2.min.css",
+              "node_modules/ngx-toastr/toastr.css"
+
             ],
             "scripts": [
               "src/assets/plugins/jquery/jquery.min.js",
