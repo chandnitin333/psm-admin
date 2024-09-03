@@ -37,6 +37,7 @@ import { AddnewoopsarpanchComponent } from './components/oopsarpanchimages/addne
 import { AdminComponent } from './components/admin/admin.component';
 import { UsersComponent } from './components/users/users.component';
 import { TitleService } from '../../services/title.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,7 @@ const routes: Routes = [
       { path: 'add-new-sarpanch', component: AddnewsarpanchComponent },
       { path: 'oopsarpanch-list', component: OopsarpanchimagesComponent },
       { path: 'add-new-oopsarpanch', component: AddnewoopsarpanchComponent },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'admin', component: AdminComponent },
       { path: '', redirectTo: '/admin/home', pathMatch: 'full' }
     ]

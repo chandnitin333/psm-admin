@@ -6,13 +6,18 @@ import { HttpHeaderInterceptor } from '../../http.interceptor';
 import { ApiService } from '../../services/api.service';
 import { TalukaService } from '../../services/taluka.service';
 import { AdminRoutingModule } from './admin-routing.module';
+import { LoaderComponent } from './components/loader/loader.component';
+
 
 
 
 @NgModule({
 
-  declarations: [],
+  declarations: [
+
+  ],
   imports: [
+    LoaderComponent,
     CommonModule,
     AdminRoutingModule,
     HttpClientModule,
@@ -24,7 +29,8 @@ import { AdminRoutingModule } from './admin-routing.module';
       toastClass: 'ngx-toastr custom-toast', // Apply custom toast class
       titleClass: 'custom-toast-title', // Apply custom title class
       messageClass: 'custom-toast-message' // Apply custom message class
-    })
+    }),
+
 
   ],
   providers: [
