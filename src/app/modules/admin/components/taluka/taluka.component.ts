@@ -226,8 +226,9 @@ export class TalukaComponent {
 			return;
 		}
 		this.isEdit = true;
-		this.selectedDistrict = taluka.district_id;
-		this.talukaName = taluka.name;
+		this.talukaForm.get('district_id')?.setValue(taluka.district_id);
+		this.talukaForm.get('name')?.setValue(taluka.name);
+
 		this.modifyTaluka = {
 			id: id,
 			district_id: parseInt(this.selectedDistrict),
@@ -237,8 +238,7 @@ export class TalukaComponent {
 	}
 
 	reset() {
-		this.selectedDistrict = '';
-		this.talukaName = '';
+		this.talukaForm.reset();
 		this.isEdit = false;
 	}
 	editTaluka() {
