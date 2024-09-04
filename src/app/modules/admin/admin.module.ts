@@ -22,8 +22,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     AdminRoutingModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-top-right', // Set the position to top-right
-      timeOut: 5000, // Set the display time to 5 seconds
+      positionClass: 'toast-top-right', 
+      timeOut: 5000, 
       closeButton: true, // Optionally add a close button
       progressBar: true, // Optionally add a progress bar
       toastClass: 'ngx-toastr custom-toast', // Apply custom toast class

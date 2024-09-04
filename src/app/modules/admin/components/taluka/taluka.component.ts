@@ -1,7 +1,8 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
@@ -10,15 +11,29 @@ import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap } 
 import { ApiService } from '../../../../services/api.service';
 import { TalukaService } from '../../../../services/taluka.service';
 import { TranslateService } from '../../../../services/translate.service';
+import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+
+
+
 @Component({
 	selector: 'app-taluka',
 	standalone: true,
-	imports: [RouterLink, FormsModule, HttpClientModule, PaginationComponent, CommonModule, ReactiveFormsModule],
+	imports: [
+		RouterLink,
+		FormsModule,
+		HttpClientModule,
+		PaginationComponent,
+		CommonModule,
+		ReactiveFormsModule,
+		ConfirmationDialogModule // Ensure this is included
+	],
 	templateUrl: './taluka.component.html',
-	styleUrl: './taluka.component.css'
+	styleUrls: ['./taluka.component.css']
 })
 export class TalukaComponent {
+	@ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
 	talukaName: string = '';
 	marathiText: string = '';
 	taluka: any = {};
@@ -42,6 +57,7 @@ export class TalukaComponent {
 		district_id: new FormControl(''),
 		name: new FormControl('')
 	});
+	deleteTalukaName: string = '';
 	constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService, private toastr: ToastrService) { }
 	ngOnInit(): void {
 		this.titleService.setTitle('Taluka');
@@ -199,7 +215,8 @@ export class TalukaComponent {
 	}
 
 	addTaluka() {
-		if (this.talukaForm.valid) {
+		// console.log('Taluka:', this.talukaForm.value);
+		if (this.talukaForm.valid && this.talukaForm.value.district_id != null || undefined || '' && this.talukaForm.value.name != null || undefined || '') {
 			let params = this.talukaForm.value;
 			this.apiService.post('create-taluka', params).subscribe({
 				next: (res: any) => {
@@ -231,7 +248,7 @@ export class TalukaComponent {
 
 		this.modifyTaluka = {
 			id: id,
-			district_id: parseInt(this.selectedDistrict),
+			district_id: this.talukaForm.value.district_id || 0,
 			name: this.talukaName
 		};
 		console.log('Taluka:', this.modifyTaluka);
@@ -261,25 +278,38 @@ export class TalukaComponent {
 			}
 		});
 	}
-
-	deleteTaluka(id: number) {
-		if (!confirm('Are you sure you want to delete this taluka?')) {
-			return;
+	onConfirmed(confirmed: boolean) {
+		if (confirmed) {
+			// Perform the delete action
+			console.log('Taluka deleted');
+		} else {
+			console.log('Delete action cancelled');
 		}
-		if (id == 0) {
-			this.toastr.error('This taluka cannot be deleted.', 'Error');
-			return;
+	}
+	deleteTaluka(id: number, name = '') {
+		this.deleteTalukaName = name;
+		if (this.confirmationDialog) {
+			this.confirmationDialog.open();
+			this.confirmationDialog.confirmed.subscribe((confirmed) => {
+				if (confirmed) {
+					if (id === 0) {
+						this.toastr.error('This taluka cannot be deleted.', 'Error');
+						return;
+					}
+					this.apiService.delete(`delete-taluka/${id}`).subscribe({
+						next: () => {
+							this.toastr.success('Taluka has been successfully deleted.', 'Success');
+							this.getTalukas();
+						},
+						error: (err: Error) => {
+							console.error('Error deleting taluka:', err);
+							this.toastr.error('There was an error deleting the taluka.', 'Error');
+						}
+					});
+				}
+			});
+		} else {
+			console.error('ConfirmationDialogComponent is not initialized');
 		}
-		this.apiService.delete(`delete-taluka/${id}`).subscribe({
-			next: (res: any) => {
-				this.getTalukas();
-				this.toastr.success('Taluka has been successfully deleted.', 'Success');
-			},
-			error: (err: Error) => {
-				console.error('Error deleting taluka:', err);
-				this.toastr.error('There was an error deleting the taluka.', 'Error');
-			}
-		});
-
 	}
 }
