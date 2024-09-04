@@ -54,8 +54,8 @@ export class TalukaComponent {
 	isEdit: boolean = false;
 	modifyTaluka: any = {};
 	talukaForm = new FormGroup({
-		district_id: new FormControl(''),
-		name: new FormControl('')
+		district_id: new FormControl(undefined),
+		name: new FormControl(undefined)
 	});
 	deleteTalukaName: string = '';
 	constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService, private toastr: ToastrService) { }
@@ -110,6 +110,9 @@ export class TalukaComponent {
 						console.log('Translation completed');
 					}
 				});
+			} else {
+				this.marathiText = '';
+				this.updateText(this.marathiText, input);
 			}
 		}, 200); // Adjust the debounce delay as per your requirement
 	}
@@ -119,14 +122,15 @@ export class TalukaComponent {
 			event.preventDefault(); // Prevent the default Enter key behavior
 			const control = this.talukaForm.get(controlName) as FormControl;
 			const text = control.value;
-
+			let translatedText = '';
 			if (text && text.trim() !== '') {
+				console.log('Translating:', text);
 				clearTimeout(this.debounceTimeout);
 				this.debounceTimeout = setTimeout(() => {
 					this.translate.translate(text).subscribe({
 						next: (res: any) => {
 							if (res && res.data && res.data.translations && res.data.translations.length > 0) {
-								const translatedText = res.data.translations[0].translatedText;
+								translatedText = res.data.translations[0].translatedText;
 								this.updateText1(translatedText, control);
 							} else {
 								console.error('Unexpected API response format:', res);
@@ -151,16 +155,21 @@ export class TalukaComponent {
 	}
 
 	updateText(text: string, field: any) {
-		this.commonText = '';
-		field.value = '';
-		field.value = text;
-		this.commonText = text;
-		this.marathiText = '';
+		if (text != '') {
+			this.commonText = '';
+			field.value = '';
+			field.value = text;
+			this.commonText = text;
+			this.marathiText = '';
+		} else {
+			this.commonText = '';
+		}
 	}
 
 
 	getTalukas(pageNumber: number = 1) {
-		this.searchValue = (this.commonText != '') ? this.commonText : this.searchValue;
+		this.searchValue = (this.commonText != '') ? this.commonText : '';
+
 		setTimeout(() => {
 			this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
 				next: (res: any) => {
@@ -251,7 +260,7 @@ export class TalukaComponent {
 			district_id: this.talukaForm.value.district_id || 0,
 			name: this.talukaName
 		};
-		console.log('Taluka:', this.modifyTaluka);
+
 	}
 
 	reset() {
