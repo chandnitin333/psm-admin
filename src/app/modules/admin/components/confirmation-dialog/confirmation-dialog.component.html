@@ -1,0 +1,15 @@
+<div class="confirmation-dialog-overlay" *ngIf="isVisible">
+  <div class="confirmation-dialog">
+    <div class="confirmation-dialog-header">
+      <h5 class="confirmation-dialog-title">Confirm Action</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="confirmation-dialog-body">
+      <p>{{ message }}</p>
+    </div>
+    <div class="confirmation-dialog-footer">
+      <button type="button" class="btn btn-outline-secondary mr-1" (click)="close()">No</button>
+      <button type="button" class="btn btn-outline-success mr-1" (click)="confirm()">Yes</button>
+    </div>
+  </div>
+</div>

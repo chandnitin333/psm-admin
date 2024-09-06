@@ -1,0 +1,51 @@
+.skeleton-loader {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* Form Skeleton */
+  .skeleton-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .skeleton-form-item {
+    height: 50px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  /* Table Skeleton */
+  .skeleton-table {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .skeleton-table-header,
+  .skeleton-table-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .skeleton-table-header-item,
+  .skeleton-table-row-item {
+    flex: 1;
+    height: 50px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  /* Keyframe animations */
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }

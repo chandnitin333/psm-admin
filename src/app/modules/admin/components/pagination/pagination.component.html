@@ -1,0 +1,32 @@
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-seperated pagination-seperated-rounded">
+        <li class="page-item " [class.disabled]="currentPage === 1">
+            <a class="page-link"  aria-label="Previous" (click)="changePage(currentPage - 1)">
+                <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
+                <span class="d-none d-lg-inline-block">Prev</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <ng-container *ngFor="let page of pages">
+            <ng-container *ngIf="page === -1">
+              <li class="page-item disabled">
+                <span class="page-link">...</span>
+              </li>
+            </ng-container>
+            <ng-container *ngIf="page !== -1">
+              <li class="page-item" [class.active]="page === currentPage">
+                <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+              </li>
+            </ng-container>
+          </ng-container>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link"  aria-label="Next" (click)="changePage(currentPage + 1)">
+                <span class="d-none d-lg-inline-block">Next</span>
+                <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
