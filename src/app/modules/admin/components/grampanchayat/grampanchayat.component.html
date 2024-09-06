@@ -13,7 +13,8 @@
                             <option value="1">नागपुर</option>
                             <option value="2">भंडारा</option>
                         </select> -->
-                        <select id="my-select2" class="form-control">
+                        <select id="my-select2" class="form-control js-example-basic-single" style="width: 100%">
+                            <option value="">-- जिल्हा निवडा -- </option>
                             <option *ngFor="let option of options" [value]="option.value">{{ option.text }}</option>
                         </select>
 

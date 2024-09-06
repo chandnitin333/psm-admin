@@ -38,7 +38,7 @@
 
             ],
             "scripts": [
-               "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
               "node_modules/select2/dist/js/select2.min.js",
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/plugins/simplebar/simplebar.min.js",

@@ -16,10 +16,6 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit{
     { value: '3', text: 'Option 3' }
   ];
 
-  select2Config = {
-    placeholder: 'Select an option',
-    allowClear: true
-  };
 constructor(private titleService: Title) {
   this.titleService.setTitle('Gram Panchayat');
 }
@@ -27,6 +23,12 @@ constructor(private titleService: Title) {
   
   }
   ngAfterViewInit(): void {
-    $('#my-select2').select2();
+    // $('#my-select2').select2();
+    $("#my-select2").select2({                    
+        // allowClear: true,
+        // width: "resolve" ,
+        // theme: "classic"
+        // multiple: true,
+    });
   }
 }

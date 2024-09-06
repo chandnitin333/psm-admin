@@ -271,3 +271,44 @@
     }
   }
   
+
+.select2-container--default .select2-selection--single {
+    height: 40px !important;
+    border-color: #e5e9f2 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+   height: 40px !important;
+    border-color: #e5e9f2 !important;
+    padding: 6px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+    border-color: #e5e9f2 !important;
+}
+::ng-deep .select2-container--default .select2-selection--single {
+    height: 40px !important;
+    border-color: #e5e9f2 !important;
+}
+
+::ng-deep .select2-container--default .select2-selection--single .select2-selection__rendered {
+    height: 40px !important;
+    border-color: #e5e9f2 !important;
+    padding: 6px !important;
+}
+
+::ng-deep .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+    border-color: #e5e9f2 !important;
+}
+
+
+.select2-container--default .select2-selection__choice .select2-selection__choice__display {
+    padding: 20px !important;
+    border-color: #e5e9f2 !important;
+}
+::ng-deep .select2-container--default .select2-selection__choice .select2-selection__choice__display {
+    padding: 20px !important;
+    border-color: #e5e9f2 !important;
+}
