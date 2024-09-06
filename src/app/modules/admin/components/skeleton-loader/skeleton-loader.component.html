@@ -1,0 +1,18 @@
+<div class="skeleton-loader">
+  <!-- Form Skeleton -->
+  <div class="skeleton-form">
+    <div class="skeleton-form-item"></div>
+    <div class="skeleton-form-item"></div>
+    <div class="skeleton-form-item"></div>
+  </div>
+
+  <!-- Table Skeleton -->
+  <div class="skeleton-table">
+    <div class="skeleton-table-header">
+      <div *ngFor="let col of [].constructor(columns)" class="skeleton-table-header-item"></div>
+    </div>
+    <div *ngFor="let row of [].constructor(rows)" class="skeleton-table-row">
+      <div *ngFor="let col of [].constructor(columns)" class="skeleton-table-row-item"></div>
+    </div>
+  </div>
+</div>

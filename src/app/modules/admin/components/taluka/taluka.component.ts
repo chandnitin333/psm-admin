@@ -14,6 +14,7 @@ import { TranslateService } from '../../../../services/translate.service';
 import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 
 
 
@@ -27,6 +28,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 		PaginationComponent,
 		CommonModule,
 		ReactiveFormsModule,
+		SkeletonLoaderComponent,
 		ConfirmationDialogModule // Ensure this is included
 	],
 	templateUrl: './taluka.component.html',
@@ -58,6 +60,7 @@ export class TalukaComponent {
 		name: new FormControl(undefined)
 	});
 	deleteTalukaName: string = '';
+	isLoading: boolean = true;
 	constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService, private toastr: ToastrService) { }
 	ngOnInit(): void {
 		this.titleService.setTitle('Taluka');
@@ -71,13 +74,23 @@ export class TalukaComponent {
 		).subscribe(item => {
 			let data = item as any;
 			this.items = data?.data?.talukas;
+			this.stopLoading();
+
 		});
+
+
 
 	}
 
 	ngAfterViewInit() {
 		// Use jQuery to select the element and initialize Select2
 
+	}
+
+	stopLoading() {
+		setTimeout(() => {
+			this.isLoading = false;
+		}, 1000);
 	}
 
 	translateText(event: Event) {
@@ -175,6 +188,7 @@ export class TalukaComponent {
 				next: (res: any) => {
 					this.items = res?.data?.talukas;
 					this.totalItems = res?.data?.totalCount;
+					this.stopLoading();
 				},
 				error: (err) => {
 					console.error('API error:', err);
@@ -225,14 +239,17 @@ export class TalukaComponent {
 
 	addTaluka() {
 		// console.log('Taluka:', this.talukaForm.value);
+		
 		if (this.talukaForm.valid && this.talukaForm.value.district_id != null || undefined || '' && this.talukaForm.value.name != null || undefined || '') {
 			let params = this.talukaForm.value;
+			this.isLoading = true;
 			this.apiService.post('create-taluka', params).subscribe({
 				next: (res: any) => {
 					this.getTalukas();
 					this.reset();
 					this.isSubmitted = true;
 					this.toastr.success('Taluka has been successfully added.', 'Success');
+					this.stopLoading();
 				},
 				error: (err: Error) => {
 					console.error('Error adding taluka:', err);
