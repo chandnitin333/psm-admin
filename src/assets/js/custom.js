@@ -279,16 +279,16 @@ $(document).ready(function () {
   }
 
   /*======== 9. MULTIPLE SELECT ========*/
-  var select2Multiple = $(".js-example-basic-multiple");
-  if (select2Multiple.length != 0) {
-    select2Multiple.select2();
-  }
-  var select2Country = $(".country");
-  if (select2Country.length != 0) {
-    select2Country.select2({
-      minimumResultsForSearch: -1,
-    });
-  }
+  // var select2Multiple = $(".js-example-basic-multiple");
+  // if (select2Multiple.length != 0) {
+  //   select2Multiple.select2();
+  // }
+  // var select2Country = $(".country");
+  // if (select2Country.length != 0) {
+  //   select2Country.select2({
+  //     minimumResultsForSearch: -1,
+  //   });
+  // }
 
   /*======== 10. LOADING BUTTON ========*/
   var laddaButton = $(".ladda-button");
