@@ -26,17 +26,20 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/select2/dist/css/select2.min.css",
               "src/styles.css",
               "src/assets/plugins/material/css/materialdesignicons.min.css",
               "src/assets/plugins/simplebar/simplebar.css",
               "src/assets/css/style.css",
+              "src/assets/plugins/nprogress/nprogress.css",
                "src/assets/plugins/nprogress/nprogress.css",
               "src/assets/plugins/select2/css/select2.min.css",
               "node_modules/ngx-toastr/toastr.css"
 
             ],
             "scripts": [
-              "src/assets/plugins/jquery/jquery.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/select2/dist/js/select2.min.js",
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/plugins/simplebar/simplebar.min.js",
               "src/assets/js/hotkeys.min.js",

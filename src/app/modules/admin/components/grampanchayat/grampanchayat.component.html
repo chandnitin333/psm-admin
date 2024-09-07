@@ -8,11 +8,16 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
+                        <!-- <select class="js-example-basic-multiple1 form-control" name="district">
                             <option value="">-- जिल्हा निवडा -- </option>
                             <option value="1">नागपुर</option>
                             <option value="2">भंडारा</option>
+                        </select> -->
+                        <select id="my-select2" class="form-control my-select2">
+                            <option value="">-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let option of options" [value]="option.value">{{ option.text }}</option>
                         </select>
+
                     </div>
                 </div>
                 <div class="col-sm-3">
