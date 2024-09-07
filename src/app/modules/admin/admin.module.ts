@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { HttpHeaderInterceptor } from '../../http.interceptor';
 import { ApiService } from '../../services/api.service';
-import { TalukaService } from '../../services/taluka.service';
+import { TalukaService } from './services/taluka.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { LoaderComponent } from './components/loader/loader.component';
 import { Select2Directive } from '../../directives/select2.directive';

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { routes } from './app.routes';
 import { HttpHeaderInterceptor } from './http.interceptor';
 import { ApiService } from './services/api.service';
-import { TalukaService } from './services/taluka.service';
+import { TalukaService } from './modules/admin/services/taluka.service';
 export const appConfig: ApplicationConfig = {
 
   providers: [

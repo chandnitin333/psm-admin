@@ -10,25 +10,26 @@ import { CommonModule } from '@angular/common';
   styleUrl: './grampanchayat.component.css'
 })
 export class GrampanchayatComponent implements OnInit, AfterViewInit{
- options = [
-    { value: '1', text: 'Option 1' },
-    { value: '2', text: 'Option 2' },
-    { value: '3', text: 'Option 3' }
-  ];
+  options1 = [
+      { value: '1', text: 'Option 1' },
+      { value: '2', text: 'Option 2' },
+      { value: '3', text: 'Option 3' }
+    ];
+    options:any = [];
 
-constructor(private titleService: Title) {
-  this.titleService.setTitle('Gram Panchayat');
-}
-   ngOnInit(): void {
-  
+  constructor(private titleService: Title) {
+    this.titleService.setTitle('Gram Panchayat');
+  }
+  ngOnInit(): void {
+    this.options = [...this.options1];
   }
   ngAfterViewInit(): void {
-    // $('#my-select2').select2();
-    $("#my-select2").select2({                    
-        // allowClear: true,
-        // width: "resolve" ,
-        // theme: "classic"
-        // multiple: true,
-    });
+    $('.my-select2').select2();
+    // $("#my-select2").select2({                    
+    //     // allowClear: true,
+    //     // width: "resolve" ,
+    //     // theme: "classic"
+    //     // multiple: true,
+    // });
   }
 }

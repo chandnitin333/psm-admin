@@ -1,7 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap } from 'rxjs';
 import { ApiService } from '../../../../services/api.service';
-import { TalukaService } from '../../../../services/taluka.service';
+import { TalukaService } from '../../services/taluka.service';
 import { TranslateService } from '../../../../services/translate.service';
 import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
@@ -34,7 +34,7 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
 	templateUrl: './taluka.component.html',
 	styleUrls: ['./taluka.component.css']
 })
-export class TalukaComponent {
+export class TalukaComponent implements OnInit, AfterViewInit{
 	@ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
 	talukaName: string = '';
 	marathiText: string = '';
@@ -47,6 +47,7 @@ export class TalukaComponent {
 	totalItems: number = 0;
 	commonText: string = ''
 	debounceTimeout: any;
+	districts1: any = [];
 	districts: any = [];
 	selectedDistrict = "";
 	searchControl = new FormControl();
@@ -61,12 +62,18 @@ export class TalukaComponent {
 	});
 	deleteTalukaName: string = '';
 	isLoading: boolean = true;
-	constructor(private titleService: Title, private translate: TranslateService, private apiService: ApiService, private talukaService: TalukaService, private toastr: ToastrService) { }
-	ngOnInit(): void {
+	constructor(
+		private titleService: Title, 
+		private translate: TranslateService, 
+		private apiService: ApiService, 
+		private talukaService: TalukaService, 
+		private toastr: ToastrService) 
+	{ 
 		this.titleService.setTitle('Taluka');
+	}
+	ngOnInit(): void {
 		this.getTalukas();
 		this.getAllDistricts();
-
 		this.subscription = this.searchControl.valueChanges.pipe(
 			debounceTime(1000),
 			distinctUntilChanged(),
@@ -74,23 +81,26 @@ export class TalukaComponent {
 		).subscribe(item => {
 			let data = item as any;
 			this.items = data?.data?.talukas;
-			this.stopLoading();
+			this.isLoading = false;
 
 		});
 
+		// this.districts = [...this.districts1];
+		console.log('Districts DDL:', this.districts);
 
 
 	}
 
 	ngAfterViewInit() {
+		console.log("districts", this.districts);
 		// Use jQuery to select the element and initialize Select2
-
+		$('.my-select2').select2();
 	}
 
 	stopLoading() {
-		setTimeout(() => {
-			this.isLoading = false;
-		}, 1000);
+		// setTimeout(() => {
+		// 	this.isLoading = false;
+		// }, 1000);
 	}
 
 	translateText(event: Event) {
@@ -184,7 +194,8 @@ export class TalukaComponent {
 		this.searchValue = (this.commonText != '') ? this.commonText : '';
 
 		setTimeout(() => {
-			this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
+			// this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
+			this.talukaService.getTalukas({ pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
 				next: (res: any) => {
 					this.items = res?.data?.talukas;
 					this.totalItems = res?.data?.totalCount;
@@ -209,7 +220,6 @@ export class TalukaComponent {
 	get paginatedItems(): any[] {
 		const start = (this.currentPage - 1) * this.itemsPerPage;
 		const end = start + this.itemsPerPage;
-
 		return this.items;
 	}
 
@@ -223,10 +233,12 @@ export class TalukaComponent {
 
 	getAllDistricts() {
 		// Get all districts
-		this.apiService.get('/districts_ddl').subscribe({
+		this.talukaService.getDistrictDDL().subscribe({
+		// this.apiService.get('/districts_ddl').subscribe({
 			next: (res: any) => {
 				this.districts = res.data;
-
+				console.log("district ddl API", this.districts);
+				this.isLoading = false;
 			},
 			error: (err: Error) => {
 				console.error('Error getting districts:', err);
@@ -243,13 +255,14 @@ export class TalukaComponent {
 		if (this.talukaForm.valid && this.talukaForm.value.district_id != null || undefined || '' && this.talukaForm.value.name != null || undefined || '') {
 			let params = this.talukaForm.value;
 			this.isLoading = true;
-			this.apiService.post('create-taluka', params).subscribe({
+			// this.apiService.post('create-taluka', params).subscribe({
+				this.talukaService.createTaluka(params).subscribe({
 				next: (res: any) => {
 					this.getTalukas();
 					this.reset();
 					this.isSubmitted = true;
 					this.toastr.success('Taluka has been successfully added.', 'Success');
-					this.stopLoading();
+					this.isLoading = false;
 				},
 				error: (err: Error) => {
 					console.error('Error adding taluka:', err);
@@ -292,7 +305,8 @@ export class TalukaComponent {
 			name: this.talukaForm?.value?.name,
 		};
 
-		this.apiService.put('update-taluka', data).subscribe({
+		// this.apiService.put('update-taluka', data).subscribe({
+		this.talukaService.UpdateTaluka(data).subscribe({
 			next: (res: any) => {
 				this.getTalukas();
 				this.reset();
@@ -322,7 +336,8 @@ export class TalukaComponent {
 						this.toastr.error('This taluka cannot be deleted.', 'Error');
 						return;
 					}
-					this.apiService.delete(`delete-taluka/${id}`).subscribe({
+					// this.apiService.delete(`delete-taluka/${id}`).subscribe({
+					this.talukaService.deleteTaluka(id).subscribe({
 						next: () => {
 							this.toastr.success('Taluka has been successfully deleted.', 'Success');
 							this.getTalukas();
