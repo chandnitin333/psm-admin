@@ -17,6 +17,7 @@ export class PaginationComponent {
   currentPage: number = 1;
 
   get totalPages(): number {
+
     return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 

@@ -1,9 +1,5 @@
-export const SERVICE_URL = {
-    // FOR TALUKA
-    GET_TALUKAS: 'talukas',
-    GET_DISTRICT_DDL: 'districts_ddl',
-    CREATE_TALUKA: 'create-taluka',
-    UPDATE_TALUKA: 'update-taluka',
-    DELETE_TALUKA: 'delete-taluka/',
 
-}
+export const API_URL = 'http://localhost:4444/api/admin/';
+
+export const API_KEY = 'AIzaSyCsQc4fLXZfZcSU00oHFdGWOZG4qiq7af8';
+export const TRANSLATE_API_URL =`https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;

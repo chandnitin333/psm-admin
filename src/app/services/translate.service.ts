@@ -11,7 +11,7 @@ export class TranslateService {
   constructor(private http: HttpClient) { }
 
   translate(text: string): Observable<any> {
-    console.log(this.API_URL)
+ 
     return this.http.post(this.API_URL, {
       q: text,
       source: 'en',

@@ -15,6 +15,7 @@ export class ApiService {
 
   // POST request
   post<T>(endpoint: string, data: any): Observable<T> {
+    console.log("this.baseUrl",this.baseUrl);
     return this.http.post<T>(`${this.baseUrl}/${endpoint}`, data);
   }
 
@@ -27,4 +28,7 @@ export class ApiService {
   delete<T>(endpoint: string): Observable<T> {
     return this.http.delete<T>(`${this.baseUrl}/${endpoint}`);
   }
+
+
+  
 }

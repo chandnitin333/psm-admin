@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { HttpHeaderInterceptor } from './http.interceptor';
 import { ApiService } from './services/api.service';
 import { TalukaService } from './modules/admin/services/taluka.service';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 export const appConfig: ApplicationConfig = {
 
   providers: [
@@ -20,6 +21,6 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,
       multi: true
-    }
+    }, provideAnimationsAsync()
   ]
 };
