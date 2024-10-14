@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
+import { API_URL } from '../modules/admin/constants/admin.constant';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    apiUrl: string = 'http://localhost:4444/api';
+
     constructor(private router: Router, private http: HttpClient) { }
 
     setToken(token: string): void {
@@ -29,8 +30,13 @@ export class AuthService {
 
     login({ username, password }: any): Observable<any> {
         if (username !== '' && password !== '') {
-            this.http.post<any>(`${this.apiUrl}/user/login`, { username, password }).subscribe((res) => {
-                this.setToken(res.token);
+            console.log('login===', +`${API_URL}sign-in`);
+            this.http.post<any>(`${API_URL}sign-in`, { user_id: username, password: password }).subscribe((res) => {
+
+                if (!res?.data?.token) {
+                    this.router.navigate(['login']);
+                }
+                this.setToken(res?.data?.token);
                 this.router.navigate(['admin']);
             });
         } else {

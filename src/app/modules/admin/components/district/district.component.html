@@ -1,40 +1,41 @@
 <div *ngIf="isLoading">
     <app-skeleton-loader></app-skeleton-loader>
   </div>
-  <div *ngIf="!isLoading">
-    <!-- Your actual content goes here -->
+ <!-- <div *ngIf="!isLoading">
+ Your actual content goes here
     <div *ngFor="let item of district">
-      {{ item.name }}
+      {{ item.DISTRICT_NAME }}
     </div>
-  </div>
+  </div> -->
 
-<!-- <div class="card card-default">
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>जिल्हा</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="districtForm">
             <div class="form-group row">
                 <label for="district" class="col-sm-1 col-form-label">जिल्हा : </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="district" name="district" placeholder="उदा. नागपुर">
+                    <input type="text" class="form-control" id="district_name" name="district_name" placeholder="उदा. नागपुर"  formControlName="districtName" (keypress)="keyDownText($event,'districtName')">
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
-                            करा</strong></button>
+                    <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? addDistrict() : updateDistrict()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
-<div class="card card-default">
+
+
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-        <form action="#" method="get">
+       
             <div class="col-md-4" id="input-group-search">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search...">
+                    placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)" >
             </div>
-        </form>
+       
         <br>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -46,29 +47,25 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr class="font-weight-bold">
-                        <td>1</td>
-                        <td>नागपुर</td>
-                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
+                   
+                    <tr class="font-weight-bold"  *ngFor="let item of paginatedItems let i = index">
+                        <td>{{getSerialNumber(i)}}</td>
+                        <td>{{ item.DISTRICT_NAME }}</td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="getDistrict(item.DISTRICT_ID)"><i
                                     class="mdi mdi-square-edit-outline"></i>
-                                एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
+                                एडिट</button> &nbsp;<button href="" class="btn btn-sm btn-outline-danger font-weight-bold" (click)="deleteDistrict(item.DISTRICT_ID)"><i
+                                    class="mdi mdi-trash-can-outline"></i> डिलीट</button></td>
                     </tr>
-                    <tr class="font-weight-bold">
-                        <td>2</td>
-                        <td>भंडारा</td>
-                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                    class="mdi mdi-square-edit-outline "></i>
-                                एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a>
-                        </td>
-                    </tr>
+                    
                 </tbody>
             </table>
+          
         </div>
         <br>
-        <nav aria-label="Page navigation example">
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+        </app-pagination>
+        <!-- <nav aria-label="Page navigation example">
             <ul class="pagination pagination-seperated pagination-seperated-rounded">
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
@@ -94,6 +91,6 @@
                     </a>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
     </div>
-</div> -->
+</div>

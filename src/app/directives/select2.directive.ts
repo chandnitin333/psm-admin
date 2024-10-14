@@ -15,8 +15,7 @@ export class Select2Directive implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
      
-    // Initialize Select2
-    console.log(this.select2Options, "here");
+
     $(this.el.nativeElement).select2(this.select2Options);
 
     // Destroy Select2 on component destroy

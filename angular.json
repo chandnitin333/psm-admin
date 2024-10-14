@@ -25,6 +25,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/select2/dist/css/select2.min.css",
               "src/styles.css",
@@ -32,10 +33,9 @@
               "src/assets/plugins/simplebar/simplebar.css",
               "src/assets/css/style.css",
               "src/assets/plugins/nprogress/nprogress.css",
-               "src/assets/plugins/nprogress/nprogress.css",
+              "src/assets/plugins/nprogress/nprogress.css",
               "src/assets/plugins/select2/css/select2.min.css",
               "node_modules/ngx-toastr/toastr.css"
-
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -103,6 +103,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []

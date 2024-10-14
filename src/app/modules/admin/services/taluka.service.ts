@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
-import { SERVICE_URL } from '../constants/admin.constant';
+import { API_URL } from '../constants/admin.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -10,22 +10,22 @@ export class TalukaService {
   constructor(private api: ApiService) { }
 
   getTalukas(params: any) {
-    return this.api.post(SERVICE_URL.GET_TALUKAS, params);
+    return this.api.post(API_URL, params);
   }
 
   getDistrictDDL(){
-    return this.api.get(SERVICE_URL.GET_DISTRICT_DDL);
+    return this.api.get(API_URL);
   }
 
  createTaluka(params: any) {
-    return this.api.post(SERVICE_URL.CREATE_TALUKA, params);
+    return this.api.post(API_URL, params);
   }
 
   UpdateTaluka(params: any) {
-    return this.api.put(SERVICE_URL.UPDATE_TALUKA, params);
+    return this.api.put(API_URL, params);
   }
 
   deleteTaluka(id: number){
-    return this.api.delete(SERVICE_URL.DELETE_TALUKA+id);
+    return this.api.delete(API_URL+id);
   }
 }
