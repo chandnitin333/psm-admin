@@ -8,6 +8,7 @@ import { TalukaService } from './services/taluka.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { LoaderComponent } from './components/loader/loader.component';
 import { Select2Directive } from '../../directives/select2.directive';
+import { GramPanchayatService } from './services/gram-panchayat.service';
 
 
 
@@ -37,6 +38,7 @@ import { Select2Directive } from '../../directives/select2.directive';
   providers: [
     ApiService,
     TalukaService,
+    GramPanchayatService,
     ToastrService,
     {
       provide: HTTP_INTERCEPTORS,

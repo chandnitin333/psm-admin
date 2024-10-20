@@ -3,25 +3,25 @@
         <h2 class="card-header-label"><strong>गट ग्राम पंचायत</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="gatGramFrom">
             <div class="row">
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- जिल्हा निवडा -- </option>
-                            <option value="1">नागपुर</option>
-                            <option value="2">भंडारा</option>
+                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2 col-sm-12" placeholder="Select district" (change)="getTalukaByDistrict($event)" formControlName="districtName">
+                            <option value="" selected>-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
                         </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.districtName">Please select district</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- तालुका निवडा -- </option>
-                            <option value="1">रामटेक</option>
-                            <option value="2">तुमसर</option>
+                        <select class="js-example-basic-multiple1 form-control   my-select2" name="taluka" id="taluka" formControlName="talukaName"  >
+                            <option value="" selected >-- तालुका निवडा -- </option>
+                            <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
+                           
                         </select>
                     </div>
                 </div>

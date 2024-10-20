@@ -14,14 +14,11 @@
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select formControlName="district_id" name="selectedOption" class="form-control my-select2">
-
+                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2" placeholder="Select district" >
                             <option value="">-- जिल्हा निवडा -- </option>
-                            <option *ngFor="let district of districts" [value]="district.id">{{ district.name }}
-                            </option>
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
                         </select>
-                        <span class="text-danger" *ngIf="isSubmitted && !talukaForm.value.district_id">Please select
-                            district</span>
+                        <span class="text-danger" *ngIf="isSubmitted && !talukaForm.value.district_id">Please select district</span>
                     </div>
 
                 </div>
@@ -57,13 +54,18 @@
 </div>
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-        <form action="#" method="get">
-            <div class="col-md-4" id="input-group-search">
+        <div class="col-md-4" id="input-group-search">
+            <div class="input-group">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." [formControl]="searchControl" (input)="search()"
-                    (keyup.enter)="translateText($event); getTalukas()">
+                    placeholder="Search..." (keyup.enter)="translateText($event); getTalukas(); " (input)="getTalukas()" [(ngModel)]="searchValue" >
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
+                </div>
             </div>
-        </form>
+        </div>
+      
         <br>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -79,23 +81,24 @@
 
 
                     <tr *ngFor="let item of paginatedItems let i = index">
+                      
                         @if(item.is_delete == 1){
-                        <td class="text-decoration-line-through">{{ getSerialNumber(i) }}
+                        <td class="text-decoration-line-through">{{ srNo(i) }}
                         </td>
-                        <td class="text-decoration-line-through">{{ item.district.name }}</td>
-                        <td class="text-decoration-line-through">{{ item.name }}</td>
+                        <td class="text-decoration-line-through">{{ item.DISTRICT_NAME }}</td>
+                        <td class="text-decoration-line-through">{{ item.TALUKA_NAME }}</td>
                         <td><button class="btn btn-sm btn-outline-success font-weight-bold"
-                                (click)="getTaluka(item.id)"><i class="mdi mdi-square-edit-outline"></i>
+                                (click)="getTaluka(item.TALUKA_ID)"><i class="mdi mdi-square-edit-outline"></i>
                                 पुनर्संचयित करा</button>
 
                             } @else{
-                        <td class="isDelete">{{ getSerialNumber(i) }}</td>
-                        <td>{{ item.district.name }}</td>
-                        <td>{{ item.name }}</td>
+                        <td class="isDelete">{{ srNo(i) }}</td>
+                        <td>{{ item.DISTRICT_NAME  }}</td>
+                        <td>{{  item.TALUKA_NAME }}</td>
                         <td><button class="btn btn-sm btn-outline-success font-weight-bold"
-                                (click)="getTaluka(item.id)"><i class="mdi mdi-square-edit-outline"></i>
+                                (click)="getTaluka(item.TALUKA_ID)"><i class="mdi mdi-square-edit-outline"></i>
                                 एडिट</button> &nbsp;<button class="btn btn-sm btn-outline-danger font-weight-bold"
-                                (click)="deleteTaluka(item.id,item.name)"><i class="mdi mdi-trash-can-outline"></i>
+                                (click)="deleteTaluka(item.TALUKA_ID,item.TALUKA_ID)"><i class="mdi mdi-trash-can-outline"></i>
                                 डिलीट</button></td>
 
                         }
