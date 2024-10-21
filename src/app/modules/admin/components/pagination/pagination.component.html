@@ -1,32 +1,28 @@
-<nav aria-label="Page navigation example">
-    <ul class="pagination pagination-seperated pagination-seperated-rounded">
-        <li class="page-item " [class.disabled]="currentPage === 1">
-            <a class="page-link"  aria-label="Previous" (click)="changePage(currentPage - 1)">
-                <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
-                <span class="d-none d-lg-inline-block">Prev</span>
-                <span class="sr-only">Previous</span>
-            </a>
+<nav aria-label="Page navigation example" style="font-size: 0.875rem;">
+  <ul class="pagination pagination-sm" style="margin: 0; padding: 0; list-style: none; display: flex;">
+    <li class="page-item" [class.disabled]="currentPage === 1" style="margin: 0 2px;">
+      <a class="page-link btn btn-outline" aria-label="Previous" (click)="changePage(currentPage - 1)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+        <span aria-hidden="true">&laquo; Prev</span>
+        
+      </a>
+    </li>
+    <ng-container *ngFor="let page of pages">
+      <ng-container *ngIf="page === -1">
+        <li class="page-item disabled" style="margin: 0 2px;">
+          <span class="page-link" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem;">...</span>
         </li>
-        <ng-container *ngFor="let page of pages">
-            <ng-container *ngIf="page === -1">
-              <li class="page-item disabled">
-                <span class="page-link">...</span>
-              </li>
-            </ng-container>
-            <ng-container *ngIf="page !== -1">
-              <li class="page-item" [class.active]="page === currentPage">
-                <a class="page-link" (click)="changePage(page)">{{ page }}</a>
-              </li>
-            </ng-container>
-          </ng-container>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-            <a class="page-link"  aria-label="Next" (click)="changePage(currentPage + 1)">
-                <span class="d-none d-lg-inline-block">Next</span>
-                <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
-                <span class="sr-only">Next</span>
-            </a>
+      </ng-container>
+      <ng-container *ngIf="page !== -1">
+        <li class="page-item" [class.active]="page === currentPage" style="margin: 0 2px;">
+          <a class="page-link" (click)="changePage(page)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">{{ page }}</a>
         </li>
-    </ul>
+      </ng-container>
+    </ng-container>
+    <li class="page-item" [class.disabled]="currentPage === totalPages" style="margin: 0 2px;">
+      <a class="page-link btn btn-outline" aria-label="Next" (click)="changePage(currentPage + 1)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+        <span aria-hidden="true">Next &raquo;</span>
+
+      </a>
+    </li>
+  </ul>
 </nav>
-
-

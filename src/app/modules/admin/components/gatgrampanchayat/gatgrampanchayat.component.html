@@ -8,45 +8,48 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2 col-sm-12" placeholder="Select district" (change)="getTalukaByDistrict($event)" formControlName="districtName">
-                            <option value="" selected>-- जिल्हा निवडा -- </option>
+                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2 col-sm-12" placeholder="Select district" (change)="getTalukaByDistrict($event)" formControlName="district_id">
+                            <option value="" selected="selected">-- जिल्हा निवडा -- </option>
                             <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
                         </select>
-                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.districtName">Please select district</span>
+                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.district_id">Please select district</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control   my-select2" name="taluka" id="taluka" formControlName="talukaName"  >
-                            <option value="" selected >-- तालुका निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control my-select2" name="taluka" id="taluka" formControlName="taluka_id"  >
+                            <option value="" selected="selected" >-- तालुका निवडा -- </option>
                             <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
                            
                         </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.taluka_id">Please select taluka</span>
                     </div>
                 </div>
                 <div class=" col-sm-3">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
-                        <select class="form-control" name="gramPanchayat">
-                            <option value="">-- ग्राम पंचायत निवडा -- </option>
-                            <option value="1">मनसर</option>
-                            <option value="2">वरठी</option>
+                        <select class="form-control my-select2" name="gramPanchayat"  id="gramPanchayat" formControlName="grampanchayat_id">
+                            <option value="" selected="selected">- ग्राम पंचायत निवडा -- </option>
+                            <option *ngFor="let gramPanchayat of gramPanchayatList" value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}</option>
+                           
                         </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.grampanchayat_id">Please select taluka</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">गट ग्राम पंचायत</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="gatGramPanchayat" name="gatGramPanchayat"
-                            placeholder="उदा. सावंगी">
+                            placeholder="उदा. सावंगी" formControlName="name" (keypress)="keyDownText($event,'name')">
+                            <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.grampanchayat_id">Please fill gram panchayat name</span>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
+                        <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="addGatGramPanchayat()"><strong>जतन
                                 करा</strong></button>
                     </div>
                 </div>
@@ -56,12 +59,17 @@
 </div>
 <div class="card card-default">
     <div class="card-body">
-        <form action="#" method="get">
-            <div class="col-md-4" id="input-group-search">
+        <div class="col-md-4" id="input-group-search">
+            <div class="input-group">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search...">
+                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
+                </div>
             </div>
-        </form>
+        </div>
         <br>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -77,58 +85,26 @@
                 </thead>
                 <tbody>
 
-                    <tr class="font-weight-bold">
-                        <td>1</td>
-                        <td>नागपुर</td>
-                        <td>रामटेक</td>
-                        <td>मनसर</td>
-                        <td>सावंगी</td>
-                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                    class="mdi mdi-square-edit-outline"></i>
-                                एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
+                    <tr *ngFor="let item of paginatedItems let i = index">
+                        <td>{{srNo(i)}}</td>
+                        <td>{{item.DISTRICT_NAME}}</td>
+                        <td>{{item.TALUKA_NAME}}</td>
+                        <td>{{item.PANCHAYAT_NAME}}</td>
+                        <td>{{item.GATGRAMPANCHAYAT_NAME}}</td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="editInfo(item.GATGRAMPANCHAYAT_ID)"><i
+                            class="mdi mdi-square-edit-outline"></i>
+                        एडिट</button> &nbsp;<button href="" class="btn btn-sm btn-outline-danger font-weight-bold"  (click)="deleteGatGramPanchayat(item.GATGRAMPANCHAYAT_ID)"><i
+                            class="mdi mdi-trash-can-outline"></i> डिलीट</button></td>
                     </tr>
-                    <tr class="font-weight-bold">
-                        <td>2</td>
-                        <td>भंडारा</td>
-                        <td>तुमसर</td>
-                        <td>वरठी</td>
-                        <td>हिवरा</td>
-                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                    class="mdi mdi-square-edit-outline"></i>
-                                एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
-                    </tr>
+                    
                 </tbody>
             </table>
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+            </span>{{totalItems}}</div>
         </div>
         <br>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-seperated pagination-seperated-rounded">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
-                        <span class="d-none d-lg-inline-block">Prev</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="d-none d-lg-inline-block">Next</span>
-                        <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+        </app-pagination>
     </div>
 </div>

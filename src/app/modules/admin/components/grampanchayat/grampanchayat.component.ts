@@ -96,20 +96,23 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
             }
             this.gramPanchayt.createGramPanchayat(params).subscribe((res: any) => {
                 if (res.status == 201) {
-                    this.toastr.success(res.message);
-                    this.gramFrom.reset();
+                    this.toastr.success(res.message, "Success");
+                    this.reset();
                     this.isSubmitted = false;
+                    this.fetchGramPanchayatData();
                 } else {
-                    this.toastr.error(res.message);
+                    this.toastr.error(res.message, "Error");
                 }
             });
         } else {
-            this.toastr.error('Please fill all the fields');
+            this.toastr.error('Please fill all the fields','Error');
         }
     }
 
     reset() {
         this.gramFrom.reset();
+        $('#taluka').val('').trigger('change');
+        $('#mySelect').val('').trigger('change');
         this.isEdit = false;
     }
 
@@ -133,7 +136,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                 this.gramFrom.get('gramPanchayatName')?.setValue(res.data.PANCHAYAT_NAME);
 
             } else {
-                this.toastr.error(res.message);
+                this.toastr.error(res.message, "Error");
             }
 
         });
@@ -165,7 +168,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                 }
             });
         } else {
-            this.toastr.error('Please fill all the fields');
+            this.toastr.error('Please fill all the fields', 'Error');
         }
 
     }
@@ -181,10 +184,10 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                 this.gramPanchayt.deleteGramPanchayat(id).subscribe({
                     next: (res: any) => {
                         if (res.status == 200) {
-                            this.toastr.success(res.message, "success");
+                            this.toastr.success(res.message, "Success");
                             this.fetchGramPanchayatData();
                         } else {
-                            this.toastr.error(res.message, "error");
+                            this.toastr.error(res.message, "Error");
                         }
                     },
                     error: (err: Error) => {
@@ -209,10 +212,10 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     }
 
     filterData() {
-        
+
         this.currentPage = 1;
         this.debounceFetchDistrictData();
-        
+
     }
 
     private debounceFetchDistrictData = this.debounce(() => {

@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 5;
-  @Input() maxPagesToShow: number = 1; // Max number of page links to show
+  @Input() maxPagesToShow: number = 2; // Max number of page links to show
   @Output() pageChange = new EventEmitter<number>();
 
   currentPage: number = 1;

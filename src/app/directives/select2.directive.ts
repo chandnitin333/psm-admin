@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import $ from 'jquery';
 import 'select2';
 
@@ -9,12 +9,12 @@ import 'select2';
 export class Select2Directive implements OnInit, OnDestroy, AfterViewInit {
   @Input() select2Options: any;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit() {
-     
+
 
     $(this.el.nativeElement).select2(this.select2Options);
 
