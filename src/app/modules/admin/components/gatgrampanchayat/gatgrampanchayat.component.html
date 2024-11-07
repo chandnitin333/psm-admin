@@ -48,9 +48,8 @@
             </div>
             <div class="row">
                 <div class="col-sm-2">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="addGatGramPanchayat()"><strong>जतन
-                                करा</strong></button>
+                    <div class="form-group mt-6">
+                       <button type="button"  class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? addGatGramPanchayat() : updateGatGramPanchayat()" ><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
                     </div>
                 </div>
             </div>
@@ -59,8 +58,8 @@
 </div>
 <div class="card card-default">
     <div class="card-body">
-        <div class="col-md-4" id="input-group-search">
-            <div class="input-group">
+        <div class="col-md-4  mt-2 p-0" >
+            <div class="input-group ">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
                     placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
                 <div class="input-group-append">
@@ -71,37 +70,23 @@
             </div>
         </div>
         <br>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="thead-light">
-                    <tr>
-                        <th style="width:10%">अनुक्रमांक</th>
-                        <th style="width:15%">जिल्हा</th>
-                        <th style="width:15%">तालुका</th>
-                        <th style="width:13%">ग्राम पंचायत</th>
-                        <th style="width:15%">गट ग्राम पंचायत</th>
-                        <th style="width:20%">क्रिया</th>
-                    </tr>
-                </thead>
-                <tbody>
+       
 
-                    <tr *ngFor="let item of paginatedItems let i = index">
-                        <td>{{srNo(i)}}</td>
-                        <td>{{item.DISTRICT_NAME}}</td>
-                        <td>{{item.TALUKA_NAME}}</td>
-                        <td>{{item.PANCHAYAT_NAME}}</td>
-                        <td>{{item.GATGRAMPANCHAYAT_NAME}}</td>
-                        <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="editInfo(item.GATGRAMPANCHAYAT_ID)"><i
-                            class="mdi mdi-square-edit-outline"></i>
-                        एडिट</button> &nbsp;<button href="" class="btn btn-sm btn-outline-danger font-weight-bold"  (click)="deleteGatGramPanchayat(item.GATGRAMPANCHAYAT_ID)"><i
-                            class="mdi mdi-trash-can-outline"></i> डिलीट</button></td>
-                    </tr>
-                    
-                </tbody>
-            </table>
+        <div class="table-responsive">
+            
+            <app-sorting-table
+            [data]="items"
+            [columns]="displayedColumns"
+            [currentPage]="currentPage"
+            (edit)="editInfo($event)"
+            (delete)="deleteGatGramPanchayat($event)"
+            [keyName]="keyName">
+            </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
             </span>{{totalItems}}</div>
         </div>
+
+
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
         (pageChange)="onPageChange($event)">

@@ -9,25 +9,27 @@ import { GatGramPanchayatService } from '../../services/gat-gram-panchayat.servi
 import { GramPanchayatService } from '../../services/gram-panchayat.service';
 import Util from '../../utils/utils';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { SortingTableComponent } from '../sorting-table/sorting-table.component';
 @Component({
 	selector: 'app-gatgrampanchayat',
 	standalone: true,
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginationComponent],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginationComponent, SortingTableComponent],
 	templateUrl: './gatgrampanchayat.component.html',
 	styleUrl: './gatgrampanchayat.component.css'
 })
 export class GatgrampanchayatComponent {
 	isSubmitted: boolean = false;
-	private currentPage: number = 1;
+	currentPage: number = 1;
 	districts: any = [];
 	talukas: any = [];
 	isEdit: boolean = false;
 	public gramPanchayatList: any = [];
 	private gatgramPanchayatData: any = [];
+	items: any = [];
 	itemsPerPage: number = ITEM_PER_PAGE;
 	totalItems: number = 0;
 	searchValue: string = '';
-	datPanchayatId: number = 0;
+	gatPanchayatId: number = 0;
 	marathiText: string = '';
 	gatGramFrom = new FormGroup({
 		district_id: new FormControl<string | null>(null),
@@ -35,6 +37,15 @@ export class GatgrampanchayatComponent {
 		grampanchayat_id: new FormControl<string | null>(null),
 		name: new FormControl<string | null>(null),
 	});
+
+	displayedColumns: any = [
+		{ key: 'sr_no', label: 'अनुक्रमांक' },
+		{ key: 'DISTRICT_NAME', label: 'जिल्हा' },
+		{ key: 'TALUKA_NAME', label: 'तालुका' },
+		{ key: 'PANCHAYAT_NAME', label: 'ग्राम पंचायत' },
+		{ key: 'GATGRAMPANCHAYAT_NAME', label: 'गट ग्राम पंचायत' },
+	];
+	keyName: string = 'GATGRAMPANCHAYAT_ID';
 	constructor(private titleService: Title,
 		private util: Util,
 		private gramPanchayt: GramPanchayatService,
@@ -95,10 +106,12 @@ export class GatgrampanchayatComponent {
 
 	}
 
-	getGramPanchayByTaluka(talikaId: number) {
+	getGramPanchayByTaluka(talikaId: any) {
+
 		this.gatGramPanchayatService.getGatGramTalukaById({ id: talikaId }).subscribe((res: any) => {
+			console.log("res====", res);
 			this.gramPanchayatList = res?.data ?? [];
-			console.log("gramPanchayatList===", this.gramPanchayatList);
+			console.log("gramPanchayatList=========Test", this.gramPanchayatList);
 
 		});
 
@@ -139,13 +152,14 @@ export class GatgrampanchayatComponent {
 		$('#mySelect').val('').trigger('change');
 		$('#gramPanchayat').val('').trigger('change');
 		this.talukas = [];
-		this.districts = [];
+		// this.districts = [];
 		this.gramPanchayatList = [];
 		this.isEdit = false;
 	}
 	fetchGatGramPanchayatData() {
 		this.gatGramPanchayatService.getGatGramPanchayatList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
 			next: (res: any) => {
+				this.items = res?.data ?? [];
 				this.gatgramPanchayatData = res?.data ?? [];
 				this.totalItems = res?.totalRecords;
 			},
@@ -211,8 +225,10 @@ export class GatgrampanchayatComponent {
 		if (!id) {
 			this.toastr.error("Gat Panchayat Id is required", "Error")
 		}
+
+		this.gatGramFrom.reset();
 		this.gatGramPanchayatService.getGatGramPanchayatById(id).subscribe((res: any) => {
-			this.datPanchayatId = id;
+			this.gatPanchayatId = id;
 
 			this.isEdit = true;
 
@@ -227,6 +243,8 @@ export class GatgrampanchayatComponent {
 				this.gatGramFrom.get('taluka_id')?.setValue(res.data.TALUKA_ID)
 				this.gatGramFrom.get('grampanchayat_id')?.setValue("" + res.data.PANCHAYAT_ID);
 				this.gatGramFrom.get('name')?.setValue(res.data.GATGRAMPANCHAYAT_NAME);
+				$("#mySelect").val(res.data.DISTRICT_ID).trigger('change');
+				$("#taluka").val(res.data.TALUKA_ID).trigger('change');
 				setTimeout(() => {
 					$("#mySelect").val(res.data.DISTRICT_ID).trigger('change');
 					$("#taluka").val(res.data.TALUKA_ID).trigger('change');
@@ -244,6 +262,34 @@ export class GatgrampanchayatComponent {
 
 	}
 
+	updateGatGramPanchayat() {
+		this.isSubmitted = true;
+
+		if (this.gatGramFrom.invalid) {
+			return;
+		}
+		const data: any = this.gatGramFrom.value;
+		data.gatgrampanchayat_id = this.gatPanchayatId;
+		this.gatGramPanchayatService.updateGatGramPanchayat(data).subscribe({
+			next: (res: any) => {
+				console.log("updateGatGramPanchayat res===", res);
+				if (res.status == 200) {
+					this.toastr.success(res?.message, 'यश');
+					this.isSubmitted = false;
+					this.fetchGatGramPanchayatData();
+					this.reset();
+				} else {
+					this.toastr.error(res?.message, 'त्रुटी');
+				}
+			},
+			error: (err: any) => {
+				this.toastr.error('Failed to update Gat Gram Panchayat', 'Error');
+				console.log("error: updateGatGramPanchayat ::", err);
+				this.isSubmitted = false;
+			}
+
+		});
+	}
 	deleteGatGramPanchayat(id: number) {
 		this.util.showConfirmAlert().then((res) => {
 			if (!id) {

@@ -21,6 +21,7 @@ ng add @fortawesome/angular-fontawesome
 
 
 
+ng g s modules/admin/services/karya-karani-kameti  --skip-tests
 
 
 

@@ -32,7 +32,46 @@
         </form>
     </div>
 </div>
+
 <div class="card card-default">
+    <div class="card-body">
+        <div class="col-md-4  mt-2 p-0" >
+            <div class="input-group ">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="table-responsive">
+            
+            <app-sorting-table
+            [data]="items"
+            [columns]="displayedColumns"
+            [currentPage]="currentPage"
+            (edit)="editInfo($event)"
+            (delete)="deleteInfo($event)"
+            [keyName]="keyName">
+            </app-sorting-table>
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+            </span>{{totalItems}}</div>
+        </div>
+
+
+        <br>
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+        </app-pagination>
+    </div>
+</div>
+
+
+<!-- <div class="card card-default">
     <div class="card-body">
         <form action="#" method="get">
             <div class="col-md-4" id="input-group-search">
@@ -103,4 +142,4 @@
             </ul>
         </nav>
     </div>
-</div>
+</div> -->
