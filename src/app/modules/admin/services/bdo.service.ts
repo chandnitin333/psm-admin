@@ -4,11 +4,11 @@ import { ApiService } from '../../../services/api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class TaxService {
+export class BdoService {
 
   constructor(private api: ApiService) { }
 
-  getTaxList(params: any) {
-    return this.api.post(`get-tax-list`, params);
+  fetchBdoUserList(params: any) {
+    return this.api.post(`get-bdo-user-list`, params);
   }
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ITEM_PER_PAGE } from '../../constants/admin.constant';
-import { MalamataPrakarService } from '../../services/malamata-prakar.service';
+import { MalmataService } from '../../services/malmata.service';
 import Util from '../../utils/utils';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SortingTableComponent } from '../sorting-table/sorting-table.component';
@@ -22,13 +22,14 @@ export class MalmattaComponent {
   itemsPerPage: number = ITEM_PER_PAGE
   displayedColumns: any = [
     { key: 'sr_no', label: 'अनुक्रमांक' },
-    { key: 'MILKAT_VAPAR_NAME', label: 'मालमत्तेचे वर्णन' },
-    { key: 'MILKAT_NAME', label: 'मिलकत' }
+    { key: 'DESCRIPTION_NAME', label: 'मालमत्तेचे प्रकार' },
+    {key:'DESCRIPTION_NAME_EXTRA', label:'मालमत्तेचे विवरण'},
+
   ];
 
-  keyName: string = 'MILKAT_ID';
+  keyName: string = 'MALMATTA_ID';
   marathiText: string = '';
-  constructor(private titleService: Title, private milkatPrakar: MalamataPrakarService, private util: Util) { }
+  constructor(private titleService: Title, private malamata: MalmataService, private util: Util) { }
 
   ngOnInit(): void {
     this.titleService.setTitle('Malmatta');
@@ -36,9 +37,8 @@ export class MalmattaComponent {
   }
 
   fetchData() {
-    this.milkatPrakar.getMilkatPrakar({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
+    this.malamata.getMalmataList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
       next: (res: any) => {
-        console.log("res===", res)
         this.items = res?.data ?? [];
         this.totalItems = res?.totalRecords;
       },

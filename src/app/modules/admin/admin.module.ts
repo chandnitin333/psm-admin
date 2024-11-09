@@ -24,6 +24,7 @@ import { BharankRatesService } from './services/bharank-rates.service';
 import { TawarService } from './services/tawar.service';
 import { KaryaKaraniKametiService } from './services/karya-karani-kameti.service';
 import { KamkajKametiService } from './services/kamkaj-kameti.service';
+import { BdoService } from './services/bdo.service';
 
 
 
@@ -70,6 +71,7 @@ import { KamkajKametiService } from './services/kamkaj-kameti.service';
     KaryaKaraniKametiService,
     KamkajKametiService,
     ToastrService,
+    BdoService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,

@@ -9,6 +9,6 @@ export class MalamataPrakarService {
   constructor(private api: ApiService) { }
 
   getMilkatPrakar(params: any) {
-    return this.api.post(`get-milkat-list`, params);
+    return this.api.post(`get-malmatteche-prakar-list`, params);
   }
 }

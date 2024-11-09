@@ -48,3 +48,6 @@ https://p.w3layouts.com/demos/modern_admin_panel/web/index.html
 https://themewagon.com/themes/kaiadmin/
 
 ###########################################
+
+
+ng g s modules/admin/services/malamateche-parakar  --skip-tests

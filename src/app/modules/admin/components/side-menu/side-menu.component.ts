@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-side-menu',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink,FormsModule,CommonModule],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.css'
 })
@@ -16,16 +18,16 @@ export class SideMenuComponent {
   @ViewChild('myCamiteeElement') myCamiteeElement!: ElementRef;
   @ViewChild('myImagesElement') myImagesElement!: ElementRef;
 
-  constructor(private renderer: Renderer2) {}
-  
+  constructor(private renderer: Renderer2,public router: Router) { }
+
   toggleClass(labels: string): void {
     let element: Element | undefined = undefined; // Initialize element with a default value
-    if(labels === 'user') {
+    if (labels === 'user') {
       element = this.myUserElement.nativeElement;
 
-      let tax = this.myTaxlement.nativeElement; 
+      let tax = this.myTaxlement.nativeElement;
       let dar = this.myDarlement.nativeElement;
-      let camitee = this.myCamiteeElement.nativeElement; 
+      let camitee = this.myCamiteeElement.nativeElement;
       let images = this.myImagesElement.nativeElement;
       this.renderer.removeClass(tax, 'expand');
       this.renderer.removeClass(dar, 'expand');
@@ -36,62 +38,62 @@ export class SideMenuComponent {
       this.renderer.removeClass(camitee, 'active');
       this.renderer.removeClass(images, 'active');
 
-    } else if(labels == 'tax'){
-      element = this.myTaxlement.nativeElement; 
+    } else if (labels == 'tax') {
+      element = this.myTaxlement.nativeElement;
 
-      let user = this.myUserElement.nativeElement; 
+      let user = this.myUserElement.nativeElement;
       let dar = this.myDarlement.nativeElement;
-      let camitee = this.myCamiteeElement.nativeElement; 
+      let camitee = this.myCamiteeElement.nativeElement;
       let images = this.myImagesElement.nativeElement;
       this.renderer.removeClass(user, 'expand');
-      this.renderer.removeClass(dar, 'expand');   
+      this.renderer.removeClass(dar, 'expand');
       this.renderer.removeClass(camitee, 'expand');
       this.renderer.removeClass(images, 'expand');
       this.renderer.removeClass(user, 'active');
-      this.renderer.removeClass(dar, 'active');   
+      this.renderer.removeClass(dar, 'active');
       this.renderer.removeClass(camitee, 'active');
       this.renderer.removeClass(images, 'active');
 
-    }else if(labels == 'dar'){
-      element = this.myDarlement.nativeElement; 
-      let user = this.myUserElement.nativeElement; 
+    } else if (labels == 'dar') {
+      element = this.myDarlement.nativeElement;
+      let user = this.myUserElement.nativeElement;
       let tax = this.myTaxlement.nativeElement;
-      let camitee = this.myCamiteeElement.nativeElement; 
+      let camitee = this.myCamiteeElement.nativeElement;
       let images = this.myImagesElement.nativeElement;
       this.renderer.removeClass(user, 'expand');
-      this.renderer.removeClass(tax, 'expand');  
+      this.renderer.removeClass(tax, 'expand');
       this.renderer.removeClass(camitee, 'expand');
       this.renderer.removeClass(images, 'expand');
       this.renderer.removeClass(user, 'active');
-      this.renderer.removeClass(tax, 'active');  
+      this.renderer.removeClass(tax, 'active');
       this.renderer.removeClass(camitee, 'active');
-      this.renderer.removeClass(images, 'active');        
-    }else if(labels == 'camitee'){
-      element = this.myCamiteeElement.nativeElement; 
-      let user = this.myUserElement.nativeElement; 
+      this.renderer.removeClass(images, 'active');
+    } else if (labels == 'camitee') {
+      element = this.myCamiteeElement.nativeElement;
+      let user = this.myUserElement.nativeElement;
       let tax = this.myTaxlement.nativeElement;
-      let dar = this.myDarlement.nativeElement; 
+      let dar = this.myDarlement.nativeElement;
       let images = this.myImagesElement.nativeElement;
       this.renderer.removeClass(user, 'expand');
-      this.renderer.removeClass(tax, 'expand');  
+      this.renderer.removeClass(tax, 'expand');
       this.renderer.removeClass(dar, 'expand');
       this.renderer.removeClass(images, 'expand');
       this.renderer.removeClass(user, 'active');
-      this.renderer.removeClass(tax, 'active');  
+      this.renderer.removeClass(tax, 'active');
       this.renderer.removeClass(dar, 'active');
-      this.renderer.removeClass(images, 'active'); 
-    }else if(labels == 'images'){
-      element = this.myImagesElement.nativeElement; 
-      let user = this.myUserElement.nativeElement; 
+      this.renderer.removeClass(images, 'active');
+    } else if (labels == 'images') {
+      element = this.myImagesElement.nativeElement;
+      let user = this.myUserElement.nativeElement;
       let tax = this.myTaxlement.nativeElement;
-      let camitee = this.myCamiteeElement.nativeElement; 
+      let camitee = this.myCamiteeElement.nativeElement;
       let dar = this.myDarlement.nativeElement;
       this.renderer.removeClass(user, 'expand');
-      this.renderer.removeClass(tax, 'expand');  
+      this.renderer.removeClass(tax, 'expand');
       this.renderer.removeClass(camitee, 'expand');
       this.renderer.removeClass(dar, 'expand');
       this.renderer.removeClass(user, 'active');
-      this.renderer.removeClass(tax, 'active');  
+      this.renderer.removeClass(tax, 'active');
       this.renderer.removeClass(camitee, 'active');
       this.renderer.removeClass(dar, 'active');
     }
