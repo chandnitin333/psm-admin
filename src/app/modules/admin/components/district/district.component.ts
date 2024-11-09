@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../../services/api.service';
-import { DistrictService } from '../../../admin/services/district.service';
+import { ITEM_PER_PAGE } from '../../constants/admin.constant';
+import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { Util } from '../../utils/utils';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { SortingTableComponent } from '../sorting-table/sorting-table.component';
@@ -22,6 +24,8 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
         SortingTableComponent,
         PaginationComponent,
         ReactiveFormsModule,
+        ConfirmationDialogModule,
+        FormsModule
     ],
     templateUrl: './district.component.html',
     styleUrls: ['./district.component.css'],
@@ -30,9 +34,9 @@ export class DistrictComponent implements OnInit {
     district: any = [];
     isLoading: boolean = true;
     currentPage: number = 1;
-    itemsPerPage: number = 5;
+    itemsPerPage: number = ITEM_PER_PAGE;
     isSubmitted: boolean = false;
-    displayedColumns: any = [];
+
     isEdit: boolean = false;
     items: any[] = [];
     searchValue: string = '';
@@ -42,16 +46,15 @@ export class DistrictComponent implements OnInit {
     });
     private marathiText: string = '';
     private districtId: number = 0;
-    private filteredDistricts: any[] = [];
+
     constructor(
         private titleService: Title,
-        private districtService: DistrictService,
         private apiService: ApiService,
         private toastr: ToastrService,
         private util: Util,
         private cdr: ChangeDetectorRef
     ) { }
-
+    @ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
     ngOnInit(): void {
         this.titleService.setTitle('District');
         this.fetchDistrictData();
@@ -63,6 +66,7 @@ export class DistrictComponent implements OnInit {
             .post('district-list', {
                 page_number: pageNumber,
                 limit: this.itemsPerPage,
+                searchText: this.searchValue,
             })
             .subscribe((res: any) => {
                 this.district = res?.data;
@@ -79,12 +83,11 @@ export class DistrictComponent implements OnInit {
         this.fetchDistrictData();
     }
     get paginatedItems(): any[] {
-        const start = (this.currentPage - 1) * this.itemsPerPage;
-        const end = start + this.itemsPerPage;
         return this.items;
     }
 
     getSerialNumber(index: number): number {
+
         return (this.currentPage - 1) * this.itemsPerPage + index + 1;
     }
 
@@ -93,7 +96,7 @@ export class DistrictComponent implements OnInit {
             !this.districtForm.invalid &&
             this.districtForm.value.districtName != null
         ) {
-         
+
             this.isLoading = true;
             let params = {
                 district_name: this.districtForm.value.districtName,
@@ -122,6 +125,13 @@ export class DistrictComponent implements OnInit {
     reset() {
         this.districtForm.reset();
         this.isEdit = false;
+
+    }
+
+    resetFilter(event: Event) {
+        this.searchValue = '';
+        this.currentPage = 1;
+        this.fetchDistrictData();
     }
 
     keyDownText(event: KeyboardEvent, controlName: string): void {
@@ -129,7 +139,7 @@ export class DistrictComponent implements OnInit {
     }
 
     handleInput(event: Event) {
-      
+
         this.util.getTranslateText(event, this.marathiText).subscribe({
             next: (translatedText: string) => {
                 this.marathiText = translatedText;
@@ -171,7 +181,9 @@ export class DistrictComponent implements OnInit {
                     this.isSubmitted = true;
                     this.toastr.success('District has been successfully updated.', 'Success');
                     this.isLoading = false;
+                    this.searchValue = '';
                     this.fetchDistrictData();
+
                 },
                 error: (err: Error) => {
                     console.error('Error updating district:', err);
@@ -185,34 +197,68 @@ export class DistrictComponent implements OnInit {
 
 
     deleteDistrict(districtId: number): void {
-        this.isLoading = true;
-        this.apiService.delete('district/' + districtId).subscribe({
-            next: (res: any) => {
-                this.isSubmitted = true;
-                this.toastr.success('District has been successfully deleted.', 'Success');
-                this.isLoading = false;
-                this.district = this.district.filter((dist: any) => {
-                   
-                    return dist.DISTRICT_ID !== districtId;
-                  });
-                  
-            },
-            error: (err: Error) => {
-                console.error('Error deleting district:', err);
-                this.toastr.error('There was an error deleting the district.', 'Error');
-            },
-        });
+
+        if (this.confirmationDialog) {
+            this.confirmationDialog.open();
+            const subscription = this.confirmationDialog.confirmed.subscribe((confirmed) => {
+                if (confirmed) {
+                    this.isLoading = true;
+                    this.apiService.delete('district/' + districtId).subscribe({
+                        next: () => {
+                            this.isSubmitted = true;
+                            this.toastr.success('District has been successfully deleted.', 'Success');
+                            this.isLoading = false;
+                            this.district = this.district.filter((dist: any) => {
+                                return dist.DISTRICT_ID !== districtId;
+                            });
+                            this.items = this.district;
+                            this.confirmationDialog.close();
+                            subscription.unsubscribe();
+                        },
+                        error: (err: Error) => {
+                            this.isLoading = false;
+                            console.error('Error deleting district:', err);
+                            this.toastr.error('There was an error deleting the district.', 'Error');
+                            subscription.unsubscribe();
+                        },
+                    });
+                } else {
+                    subscription.unsubscribe();
+                }
+            });
+        }
     }
+
+    onConfirmed(confirmed: boolean) {
+        if (confirmed) {
+            // Perform the delete action
+            console.log('Taluka deleted');
+        } else {
+            console.log('Delete action cancelled');
+        }
+    }
+
     filterDistricts(event: Event) {
         const searchText = (event.target as HTMLInputElement).value.toLowerCase();
-        this.items = this.district.filter((dist: any) => {
-            return dist.DISTRICT_NAME.toLowerCase().includes(searchText);
-        });
-        if (searchText === '') {
-            this.items = this.district;
-        }
-       
-      }
+        console.log('searchText', searchText);
+        this.currentPage = 1;
+        this.searchValue = searchText;
+        this.debounceFetchDistrictData();
+    }
+
+    private debounceFetchDistrictData = this.debounce(() => {
+        this.fetchDistrictData();
+    }, 1000);
+
+    private debounce(func: Function, wait: number) {
+        let timeout: any;
+        return (...args: any[]) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(this, args);
+            }, wait);
+        };
+    }
 }
 
 

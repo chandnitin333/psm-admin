@@ -1,22 +1,22 @@
 
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap } from 'rxjs';
-import { ApiService } from '../../../../services/api.service';
-import { TalukaService } from '../../services/taluka.service';
 import { TranslateService } from '../../../../services/translate.service';
+import { ITEM_PER_PAGE } from '../../constants/admin.constant';
 import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
+import { TalukaService } from '../../services/taluka.service';
+import Util from '../../utils/utils';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-
-
 
 @Component({
 	selector: 'app-taluka',
@@ -29,12 +29,13 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
 		CommonModule,
 		ReactiveFormsModule,
 		SkeletonLoaderComponent,
+		SweetAlert2Module,
 		ConfirmationDialogModule // Ensure this is included
 	],
 	templateUrl: './taluka.component.html',
 	styleUrls: ['./taluka.component.css']
 })
-export class TalukaComponent implements OnInit, AfterViewInit{
+export class TalukaComponent implements OnInit {
 	@ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
 	talukaName: string = '';
 	marathiText: string = '';
@@ -42,7 +43,7 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 
 	items: any[] = [];
 	currentPage: number = 1;
-	itemsPerPage: number = 5;
+	itemsPerPage: number = ITEM_PER_PAGE;
 	searchValue: string = '';
 	totalItems: number = 0;
 	commonText: string = ''
@@ -57,27 +58,29 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 	isEdit: boolean = false;
 	modifyTaluka: any = {};
 	talukaForm = new FormGroup({
-		district_id: new FormControl(undefined),
+		district_id: new FormControl<string | null>(null),
 		name: new FormControl(undefined)
 	});
 	deleteTalukaName: string = '';
 	isLoading: boolean = true;
+	private destroy$ = new Subject<void>();
 	constructor(
-		private titleService: Title, 
-		private translate: TranslateService, 
-		private apiService: ApiService, 
-		private talukaService: TalukaService, 
-		private toastr: ToastrService) 
-	{ 
+		private titleService: Title,
+		private translate: TranslateService,
+		private talukaService: TalukaService,
+		private util: Util,
+		private toastr: ToastrService) {
 		this.titleService.setTitle('Taluka');
 	}
 	ngOnInit(): void {
+		this.isLoading = false;
 		this.getTalukas();
 		this.getAllDistricts();
+
 		this.subscription = this.searchControl.valueChanges.pipe(
 			debounceTime(1000),
 			distinctUntilChanged(),
-			switchMap((query) => this.talukaService.getTalukas({ pageNumber: this.currentPage, searchText: this.searchValue })) // Switch to new observable
+			switchMap((query) => this.talukaService.getTalukas('taluka-list', { page_number: this.currentPage, search_text: this.searchValue })) // Switch to new observable
 		).subscribe(item => {
 			let data = item as any;
 			this.items = data?.data?.talukas;
@@ -85,130 +88,81 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 
 		});
 
-		// this.districts = [...this.districts1];
-		console.log('Districts DDL:', this.districts);
+
 
 
 	}
 
-	ngAfterViewInit() {
-		console.log("districts", this.districts);
-		// Use jQuery to select the element and initialize Select2
+	ngAfterViewInit(): void {
 		$('.my-select2').select2();
+
+		$('#mySelect').on('change', (event) => {
+			let selectedValue: string = $(event.target).val() as string;
+			this.talukaForm.get('district_id')?.setValue(selectedValue || '');
+		});
+
 	}
 
-	stopLoading() {
-		// setTimeout(() => {
-		// 	this.isLoading = false;
-		// }, 1000);
-	}
 
 	translateText(event: Event) {
+		this.util.getTranslateText(event, this.marathiText).subscribe({
+			next: (translatedText: string) => {
+				this.marathiText = translatedText;
+			},
+			error: (error: any) => {
+				console.error('Error translating text:', error);
+			},
+		});
 
-		const input = event.target as HTMLInputElement;
-
-		let text = input.value;
-		input.value = (text.trim() != '') ? text : ' ';
-
-		clearTimeout(this.debounceTimeout);
-		this.debounceTimeout = setTimeout(() => {
-			if (text.trim() != '') {
-				this.translate.translate(text).subscribe({
-					next: (res: any) => {
-
-						if (res && res.data && res.data.translations && res.data.translations.length > 0) {
-							this.marathiText = res.data.translations[0].translatedText;
-
-							setTimeout(() => {
-								this.updateText(this.marathiText, input);
-							}, 400);
-						} else {
-							console.error('Unexpected API response format:', res);
-						}
-					},
-					error: (err) => {
-						console.error('Translation API error:', err);
-					},
-					complete: () => {
-						console.log('Translation completed');
-					}
-				});
-			} else {
-				this.marathiText = '';
-				this.updateText(this.marathiText, input);
-			}
-		}, 200); // Adjust the debounce delay as per your requirement
 	}
 
 	onKeydown(event: KeyboardEvent, controlName: string) {
-		if (event.key === 'Enter') {
-			event.preventDefault(); // Prevent the default Enter key behavior
-			const control = this.talukaForm.get(controlName) as FormControl;
-			const text = control.value;
-			let translatedText = '';
-			if (text && text.trim() !== '') {
-				console.log('Translating:', text);
-				clearTimeout(this.debounceTimeout);
-				this.debounceTimeout = setTimeout(() => {
-					this.translate.translate(text).subscribe({
-						next: (res: any) => {
-							if (res && res.data && res.data.translations && res.data.translations.length > 0) {
-								translatedText = res.data.translations[0].translatedText;
-								this.updateText1(translatedText, control);
-							} else {
-								console.error('Unexpected API response format:', res);
-							}
-						},
-						error: (err) => {
-							console.error('Translation API error:', err);
-						},
-						complete: () => {
-							console.log('Translation completed');
-						}
-					});
-				}, 200); // Adjust the debounce delay as per your requirement
-			}
-		}
+		this.util.onKeydown(event, controlName, this.talukaForm);
 	}
 
-	updateText1(text: string, field: FormControl) {
-		field.setValue(text); // Set the new value
-		field.markAsDirty(); // Mark the field as dirty
-		field.markAsTouched(); // Mark the field as touched
-	}
 
-	updateText(text: string, field: any) {
-		if (text != '') {
-			this.commonText = '';
-			field.value = '';
-			field.value = text;
-			this.commonText = text;
-			this.marathiText = '';
-		} else {
-			this.commonText = '';
-		}
-	}
+	resetFilter($event: Event) {
 
+		this.searchValue = '';
+		this.currentPage = 1;
+		this.getTalukas();
+	}
 
 	getTalukas(pageNumber: number = 1) {
-		this.searchValue = (this.commonText != '') ? this.commonText : '';
 
-		setTimeout(() => {
-			// this.apiService.post('/talukas', { pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
-			this.talukaService.getTalukas({ pageNumber: pageNumber, searchText: this.searchValue }).subscribe({
-				next: (res: any) => {
-					this.items = res?.data?.talukas;
-					this.totalItems = res?.data?.totalCount;
-					this.stopLoading();
-				},
-				error: (err) => {
-					console.error('API error:', err);
-				},
-				complete: () => {
+		this.currentPage = pageNumber;
+		this.debounceFetchDistrictData();
+	}
 
-				}
-			});
+	fetchDistrictData() {
+
+		this.talukaService.getTalukas('taluka-list', { page_number: this.currentPage, search_text: this.searchValue }).subscribe({
+			next: (res: any) => {
+				console.log('Talukas:', res);
+				this.items = res?.data;
+				this.totalItems = res?.totalRecords;
+
+			},
+			error: (err) => {
+				console.error('API error:', err);
+			},
+			complete: () => {
+
+			}
 		});
+	}
+	private debounceFetchDistrictData = this.debounce(() => {
+		this.fetchDistrictData();
+	}, 1000);
+
+	private debounce(func: Function, wait: number) {
+		let timeout: any;
+		return (...args: any[]) => {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => {
+				func.apply(this, args);
+			}, wait);
+		};
 	}
 
 	onPageChange(page: number): void {
@@ -223,40 +177,29 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 		return this.items;
 	}
 
-	getSerialNumber(index: number): number {
+	srNo(index: number): number {
 		return (this.currentPage - 1) * this.itemsPerPage + index + 1;
 	}
 
-	search(): void {
-		this.searchTerms.next("search"); // 
-	}
-
-	getAllDistricts() {
-		// Get all districts
-		this.talukaService.getDistrictDDL().subscribe({
-		// this.apiService.get('/districts_ddl').subscribe({
-			next: (res: any) => {
-				this.districts = res.data;
-				console.log("district ddl API", this.districts);
-				this.isLoading = false;
-			},
-			error: (err: Error) => {
-				console.error('Error getting districts:', err);
-			}
-		});
+	async getAllDistricts() {
+		this.districts = await this.util.getDistrictDDL('district-list-ddl')
 	}
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe(); // Clean up the subscription on component destroy
+		$('#mySelect').select2('destroy');
 	}
 
 	addTaluka() {
-		// console.log('Taluka:', this.talukaForm.value);
-		
-		if (this.talukaForm.valid && this.talukaForm.value.district_id != null || undefined || '' && this.talukaForm.value.name != null || undefined || '') {
-			let params = this.talukaForm.value;
+
+		if (this.talukaForm.valid && this.talukaForm.value.district_id && this.talukaForm.value.name) {
+			let params = {
+				district_id: this.talukaForm.value.district_id,
+				taluka_name: this.talukaForm.value.name
+
+			};
+
 			this.isLoading = true;
-			// this.apiService.post('create-taluka', params).subscribe({
-				this.talukaService.createTaluka(params).subscribe({
+			this.talukaService.createTaluka('taluka', params).subscribe({
 				next: (res: any) => {
 					this.getTalukas();
 					this.reset();
@@ -276,15 +219,15 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 	}
 
 	getTaluka(id: number) {
-		let taluka = this.items.find((item) => item.id == id);
+
+		let taluka = this.items.find((item) => item.TALUKA_ID == id);
 		if (!taluka) {
 			this.toastr.error('Taluka not found.', 'Error');
 			return;
 		}
 		this.isEdit = true;
-		this.talukaForm.get('district_id')?.setValue(taluka.district_id);
-		this.talukaForm.get('name')?.setValue(taluka.name);
-
+		this.talukaForm.get('district_id')?.setValue(taluka.DISTRICT_ID);
+		this.talukaForm.get('name')?.setValue(taluka.TALUKA_NAME);
 		this.modifyTaluka = {
 			id: id,
 			district_id: this.talukaForm.value.district_id || 0,
@@ -300,13 +243,12 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 	editTaluka() {
 
 		let data = {
-			id: this.modifyTaluka.id,
+			taluka_id: this.modifyTaluka.id,
 			district_id: this.talukaForm?.value?.district_id,
-			name: this.talukaForm?.value?.name,
+			taluka_name: this.talukaForm?.value?.name,
 		};
 
-		// this.apiService.put('update-taluka', data).subscribe({
-		this.talukaService.UpdateTaluka(data).subscribe({
+		this.talukaService.UpdateTaluka('update-taluka', data).subscribe({
 			next: (res: any) => {
 				this.getTalukas();
 				this.reset();
@@ -318,39 +260,40 @@ export class TalukaComponent implements OnInit, AfterViewInit{
 			}
 		});
 	}
+
 	onConfirmed(confirmed: boolean) {
 		if (confirmed) {
-			// Perform the delete action
-			console.log('Taluka deleted');
+
 		} else {
 			console.log('Delete action cancelled');
 		}
 	}
 	deleteTaluka(id: number, name = '') {
-		this.deleteTalukaName = name;
-		if (this.confirmationDialog) {
-			this.confirmationDialog.open();
-			this.confirmationDialog.confirmed.subscribe((confirmed) => {
-				if (confirmed) {
-					if (id === 0) {
-						this.toastr.error('This taluka cannot be deleted.', 'Error');
-						return;
-					}
-					// this.apiService.delete(`delete-taluka/${id}`).subscribe({
-					this.talukaService.deleteTaluka(id).subscribe({
-						next: () => {
-							this.toastr.success('Taluka has been successfully deleted.', 'Success');
-							this.getTalukas();
-						},
-						error: (err: Error) => {
-							console.error('Error deleting taluka:', err);
-							this.toastr.error('There was an error deleting the taluka.', 'Error');
-						}
-					});
+		this.util.showConfirmAlert().then((res) => {
+
+			if (res) {
+				if (id === 0) {
+					this.toastr.error('This taluka cannot be deleted.', 'Error');
+					return;
 				}
-			});
-		} else {
-			console.error('ConfirmationDialogComponent is not initialized');
+				this.talukaService.deleteTaluka(`taluka/${id}`).subscribe({
+					next: () => {
+						this.toastr.success('Taluka has been successfully deleted.', 'Success');
+						this.getTalukas();
+
+					},
+					error: (err: Error) => {
+						console.error('Error deleting taluka:', err);
+						this.toastr.error('There was an error deleting the taluka.', 'Error');
+
+					}
+				});
+			}
 		}
+		);
+
+
 	}
+
+
 }

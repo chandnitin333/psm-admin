@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 5;
-  @Input() maxPagesToShow: number = 1; // Max number of page links to show
+  @Input() maxPagesToShow: number = 2; // Max number of page links to show
   @Output() pageChange = new EventEmitter<number>();
 
   currentPage: number = 1;
@@ -41,22 +41,22 @@ export class PaginationComponent {
         endPage = totalPages;
       } else {
         startPage = this.currentPage - halfMaxPages;
-        endPage = this.currentPage + halfMaxPages;
+        endPage = this.currentPage + halfMaxPages - 1;
       }
+    }
 
-      if (startPage > 1) {
-        pages.push(1);
-        if (startPage > 2) pages.push(-1); // Ellipsis
-      }
+    if (startPage > 1) {
+      pages.push(1);
+      if (startPage > 2) pages.push(-1); // Ellipsis
+    }
 
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
-      }
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
 
-      if (endPage < totalPages) {
-        if (endPage < totalPages - 1) pages.push(-1); // Ellipsis
-        pages.push(totalPages);
-      }
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) pages.push(-1); // Ellipsis
+      pages.push(totalPages);
     }
 
     return pages;

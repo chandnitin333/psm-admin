@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+import { ApiService } from '../../../services/api.service';
 import { TranslateService } from '../../../services/translate.service';
-import { TRANSLATE_API_URL } from '../constants/admin.constant';
+import { API_URL, ITEM_PER_PAGE, TRANSLATE_API_URL } from '../constants/admin.constant';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +14,7 @@ export class Util {
     private debounceTimeout: any;
     private static _instance: Util;
 
-    constructor(private translate: TranslateService, private http: HttpClient) {
+    constructor(private translate: TranslateService, private http: HttpClient, private api: ApiService) {
 
     }
 
@@ -98,6 +100,51 @@ export class Util {
         control.setValue(text);
         control.updateValueAndValidity();
     }
+
+    getSerialNumber(index: number, currentPage: number): number {
+        return (currentPage - 1) * ITEM_PER_PAGE + index + 1;
+    }
+
+
+    async showConfirmAlert(): Promise<boolean> {
+        return Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            return result.isConfirmed;
+        });
+    }
+
+    async getDistrictDDL(url: string = "district-list-ddl") {
+        const cacheKey = 'districts';
+        const cachedData = localStorage.getItem(cacheKey);
+        if (cachedData) {
+            return JSON.parse(cachedData);
+        }
+
+        try {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            };
+            const res: any = await this.http.post(`${API_URL}${url}`, {}, { headers }).toPromise();
+            const data = res?.data ?? [];
+            localStorage.setItem(cacheKey, JSON.stringify(data));
+            return data;
+        } catch (err) {
+            console.error('Error getting districts:', err);
+            return [];
+        }
+    }
 }
+
+
+
+
 
 export default Util;

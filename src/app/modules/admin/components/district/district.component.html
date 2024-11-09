@@ -1,12 +1,7 @@
 <div *ngIf="isLoading">
     <app-skeleton-loader></app-skeleton-loader>
   </div>
- <!-- <div *ngIf="!isLoading">
- Your actual content goes here
-    <div *ngFor="let item of district">
-      {{ item.DISTRICT_NAME }}
-    </div>
-  </div> -->
+  <app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
 
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
@@ -32,8 +27,15 @@
     <div class="card-body">
        
             <div class="col-md-4" id="input-group-search">
-                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)" >
+                <div class="input-group">
+                    <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                        placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)" [(ngModel)]="searchValue" >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                            <i class="mdi mdi-close"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
        
         <br>
@@ -48,7 +50,7 @@
                 </thead>
                 <tbody>
                    
-                    <tr class="font-weight-bold"  *ngFor="let item of paginatedItems let i = index">
+                    <tr class=""  *ngFor="let item of paginatedItems let i = index">
                         <td>{{getSerialNumber(i)}}</td>
                         <td>{{ item.DISTRICT_NAME }}</td>
                         <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="getDistrict(item.DISTRICT_ID)"><i
@@ -59,7 +61,8 @@
                     
                 </tbody>
             </table>
-          
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+            </span>{{totalItems}}</div>
         </div>
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
