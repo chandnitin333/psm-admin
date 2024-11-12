@@ -104,7 +104,46 @@
         </form>
         <br> -->
 
-        <div class="table-responsive">
+
+        <div *ngFor="let ele of districtList" class="district-header p-2">
+            <div class="row mt-1">
+            <div class="col-md-12">
+              <button (click)="toggleCollapse(ele?.DISTRICT_ID)">
+                <i class=" toggle-nested" [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i> <span class="text-dark font-weight-bold ml-2">{{ ele?.DISTRICT_NAME }}</span> 
+              </button>
+            </div>
+            </div>  
+            <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]" >
+               
+                <div class="table-responsive mt-1">
+            
+                    <app-sorting-table
+                    [data]="items"
+                    [columns]="displayedColumns"
+                    [currentPage]="currentPage"
+                    (edit)="editInfo($event)"
+                    (delete)="deleteInfo($event)"
+                    [keyName]="keyName">
+                    </app-sorting-table>
+                    <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+                    </span>{{totalItems}}</div>
+                </div>
+        
+                <div class="col-md-12 p-2">
+                    <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                    (pageChange)="onPageChange($event)">
+                    </app-pagination>
+                </div>
+                <br/>
+               
+               
+            </div>
+           
+            
+          </div>
+          
+
+        <!-- <div class="table-responsive">
             <table class="table table-bordered ">
                 <thead class="thead-dark">
                     <tr>
@@ -219,7 +258,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
 
         <!-- <br>

@@ -7,3 +7,9 @@
 .card-header-label{
     margin-top: -0.5rem;
 }
+
+.district-header{
+    display: block;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e9ecef;
+}
