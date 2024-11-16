@@ -91,19 +91,19 @@ export class OthertaxComponent {
 
         this.otherTax.fetchOtherTaxList({ page_number: this.currentPage, search_text: '', panchayat_id: id }).subscribe((res: any) => {
             this.otherTaxList = res?.data ?? [];
-            console.log('taxList==', this.taxList);
+            
             let data: any = [];
             let taxData = res?.data[0];
             for (const key in taxData) {
                 if (key.startsWith('TAXID')) {
                     let id = taxData[key] ?? '';
-                    console.log('id==', taxData[key]);
+                    
                     let obj = { name: this.taxList[taxData[key]], tax_rate: taxData[key.replace('TAXID', 'TAXRATE')] ?? 0, tax_id: id ?? '', isChecked: false };
                     data.push(obj);
                 }
             }
             this.otherTaxList = { ...taxData, data };
-            console.log('otherTaxList==', this.otherTaxList);
+            
         });
 
     }

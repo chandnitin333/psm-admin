@@ -26,9 +26,7 @@ export class BdoComponent {
     { key: 'DISTRICT_NAME', label: 'जिल्हा' },
     { key: 'TALUKA_NAME', label: 'तालुका' },
     { key: 'NAME_NAME', label: 'नाव' },
-    { key: 'USER_NAME', label: 'वापरकर्ता' },
-    { key: 'EMAIL_NAME', label: 'ईमेल' },
-    { key: 'ACTION', label: 'क्रिया' }
+    { key: 'USER_NAME', label: 'वापरकर्ता' }
   ];
 
   keyName: string = 'BDOUser_ID';

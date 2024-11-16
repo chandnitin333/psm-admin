@@ -25,6 +25,7 @@ import { TawarService } from './services/tawar.service';
 import { KaryaKaraniKametiService } from './services/karya-karani-kameti.service';
 import { KamkajKametiService } from './services/kamkaj-kameti.service';
 import { BdoService } from './services/bdo.service';
+import { SachiveImagesService } from './services/sachive-images.service';
 
 
 
@@ -72,6 +73,7 @@ import { BdoService } from './services/bdo.service';
     KamkajKametiService,
     ToastrService,
     BdoService,
+    SachiveImagesService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,
