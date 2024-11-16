@@ -8,31 +8,32 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- जिल्हा निवडा -- </option>
-                            <option value="1">नागपुर</option>
-                            <option value="2">भंडारा</option>
+                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2 col-sm-12" placeholder="Select district" (change)="getTalukaByDistrict($event)" formControlName="districtName">
+                            <option value="" selected>-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
                         </select>
+                        <!-- <span class="text-danger" *ngIf="isSubmitted && !gramFrom.value.districtName">Please select district</span> -->
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="taluka">
-                            <option value="">-- तालुका निवडा -- </option>
-                            <option value="1">रामटेक</option>
-                            <option value="2">तुमसर</option>
+                        <select class="js-example-basic-multiple1 form-control   my-select2" name="taluka" id="taluka" formControlName="talukaName"  >
+                            <option value="" selected >-- तालुका निवडा -- </option>
+                            <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
+                           
                         </select>
                     </div>
                 </div>
                 <div class=" col-sm-3">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
-                            <option value="">-- ग्राम पंचायत निवडा -- </option>
-                            <option value="1">मनसर</option>
-                            <option value="2">वरठी</option>
+                        <select class="form-control my-select2" name="gramPanchayat"  id="gramPanchayat" formControlName="grampanchayat_id">
+                            <option value="" selected="selected">- ग्राम पंचायत निवडा -- </option>
+                            <option *ngFor="let gramPanchayat of gramPanchayatList" value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}</option>
+                           
                         </select>
+                        <!-- <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.grampanchayat_id">Please select taluka</span> -->
                     </div>
                 </div>
                 <!-- <div class="col-sm-3">
@@ -45,16 +46,10 @@
         </form>
     </div>
 </div>
-<div class="card card-default">
-    <div class="card-body">
-        <!-- <form action="#" method="get">
-            <div class="col-md-4" id="input-group-search">
-                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search...">
-            </div>
-        </form>
-        <br> -->
-        <div class="table-responsive">
+<div class="card card-default"  *ngIf="otherTaxList?.data?.length > 0">
+    <div class="card-body" >
+       
+        <div class="table-responsive" >
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
@@ -65,66 +60,25 @@
                 </thead>
                 <tbody>
 
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold" *ngFor="let ele of otherTaxList.data">
                         <td class="text-center">
                             <div class="form-check d-inline-block">
-                                <input class="form-check-input" type="checkbox" value="" id="first">
+                                <input class="form-check-input" type="checkbox" value="" id="first" (click)="toggleCheck($event,ele)">
                             </div>
                         </td>
-                        <td>विजकर व दिवाबत्ती कर</td>
-                        <td contenteditable='true'></td>
-
+                        <td>{{ele.name}}</td>
+                        <td
+                            [attr.contenteditable]="ele.isChecked"
+                            (input)="restrictText($event)"
+                            [style.height.px]="20"
+                            style="overflow: hidden; resize: none; border: 1px solid #ddd; white-space: nowrap;"
+                            >
+                            {{ ele.tax_rate || 0 }}
+                            </td>
                     </tr>
-                    <tr class="font-weight-bold">
-                        <td class="text-center">
-                            <div class="form-check d-inline-block">
-                                <input class="form-check-input" type="checkbox" value="" id="first">
-                            </div>
-                        </td>
-                        <td>सफाई कर</td>
-                        <td contenteditable='true'></td>
-
-                    </tr>
-                    <tr class="font-weight-bold">
-                        <td class="text-center">
-                            <div class="form-check d-inline-block">
-                                <input class="form-check-input" type="checkbox" value="" id="first">
-                            </div>
-                        </td>
-                        <td>आरोग्य रक्षण कर</td>
-                        <td contenteditable='true'></td>
-
-                    </tr>
+                  
                 </tbody>
             </table>
         </div>
-        <!-- <br>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-seperated pagination-seperated-rounded">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
-                        <span class="d-none d-lg-inline-block">Prev</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="d-none d-lg-inline-block">Next</span>
-                        <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
     </div>
 </div>
