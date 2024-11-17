@@ -1,39 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class CommanTypeService {
   private baseUrl: string = 'http://localhost:4444/api/admin';
   constructor(private http: HttpClient) { }
 
 
-  // GET request
-  get<T>(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}/${endpoint}`);
-  }
+  postFormData<T>(endpoint: string, formData: any): Observable<T> {
 
-  // POST request
-  post<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}/${endpoint}`, data);
-  }
-
-  // postFormData<T>(endpoint: string, formData: any): Observable<T> {
-  //   return this.http.post<T>(`${this.baseUrl}/${endpoint}`, formData, {
-  //     headers: { 'Content-Type': 'multipart/form-data' }
-  //   }).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
-
-  // PUT request
-  put<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, data).pipe(
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+    return this.http.post<T>(`${this.baseUrl}/${endpoint}`, formData, {
+      headers: headers
+    }).pipe(
       catchError(this.handleError)
     );
   }
 
+  putFormData<T>(endpoint: string, formData: any): Observable<T> {
+
+    const headers = {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    };
+    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, formData, {
+      headers: headers
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
   private handleError(error: any): Observable<never> {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -48,12 +47,4 @@ export class ApiService {
     }
     return throwError(errorMessage);
   }
-
-  // DELETE request
-  delete<T>(endpoint: string): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}/${endpoint}`);
-  }
-
-
-
 }

@@ -43,6 +43,7 @@ export class SortingTableComponent<T> implements OnInit {
   }
 
   onDelete(item: any): void {
+
     this.delete.emit(item[this.keyName]);
   }
 

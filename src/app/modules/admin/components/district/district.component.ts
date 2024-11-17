@@ -153,9 +153,10 @@ export class DistrictComponent implements OnInit {
     getDistrict(districtId: number) {
         this.apiService.get('get-district/' + districtId).subscribe({
             next: (res: any) => {
-                this.districtForm.patchValue({
+                this.districtForm.setValue({
                     districtName: res?.data?.DISTRICT_NAME,
                 });
+                
 
                 this.districtId = res?.data?.DISTRICT_ID;
                 this.isEdit = true;
