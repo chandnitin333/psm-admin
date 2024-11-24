@@ -8,8 +8,9 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- जिल्हा निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="district">
+                            <option value>-- जिल्हा निवडा -- </option>
                             <option value="1">नागपुर</option>
                             <option value="2">भंडारा</option>
                         </select>
@@ -18,28 +19,33 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- तालुका निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="district">
+                            <option value>-- तालुका निवडा -- </option>
                             <option value="1">रामटेक</option>
                             <option value="2">तुमसर</option>
                         </select>
                     </div>
                 </div>
                 <div class=" col-sm-3">
-                    <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
+                    <label class="text-dark font-weight-medium">ग्राम
+                        पंचायत</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
-                            <option value="">-- ग्राम पंचायत निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat">
+                            <option value>-- ग्राम पंचायत निवडा -- </option>
                             <option value="1">मनसर</option>
                             <option value="2">वरठी</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <label class="text-dark font-weight-medium">गट ग्राम पंचायत</label>
+                    <label class="text-dark font-weight-medium">गट ग्राम
+                        पंचायत</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
-                            <option value="">-- गट ग्राम पंचायत निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat">
+                            <option value>-- गट ग्राम पंचायत निवडा -- </option>
                             <option value="1">मनसर</option>
                             <option value="2">वरठी</option>
                         </select>
@@ -48,36 +54,45 @@
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <label class="text-dark font-weight-medium">मालमत्तेचे प्रकार</label>
+                    <label class="text-dark font-weight-medium">मालमत्तेचे
+                        प्रकार</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="taluka">
-                            <option value="">-- मालमत्तेचे प्रकार निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="taluka">
+                            <option value>-- मालमत्तेचे प्रकार निवडा --
+                            </option>
                             <option value="1">निवासी</option>
                             <option value="2">अनिवासी</option>
                         </select>
                     </div>
                 </div>
                 <div class=" col-sm-3">
-                    <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
+                    <label class="text-dark font-weight-medium">मालमत्तेचे
+                        वर्णन</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
-                            <option value="">-- मालमत्तेचे वर्णन निवडा -- </option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat">
+                            <option value>-- मालमत्तेचे वर्णन निवडा -- </option>
                             <option value="1">निवासी</option>
                             <option value="2">अनिवासी</option>
                         </select>
                     </div>
                 </div>
                 <div class=" col-sm-3">
-                    <label class="text-dark font-weight-medium">पवार्षिक मूल्य दर</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="kranchi_nave" name="kranchi_nave"
+                    <label class="text-dark font-weight-medium">पवार्षिक मूल्य
+                        दर</label>
+                    <div class>
+                        <input type="text" class="form-control"
+                            id="kranchi_nave" name="kranchi_nave"
                             placeholder="उदा. 1200">
                     </div>
                 </div>
                 <div class=" col-sm-3">
-                    <label class="text-dark font-weight-medium">आकारणी दर</label>
-                    <div class="">
-                        <input type="text" class="form-control" id="kranchi_nave" name="kranchi_nave"
+                    <label class="text-dark font-weight-medium">आकारणी
+                        दर</label>
+                    <div class>
+                        <input type="text" class="form-control"
+                            id="kranchi_nave" name="kranchi_nave"
                             placeholder="उदा. 1.20">
                     </div>
                 </div>
@@ -86,7 +101,8 @@
 
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
+                        <button type="button" class="btn btn-pill btn-primary"
+                            title="Save"><strong>जतन
                                 करा</strong></button>
                     </div>
                 </div>
@@ -103,208 +119,65 @@
             </div>
         </form>
         <br> -->
-
-
-        <div *ngFor="let ele of districtList" class="district-header p-2">
-            <div class="row mt-1">
-            <div class="col-md-12">
-              <button (click)="toggleCollapse(ele?.DISTRICT_ID)">
-                <i class=" toggle-nested" [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i> <span class="text-dark font-weight-bold ml-2">{{ ele?.DISTRICT_NAME }}</span> 
-              </button>
-            </div>
-            </div>  
-            <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]" >
-               
-                <div class="table-responsive mt-1">
-            
-                    <app-sorting-table
-                    [data]="items"
-                    [columns]="displayedColumns"
-                    [currentPage]="currentPage"
-                    (edit)="editInfo($event)"
-                    (delete)="deleteInfo($event)"
-                    [keyName]="keyName">
-                    </app-sorting-table>
-                    <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-                    </span>{{totalItems}}</div>
-                </div>
-        
-                <div class="col-md-12 p-2">
-                    <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-                    (pageChange)="onPageChange($event)">
-                    </app-pagination>
-                </div>
-                <br/>
-               
-               
-            </div>
-           
-            
-          </div>
-          
-
-        <!-- <div class="table-responsive">
-            <table class="table table-bordered ">
+        <div>
+            <table class="table ">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center" style="width:2%">#</th>
+                        <th class="text-center"
+                            style="width:2%">#</th>
                         <th>जिल्हा</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="font-weight-bold">
-                        <td>
-                            <i class="mdi mdi-plus-circle toggle-nested"></i>
-                        </td>
-                        <td>नागपुर</td>
-                    </tr>
-                    <tr class="nested-table d-none">
-                        <td colspan="3">
-                            <table class="table table-bordered">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>अनुक्रमांक</th>
-                                        <th>जिल्हा</th>
-                                        <th>मालमत्तेचे प्रकार</th>
-                                        <th>मालमत्तेचे वर्णन</th>
-                                        <th>वार्षिक मूल्य दर</th>
-                                        <th>आकारणी दर</th>
-                                        <th>क्रिया</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>नागपुर</td>
-                                        <td>आर सी सी</td>
-                                        <td>निवासी</td>
-                                        <td contenteditable='true'>21296</td>
-                                        <td contenteditable='true'>1.20</td>
-                                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                                    class="mdi mdi-square-edit-outline"></i>
-                                                एडिट</a> &nbsp;<a href=""
-                                                class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>नागपुर</td>
-                                        <td>आर सी सी</td>
-                                        <td>निवासी</td>
-                                        <td contenteditable='true'>21296</td>
-                                        <td contenteditable='true'>1.20</td>
-                                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                                    class="mdi mdi-square-edit-outline"></i>
-                                                एडिट</a> &nbsp;<a href=""
-                                                class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="font-weight-bold">
-                        <td>
-                            <i class="mdi mdi-plus-circle toggle-nested"></i>
-                        </td>
-                        <td>भंडारा</td>
-                    </tr>
-                    <tr class="nested-table d-none">
-                        <td colspan="3">
-                            <table class="table table-bordered">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>अनुक्रमांक</th>
-                                        <th>जिल्हा</th>
-                                        <th>मालमत्तेचे प्रकार</th>
-                                        <th>मालमत्तेचे वर्णन</th>
-                                        <th>वार्षिक मूल्य दर</th>
-                                        <th>आकारणी दर</th>
-                                        <th>क्रिया</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>भंडारा</td>
-                                        <td>आर सी सी</td>
-                                        <td>निवासी</td>
-                                        <td contenteditable='true'>21296</td>
-                                        <td contenteditable='true'>1.20</td>
-                                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                                    class="mdi mdi-square-edit-outline"></i>
-                                                एडिट</a> &nbsp;<a href=""
-                                                class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>भंडारा</td>
-                                        <td>आर सी सी</td>
-                                        <td>निवासी</td>
-                                        <td contenteditable='true'>21296</td>
-                                        <td contenteditable='true'>1.20</td>
-                                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                                    class="mdi mdi-square-edit-outline"></i>
-                                                एडिट</a> &nbsp;<a href=""
-                                                class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
             </table>
-        </div> -->
+            <div *ngFor="let ele of districtList" class="m-0">
+                <div class="row mt-0">
 
+                    <div class="col-md-12 mb-0">
+                        <table class="table">
+                            <thead class>
+                                <tr>
+                                    <th class="text-center border"
+                                        (click)="toggleCollapse(ele?.DISTRICT_ID)"
+                                        style="width:2%"><i
+                                            class=" toggle-nested "
+                                            [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
+                                    <th class="border"> <span
+                                            class="text-dark font-weight-bold ml-2 ">{{
+                                            ele?.DISTRICT_NAME }}</span></th>
+                                </tr>
+                            </thead>
+                        </table>
 
-        <!-- <br>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-seperated pagination-seperated-rounded">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
-                        <span class="d-none d-lg-inline-block">Prev</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="d-none d-lg-inline-block">Next</span>
-                        <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
-    </div>
-</div>
-<script>
-    // $(document).ready(function () {
-    //     console.log("dd")
-    //     $('.toggle-nested').click(function () {
-    //         var $button = $(this);
-    //         var $nestedTable = $button.closest('tr').nextUntil('tr:not(.nested-table)', '.nested-table');
+                    </div>
+                </div>
+                <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]"
+                    class="mt-0 mb-2">
 
-    //         if ($nestedTable.is(':visible')) {
-    //             $nestedTable.hide();
-    //             $button.text('+');
-    //         } else {
-    //             $nestedTable.show();
-    //             $button.text('-');
-    //         }
-    //     });
-    // });
-</script>
+                    <div class=" mt-0">
+
+                        <app-sorting-table
+                            [data]="items"
+                            [columns]="displayedColumns"
+                            [currentPage]="currentPage"
+                            (edit)="editInfo($event)"
+                            (delete)="deleteInfo($event)"
+                            [keyName]="keyName">
+                        </app-sorting-table>
+                        <div class="float-left font-weight-bold mt-1"><span
+                                class="font-weight-bold">Total Records :
+                            </span>{{totalItems}}</div>
+                    </div>
+
+                    <div class="col-md-12 p-2">
+                        <app-pagination class="float-right "
+                            [totalItems]="totalItems"
+                            [itemsPerPage]="itemsPerPage"
+                            (pageChange)="onPageChange($event)">
+                        </app-pagination>
+                    </div>
+                    <br />
+
+                </div>
+
+            </div>
+        </div>

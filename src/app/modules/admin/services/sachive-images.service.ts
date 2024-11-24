@@ -12,8 +12,8 @@ export class SachiveImagesService {
     return this.api.post('get-dashboard-data-list', params);
   }
 
-  getSachiveImagesById(id: number) {
-    return this.api.get('get-dashboard-data/' + id,);
+  getSachiveImagesById(id: number, type: string) {
+    return this.api.get('get-dashboard-data/' + id + '/' + type,);
   }
 
 

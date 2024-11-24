@@ -35,14 +35,21 @@ export class AddnewsachivComponent {
     showOverlay = false;
     changeFileName: string = '';
     isEdit: boolean = false;
+    type: string = '';
+    list = ['sachive', 'sarpanch', 'upsarpanch'];
     constructor(private sachive: SachiveImagesService, private route: ActivatedRoute, private titleService: Title, private util: Util, private api: ApiService, private comman: CommanTypeService, private toast: ToastrService, private router: Router) { }
     ngOnInit(): void {
         this.titleService.setTitle('Add new sachiv');
+        this.route.queryParamMap.subscribe((params) => {
+            this.type = params.get('type') ?? '';
+        });
         this.fetchDistrict();
         this.recordId = Number(this.route.snapshot.paramMap.get('id') || 0);
         if (this.recordId) {
             this.getInfo();
         }
+
+
     }
 
     ngAfterViewInit(): void {
@@ -82,7 +89,7 @@ export class AddnewsachivComponent {
 
     getInfo() {
 
-        this.sachive.getSachiveImagesById(this.recordId).subscribe({
+        this.sachive.getSachiveImagesById(this.recordId, this.type).subscribe({
             next: (res: any) => {
                 this.isEdit = true;
                 this.sachiveData = res.data ?? [];
@@ -98,11 +105,12 @@ export class AddnewsachivComponent {
                 this.selectPanchayat = Number(this.sachiveData.PANCHAYAT_ID); // spell-check-disable-line
                 this.formData.set('panchayat_id', this.selectPanchayat.toString()); // spell-check-disable-line
 
-                this.sachivName = this.sachiveData.FILE_NAME;
+                let i = this.list.indexOf(this.type) != 0 ? this.list.indexOf(this.type) == 1 ? 1 : 2 : '';
+                this.sachivName = this.sachiveData[`FILE_NAME${i}`];
 
 
 
-                this.selectedFileName = this.sachiveData.R_PATH;
+                this.selectedFileName = this.sachiveData[`R_PATH${i}`];
 
 
                 setTimeout(() => {
@@ -128,12 +136,14 @@ export class AddnewsachivComponent {
         }
         this.formData.set('name', this.sachivName);
         this.formData.set('id', this.recordId.toString());
+        this.formData.set('type', this.type);
+        localStorage.setItem('current_tab', this.type)
         this.comman.putFormData('update-dashboard-data/' + this.recordId, this.formData).subscribe({
             next: (res: any) => {
                 this.toast.success('Sachive images updated successfully.', 'Success');
                 setTimeout(() => {
                     this.router.navigate(['/admin/sachiv-list']);
-                }, 1000);
+                }, 500);
             },
             error: (error: any) => {
                 console.error('Error update dashboard data:', error);
@@ -192,7 +202,7 @@ export class AddnewsachivComponent {
             return;
         }
         this.formData.set('name', this.sachivName);
-
+        this.formData.set('type', this.type);
         const fileInput: any = document.getElementById('sachiv_image');  // Get file input
         const file = fileInput?.files[0];
         this.formData.set('upload_profile', file, file.name);
