@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { ITEM_PER_PAGE } from '../../constants/admin.constant';
 import { SachiveImagesService } from '../../services/sachive-images.service';
 import Util from '../../utils/utils';
@@ -29,17 +30,21 @@ export class SachivimagesComponent {
     { key: 'FILE_NAME', label: 'सचिव नाव' },
   ];
 
-  keyName: string = 'INCOME_ID';
+  keyName: string = 'UPLOAD_ID';
   marathiText: string = '';
-
-  constructor(private titleService: Title, private sachive: SachiveImagesService, private util: Util) { }
+  talukaList: any = [];
+  districtList: any = [];
+  panchayatList: any = [];
+  sachiveData: any = [];
+  constructor(private titleService: Title, private sachive: SachiveImagesService, private util: Util, private toast: ToastrService, private router: Router) { }
   ngOnInit(): void {
     this.titleService.setTitle('Sachiv Images List');
-    this.fetchData();
+
+    this.fetchDataSachiveData();
   }
 
 
-  fetchData() {
+  fetchDataSachiveData() {
     this.sachive.fetchSachiveImagesList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
       next: (res: any) => {
         this.items = res?.data ?? [];
@@ -52,18 +57,66 @@ export class SachivimagesComponent {
 
   }
 
+  async fetchTaluka() {
+    this.talukaList = await this.util.getTalukaById([]);
+  }
 
-  editInfo(id: number) {
+  fetchDistrict() {
+    this.util.getDistrictDDL().then((observable) => {
+      observable.subscribe({
+        next: (res: any) => {
+          this.districtList = res?.data ?? [];
+
+        },
+        error: (err: any) => {
+          console.error('Error get TaxList Data:', err);
+        }
+      });
+    });
+  }
+
+
+
+
+  async fetchPanchayat() {
+    this.panchayatList = await this.util.getGatGramTalukaById([]);
 
   }
 
-  deleteInfo(id: number) {
+  getInfo(id: number) {
 
+  }
+
+
+  editInfo(id: number) {
+
+    this.router.navigate(['admin/add-new-sachiv-images/', id]);
+  }
+
+  deleteInfo(id: number) {
+    this.util.showConfirmAlert().then((res) => {
+      if (!id) {
+        this.toast.warning("Gat Sachive Id is required", "Warning!");
+        return
+      }
+      if (res) {
+        this.sachive.deleteSachiveImagesById(id).subscribe({
+          next: (res: any) => {
+            this.toast.success('Record deleted successfully', "Success!");
+            this.fetchDataSachiveData();
+          },
+          error: (err: any) => {
+            this.toast.error('Record delete failed', "Failed!");
+            console.error('Error get TaxList Data:', err);
+          }
+        });
+      }
+    });
   }
 
   onPageChange(page: number) {
     this.currentPage = page;
-    this.fetchData();
+    this.fetchDataSachiveData();
   }
 
   translateText(event: Event) {
@@ -79,10 +132,28 @@ export class SachivimagesComponent {
 
   filterData() {
 
+    this.currentPage = 1;
+    this.debounceFetchData();
+
+  }
+
+  private debounceFetchData = this.debounce(() => {
+    this.fetchDataSachiveData();
+  }, 1000);
+
+  private debounce(func: Function, wait: number) {
+    let timeout: any;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args);
+      }, wait);
+    };
   }
 
   resetFilter(event: Event) {
-
+    this.searchValue = '';
+		this.fetchDataSachiveData();
   }
 
 }

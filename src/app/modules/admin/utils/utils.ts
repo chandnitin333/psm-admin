@@ -141,6 +141,23 @@ export class Util {
             return [];
         }
     }
+
+    async getTalukaById(params: any) {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        };
+
+        return await this.http.post(`${API_URL}taluka-list-by-district-id`, params, { headers }).toPromise();
+
+    }
+    async getGatGramTalukaById(params: any) {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        };
+        return await this.http.post(`${API_URL}panchayat-list-by-taluka-id`, params, { headers }).toPromise();
+    }
 }
 
 

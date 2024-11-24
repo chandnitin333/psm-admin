@@ -213,7 +213,7 @@ export class TalukaComponent implements OnInit {
 				}
 			});
 		} else {
-			this.toastr.warning('Please fill all required fields.', 'warning');
+			this.toastr.warning('कृपया सर्व आवश्यक फील्ड भरा.', 'warning');
 			return;
 		}
 	}
@@ -226,8 +226,10 @@ export class TalukaComponent implements OnInit {
 			return;
 		}
 		this.isEdit = true;
-		this.talukaForm.get('district_id')?.setValue(taluka.DISTRICT_ID);
+		this.talukaForm.get('district_id')?.patchValue(taluka.DISTRICT_ID);
+
 		this.talukaForm.get('name')?.setValue(taluka.TALUKA_NAME);
+		$('#mySelect').val(taluka.DISTRICT_ID).trigger('change');
 		this.modifyTaluka = {
 			id: id,
 			district_id: this.talukaForm.value.district_id || 0,
@@ -252,7 +254,7 @@ export class TalukaComponent implements OnInit {
 			next: (res: any) => {
 				this.getTalukas();
 				this.reset();
-				this.toastr.success('Taluka has been successfully updated.', 'Success');
+				this.toastr.success('तालुका यशस्वीरित्या अद्ययावत करण्यात आला आहे.', 'Success');
 			},
 			error: (err: Error) => {
 				console.error('Error updating taluka:', err);

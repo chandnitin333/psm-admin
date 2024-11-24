@@ -6,65 +6,114 @@
         <form>
             <div class="row">
                 <div class="col-sm-6">
-                    <label class="text-dark font-weight-medium">जिल्हा</label>
+                    <label
+                        class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- जिल्हा निवडा -- </option>
-                            <option value="1">नागपुर</option>
-                            <option value="2">भंडारा</option>
+                        <select
+                            class="js-example-basic-multiple1 form-control my-select2"
+                            name="district" id="district"
+                            [(ngModel)]="selectDistrict">
+                            <option value>-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let district of districtList"
+                                [value]="district.DISTRICT_ID">{{
+                                district.DISTRICT_NAME }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
-                            <option value="">-- तालुका निवडा -- </option>
-                            <option value="1">रामटेक</option>
-                            <option value="2">तुमसर</option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="taluka" id="taluka"
+                            [(ngModel)]="selectTaluka">
+                            <option value>-- तालुका निवडा -- </option>
+                            <option *ngFor="let taluka of talukaList"
+                                [value]="taluka.TALUKA_ID">{{
+                                taluka.TALUKA_NAME }}</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class=" col-sm-6">
-                    <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
+                    <label class="text-dark font-weight-medium">ग्राम
+                        पंचायत {{selectPanchayat}}</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
-                            <option value="">-- ग्राम पंचायत निवडा -- </option>
-                            <option value="1">मनसर</option>
-                            <option value="2">वरठी</option>
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat" id="gramPanchayat"
+                            [(ngModel)]="selectPanchayat">
+                            <option value>-- ग्राम पंचायत निवडा -- </option>
+                            <option *ngFor="let panchayat of panchayatList"
+                                [value]="panchayat.PANCHAYAT_ID">{{
+                                panchayat.PANCHAYAT_NAME }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">सचिव नाव</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="sachiv_name" name="sachiv_name"
-                            placeholder="उदा. रवी सुरज शर्मा">
+                        <input type="text" class="form-control" id="sachiv_name"
+                            name="sachiv_name"
+                            placeholder="उदा. रवी सुरज शर्मा"
+                            [(ngModel)]="sachivName"
+                            (keyup.enter)="translateText($event)">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class=" col-sm-6">
-                    <label class="text-dark font-weight-medium">सचिव इमेज</label>
+                    <label class="text-dark font-weight-medium">सचिव
+                        इमेज</label>
                     <div class="form-group">
-                        <input type="file" class="form-control" id="sachiv_image" name="sachiv_image">
+                        <input type="file" class="form-control "
+                            id="sachiv_image" name="sachiv_image"
+                            (change)="onFileSelected($event)" accept="image/*"
+                            #fileInput>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+
+                        <div
+                            class="overlay-container"
+                            (mouseover)="showOverlay = true"
+                            (mouseout)="showOverlay = false"
+                            style="position: relative; display: inline-block;">
+                            <img
+                                [src]="changeFileName ? changeFileName : '../../assets/images/user/user-sm-02.jpg'"
+                                alt="sachiv_image"
+                                class="img-thumbnail"
+                                style="width: 100px;"
+                                id="sachiv_image">
+                            <div
+                                class="overlay"
+                                [style.opacity]="showOverlay ? 1 : 0"
+                                (click)="fileInput.click()"
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); color: white; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s;">
+                                <i class="mdi mdi-pencil"
+                                    style="font-size: 24px;"></i>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group ">
-                        <button type="button" class="btn btn-pill btn-primary col-md-12 col-sm-12"
-                            title="Save"><strong>जतन
-                                करा</strong></button>
+                        <button type="button" class="btn btn-pill btn-primary"
+                            title="Save"
+                            (click)="(!isEdit)  ? addSachiv() : updateInfo()"><strong>{{(isEdit)
+                                ? "बदल करा" : "जतन करा"}}</strong></button>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 text-left">
                     <div class="form-group ">
-                        <a routerLink="../sachiv-list" class="btn btn-pill btn-danger col-md-12 col-sm-12"
-                            title="Back Page"><strong><i class="mdi mdi-arrow-left-bold-box"></i>मागील पृष्ठ ( Back
+                        <a [routerLink]="['/admin/sachiv-list']"
+                            class="btn btn-pill btn-danger col-md-12 col-sm-12"
+                            title="Back Page"><strong><i
+                                    class="mdi mdi-arrow-left-bold-box"></i>मागील
+                                पृष्ठ ( Back
                                 )</strong></a>
                     </div>
                 </div>

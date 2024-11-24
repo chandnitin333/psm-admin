@@ -17,7 +17,7 @@ ng g c modules/admin/components/service
 ng add @ng-bootstrap/ng-bootstrap
 ng add @fortawesome/angular-fontawesome
 
-
+ npm i --legacy-peer-deps
 
 
 

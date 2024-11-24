@@ -26,6 +26,7 @@ import { KaryaKaraniKametiService } from './services/karya-karani-kameti.service
 import { KamkajKametiService } from './services/kamkaj-kameti.service';
 import { BdoService } from './services/bdo.service';
 import { SachiveImagesService } from './services/sachive-images.service';
+import { UploadFileService } from './services/upload-file.service';
 
 
 
@@ -74,6 +75,7 @@ import { SachiveImagesService } from './services/sachive-images.service';
     ToastrService,
     BdoService,
     SachiveImagesService,
+    UploadFileService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,
