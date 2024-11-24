@@ -27,6 +27,7 @@ import { KamkajKametiService } from './services/kamkaj-kameti.service';
 import { BdoService } from './services/bdo.service';
 import { SachiveImagesService } from './services/sachive-images.service';
 import { UploadFileService } from './services/upload-file.service';
+import { UsersService } from './services/users.service';
 
 
 
@@ -76,6 +77,8 @@ import { UploadFileService } from './services/upload-file.service';
     BdoService,
     SachiveImagesService,
     UploadFileService,
+    UsersService
+    ,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeaderInterceptor,
