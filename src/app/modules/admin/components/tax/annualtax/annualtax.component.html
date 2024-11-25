@@ -3,20 +3,20 @@
         <h2 class="card-header-label"><strong>एनुअल टैक्स</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="annualTaxForm">
             <div class="row">
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control"
-                            name="district">
-                            <option value>-- जिल्हा निवडा -- </option>
-                            <option value="1">नागपुर</option>
-                            <option value="2">भंडारा</option>
+                        <select formControlName="district_id" name="selectedOption" id="mySelect"
+                            class="form-control my-select2" placeholder="Select district">
+                            <option value="">-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let district of districtList" [value]="district.DISTRICT_ID">{{
+                                district.DISTRICT_NAME }}</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <!-- <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
                         <select class="js-example-basic-multiple1 form-control"
@@ -50,19 +50,17 @@
                             <option value="2">वरठी</option>
                         </select>
                     </div>
-                </div>
-            </div>
-            <div class="row">
+                </div> -->
+
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">मालमत्तेचे
                         प्रकार</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control"
-                            name="taluka">
-                            <option value>-- मालमत्तेचे प्रकार निवडा --
-                            </option>
-                            <option value="1">निवासी</option>
-                            <option value="2">अनिवासी</option>
+                        <select formControlName="malmattaId" class="my-select2 form-control" name="malmatta_prakar"
+                            id="malmatta_id" placeholder="Malmatta Prakar">
+                            <option value="">-- मालमत्तेचे प्रकार निवडा -- </option>
+                            <option *ngFor="let malmatta of malmattaList" [value]="malmatta.MALMATTA_ID">{{
+                                malmatta.DESCRIPTION_NAME }}</option>
                         </select>
                     </div>
                 </div>
@@ -99,13 +97,30 @@
             </div>
             <div class="row">
 
+                <div class=" col-sm-3">
+                    <label class="text-dark font-weight-medium">आकारणी दर</label>
+                    <div class="">
+                        <input type="text" class="form-control" id="aakarniDar" name="aakarniDar"
+                            placeholder="उदा. 1.20" formControlName="aakarniDar" (keydown)="onKeydown($event,'aakarniDar')">
+                    </div>
+                </div>
                 <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">&nbsp;</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                                करा"}}</strong></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <!-- <div class="col-sm-3">
                     <div class="form-group">
                         <button type="button" class="btn btn-pill btn-primary"
                             title="Save"><strong>जतन
                                 करा</strong></button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </form>
     </div>
@@ -119,8 +134,45 @@
             </div>
         </form>
         <br> -->
-        <div>
-            <table class="table ">
+
+
+        <div *ngFor="let ele of districtList" class="district-header p-2">
+            <div class="row mt-1">
+                <div class="col-md-12">
+                    <button (click)="toggleCollapse(ele?.DISTRICT_ID)">
+                        <i class=" toggle-nested"
+                            [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                        <span class="text-dark font-weight-bold ml-2">{{ ele?.DISTRICT_NAME }}</span>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]">
+
+                <div class="table-responsive mt-1">
+
+                    <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                        (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
+                    </app-sorting-table>
+                    <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+                        </span>{{totalItems}}</div>
+                </div>
+
+                <div class="col-md-12 p-2">
+                    <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+                        (pageChange)="onPageChange($event)">
+                    </app-pagination>
+                </div>
+                <br />
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- <div class="table-responsive">
+            <table class="table table-bordered ">
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center"

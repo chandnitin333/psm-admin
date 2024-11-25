@@ -27,7 +27,7 @@ export class SortingTableComponent<T> implements OnInit {
   marathiText: string = '';
 
   ngOnInit(): void {
-    console.log('data', this.data);
+    // console.log('data', this.data);
     this.filteredData = this.data;
   }
 

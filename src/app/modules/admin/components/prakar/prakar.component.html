@@ -1,29 +1,36 @@
-<div class="card card-default">
+<div *ngIf="isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+</div>
+<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>प्रकार</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="prakarForm">
             <div class="form-group row">
                 <label for="prakar" class="col-sm-1 col-form-label">प्रकार </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="prakar" name="prakar" placeholder="उदा. गावठान">
+                    <input type="text" class="form-control" id="prakar" name="prakar" placeholder="उदा. गावठान"
+                        formControlName="prakarName" (keypress)="keyDownText($event,'prakarName')">
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
-                            करा</strong></button>
+                    <button type="button" class="btn btn-pill btn-primary" title="Save"
+                        (click)="(!isEdit)  ? addPrakar() : updatePrakar()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                            करा"}}</strong></button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<div class="card card-default">
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-        <div class="col-md-4  mt-2 p-0" >
+        <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData($event)"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
@@ -34,24 +41,18 @@
         <br>
 
         <div class="table-responsive">
-            
-            <app-sorting-table
-            [data]="items"
-            [columns]="displayedColumns"
-            [currentPage]="currentPage"
-            (edit)="editInfo($event)"
-            (delete)="deleteInfo($event)"
-            [keyName]="keyName">
+
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-            </span>{{totalItems}}</div>
+                </span>{{totalItems}}</div>
         </div>
 
 
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-        (pageChange)="onPageChange($event)">
+            (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>
-
