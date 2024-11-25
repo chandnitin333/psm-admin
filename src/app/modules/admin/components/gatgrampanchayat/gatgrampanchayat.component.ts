@@ -109,7 +109,7 @@ export class GatgrampanchayatComponent {
 	getGramPanchayByTaluka(talikaId: any) {
 
 		this.gatGramPanchayatService.getGatGramTalukaById({ id: talikaId }).subscribe((res: any) => {
-			console.log("res====", res);
+			
 			this.gramPanchayatList = res?.data ?? [];
 			console.log("gramPanchayatList=========Test", this.gramPanchayatList);
 

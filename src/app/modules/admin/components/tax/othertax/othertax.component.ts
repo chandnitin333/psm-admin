@@ -91,19 +91,19 @@ export class OthertaxComponent {
 
         this.otherTax.fetchOtherTaxList({ page_number: this.currentPage, search_text: '', panchayat_id: id }).subscribe((res: any) => {
             this.otherTaxList = res?.data ?? [];
-            
+
             let data: any = [];
             let taxData = res?.data[0];
             for (const key in taxData) {
                 if (key.startsWith('TAXID')) {
                     let id = taxData[key] ?? '';
-                    
+
                     let obj = { name: this.taxList[taxData[key]], tax_rate: taxData[key.replace('TAXID', 'TAXRATE')] ?? 0, tax_id: id ?? '', isChecked: false };
                     data.push(obj);
                 }
             }
             this.otherTaxList = { ...taxData, data };
-            
+            console.log("otherTaxList=", this.otherTaxList);
         });
 
     }
@@ -125,25 +125,25 @@ export class OthertaxComponent {
 
     }
     toggleCheck(event: Event, data: any) {
-        
+
         const isChecked = (event.target as HTMLInputElement).checked;
         const tax = this.otherTaxList.data.find((el: any) => el.tax_id === data?.tax_id);
         if (tax) {
             tax.isChecked = isChecked;
         }
 
-        
+
     }
     restrictText(event: Event): void {
         const element = event.target as HTMLElement;
-        
+
         // Optional: Restrict to a single line (remove line breaks)
         element.innerText = element.innerText.replace(/\n/g, '');
-        
+
         // Optional: Limit text length (e.g., max 10 characters)
         const maxLength = 10;
         if (element.innerText.length > maxLength) {
-          element.innerText = element.innerText.substring(0, maxLength);
+            element.innerText = element.innerText.substring(0, maxLength);
         }
-      }
+    }
 }
