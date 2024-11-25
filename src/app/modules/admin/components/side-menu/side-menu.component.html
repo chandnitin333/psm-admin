@@ -2,8 +2,9 @@
   <div id="sidebar" class="sidebar sidebar-with-footer">
     <!-- Aplication Brand -->
     <div class="app-brand">
-       <a href="javascript:void(0)"routerLink="home">
-        <img src="assets/gramvikas_images/gram_vikas.png" alt="gram vikar image" height="80%">
+      <a href="javascript:void(0)" routerLink="home">
+        <img src="assets/gramvikas_images/gram_vikas.png" alt="gram vikar image"
+          height="80%">
         <!-- <span class="brand-name">Panchayat Samiti</span> -->
       </a>
     </div>
@@ -13,44 +14,56 @@
       <ul class="nav sidebar-inner" id="sidebar-menu">
 
         <li [ngClass]="{'active': router.url.includes('district')}">
-             <a href="javascript:void(0)"class="sidenav-item-link" routerLink="district" title="District" >
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="district" title="District">
             <i class="mdi mdi-map"></i>
             <span class="nav-text">जिल्हा</span>
-            </a>
+          </a>
         </li>
 
         <li [ngClass]="{'active': router.url.includes('taluka')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="taluka" title="Tahsil" >
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="taluka" title="Tahsil">
             <i class="mdi mdi-map-marker"></i>
             <span class="nav-text">तालुका</span>
           </a>
         </li>
 
-        <li  [ngClass]="{'active': router.url.includes('gram-panchayat') && !router.url.includes('gat-gram-panchayat')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="gram-panchayat" title="Gram Panchayat">
+        <li
+          [ngClass]="{'active': router.url.includes('gram-panchayat') && !router.url.includes('gat-gram-panchayat')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="gram-panchayat" title="Gram Panchayat">
             <i class="mdi mdi-flag"></i>
             <span class="nav-text text-wrap">ग्राम पंचायत</span>
           </a>
         </li>
 
         <li [ngClass]="{'active': router.url.includes('gat-gram-panchayat')}">
-          
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="gat-gram-panchayat" title="Gat Gram Panchayat" >
+
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="gat-gram-panchayat" title="Gat Gram Panchayat">
             <i class="mdi mdi-flag"></i>
             <span class="nav-text text-wrap">गट ग्राम पंचायत </span>
           </a>
         </li>
 
-        <li class="has-sub " #myUserElement [ngClass]="{'expand active': router.url.includes('users')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#users"
-            [attr.aria-expanded]="router.url.includes('users') ? 'true' : 'false'" aria-controls="users"  >
+        <li class="has-sub " #myUserElement
+          [ngClass]="{'expand active': router.url.includes('users')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            href="javascript:void(0)" data-toggle="collapse"
+            data-target="#users"
+            [attr.aria-expanded]="router.url.includes('users') ? 'true' : 'false'"
+            aria-controls="users">
             <i class="mdi mdi-account-plus"></i>
             <span class="nav-text">यूजर</span> <b class="caret"></b>
           </a>
-          <ul class="collapse" id="users" data-parent="#sidebar-menu" [ngClass]="{'show': router.url.includes('users')}">
+          <ul class="collapse" id="users" data-parent="#sidebar-menu"
+            [ngClass]="{'show': router.url.includes('users')}">
             <div class="sub-menu">
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="users" [ngClass]="{'active': router.url.includes('users')}">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="users"
+                  [ngClass]="{'active': router.url.includes('users')}">
                   <span class="nav-text text-wrap">नविन यूजर जोडा</span>
                 </a>
               </li>
@@ -114,60 +127,76 @@
         </li> -->
 
         <li [ngClass]="{'active': router.url.includes('floor')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="floor" title="Floor" >
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="floor" title="Floor">
             <i class="mdi mdi-office-building"></i>
             <span class="nav-text">फ्लोर</span>
           </a>
         </li>
 
-        <li [ngClass]="{'active': router.url.includes('prakar') && !router.url.match('malmatteche-prakar') }">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="prakar" title="types" >
+        <li
+          [ngClass]="{'active': router.url.includes('prakar') && !router.url.match('malmatteche-prakar') }">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="prakar" title="types">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">प्रकार</span>
           </a>
         </li>
 
         <li [ngClass]="{'active': router.url.match('malmatteche-prakar')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="malmatteche-prakar" title="types of Propoerty">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="malmatteche-prakar" title="types of Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मालमत्तेचे प्रकार</span>
           </a>
         </li>
 
-        <li   [ngClass]="{'active': router.url.match('milkat-vapar')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="milkat-vapar" title="Use of Propoerty">
+        <li [ngClass]="{'active': router.url.match('milkat-vapar')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="milkat-vapar" title="Use of Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मिलकत वापर</span>
           </a>
         </li>
 
-        <li  [ngClass]="{'active': router.url.match('malmatta')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="malmatta" title="Propoerty">
+        <li [ngClass]="{'active': router.url.match('malmatta')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="malmatta" title="Propoerty">
             <i class="mdi mdi-file"></i>
             <span class="nav-text">मालमत्ता</span>
           </a>
         </li>
 
-        <li class="has-sub" #myTaxElement (click)="toggleClass('tax')" [ngClass]="{'expand active': router.url.includes('tax')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#tax"
-          [attr.aria-expanded]="router.url.includes('users') ? 'true' : 'false'" aria-controls="tax">
+        <li class="has-sub" #myTaxElement (click)="toggleClass('tax')"
+          [ngClass]="{'expand active': router.url.includes('tax')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            href="javascript:void(0)" data-toggle="collapse" data-target="#tax"
+            [attr.aria-expanded]="router.url.includes('users') ? 'true' : 'false'"
+            aria-controls="tax">
             <i class="mdi mdi-ticket-percent"></i>
             <span class="nav-text">टैक्स</span> <b class="caret"></b>
           </a>
-          <ul class="collapse" id="tax" data-parent="#sidebar-menu" [ngClass]="{'show': router.url.includes('tax')}">
+          <ul class="collapse" id="tax" data-parent="#sidebar-menu"
+            [ngClass]="{'show': router.url.includes('tax')}">
             <div class="sub-menu">
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="tax" [ngClass]="{'active': router.url.includes('tax') && !router.url.includes('other') && !router.url.includes('annual')}">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="tax"
+                  [ngClass]="{'active': router.url.includes('tax') && !router.url.includes('other') && !router.url.includes('annual')}">
                   <span class="nav-text">टैक्स</span>
                 </a>
               </li>
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="other-tax" [ngClass]="{'expand active': router.url.includes('other')  && !router.url.includes('annual')}">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="other-tax"
+                  [ngClass]="{'expand active': router.url.includes('other')  && !router.url.includes('annual')}">
                   <span class="nav-text">इतर टैक्स</span>
                 </a>
               </li>
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="annual-tax" [ngClass]="{'expand active': router.url.includes('annual') && !router.url.includes('other') }">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="annual-tax"
+                  [ngClass]="{'expand active': router.url.includes('annual') && !router.url.includes('other') }">
                   <span class="nav-text">एनुअल टैक्स</span>
                 </a>
               </li>
@@ -196,28 +225,37 @@
           </a>
         </li> -->
 
-        <li  [ngClass]="{'active': router.url.match('open-plots-list')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="open-plots-list">
+        <li [ngClass]="{'active': router.url.match('open-plots-list')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="open-plots-list">
             <i class="mdi mdi-cash-multiple"></i>
             <span class="nav-text">ओपन प्लाट रेट्स</span>
           </a>
         </li>
 
-        <li class="has-sub" #myDarElement (click)="toggleClass('dar')"  [ngClass]="{'expand active': router.url.includes('dar')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#dar"
-          [attr.aria-expanded]="router.url.includes('dar') ? 'true' : 'false'"  aria-controls="dar">
+        <li class="has-sub" #myDarElement (click)="toggleClass('dar')"
+          [ngClass]="{'expand active': router.url.includes('dar')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            href="javascript:void(0)" data-toggle="collapse" data-target="#dar"
+            [attr.aria-expanded]="router.url.includes('dar') ? 'true' : 'false'"
+            aria-controls="dar">
             <i class="mdi mdi-cash-multiple"></i>
             <span class="nav-text">दर</span> <b class="caret"></b>
           </a>
-          <ul class="collapse" id="dar" data-parent="#sidebar-menu" [ngClass]="{'show': router.url.includes('dar')  }">
+          <ul class="collapse" id="dar" data-parent="#sidebar-menu"
+            [ngClass]="{'show': router.url.includes('dar')  }">
             <div class="sub-menu">
-              <li  [ngClass]="{'active': router.url.includes('dar')}">
-                 <a href="javascript:void(0)" class="sidenav-item-link" routerLink="ghasara-dar" [ngClass]="{'active': router.url.includes('dar') && !router.url.includes('bharank-dar')}">
+              <li [ngClass]="{'active': router.url.includes('dar')}">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="ghasara-dar"
+                  [ngClass]="{'active': router.url.includes('dar') && !router.url.includes('bharank-dar')}">
                   <span class="nav-text">घसारा दर</span>
                 </a>
               </li>
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="bharank-dar"  [ngClass]="{'active': router.url.includes('bharank-dar')}">
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="bharank-dar"
+                  [ngClass]="{'active': router.url.includes('bharank-dar')}">
                   <span class="nav-text">भारांक दर</span>
                 </a>
               </li>
@@ -239,8 +277,9 @@
           </a>
         </li> -->
 
-        <li  [ngClass]="{'active': router.url.includes('tower')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="tower">
+        <li [ngClass]="{'active': router.url.includes('tower')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="tower">
             <i class="mdi mdi-radio-tower"></i>
             <span class="nav-text">टावर</span>
           </a>
@@ -259,21 +298,30 @@
             <span class="nav-text">कामकाज कमेटी</span>
           </a>
         </li> -->
-        <li class="has-sub" #myCamiteeElement (click)="toggleClass('camitee')" [ngClass]="{'expand active': router.url.includes('kameti')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#kameti"
-           [attr.aria-expanded]="router.url.includes('kameti') ? 'true' : 'false'"  aria-controls="kameti">
+        <li class="has-sub" #myCamiteeElement (click)="toggleClass('camitee')"
+          [ngClass]="{'expand active': router.url.includes('kameti')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            href="javascript:void(0)" data-toggle="collapse"
+            data-target="#kameti"
+            [attr.aria-expanded]="router.url.includes('kameti') ? 'true' : 'false'"
+            aria-controls="kameti">
             <i class="mdi mdi-account-group"></i>
             <span class="nav-text">कमेटी</span> <b class="caret"></b>
           </a>
-          <ul class="collapse" id="kameti" data-parent="#sidebar-menu" [ngClass]="{'show': router.url.includes('kameti')}">
+          <ul class="collapse" id="kameti" data-parent="#sidebar-menu"
+            [ngClass]="{'show': router.url.includes('kameti')}">
             <div class="sub-menu">
-              <li >
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="karya-karani-kameti" [ngClass]="{'active': router.url.includes('karya-karani')}">
+              <li>
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="karya-karani-kameti"
+                  [ngClass]="{'active': router.url.includes('karya-karani')}">
                   <span class="nav-text">कार्यकारणी कमेटी</span>
                 </a>
               </li>
-              <li >
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="kamkaj-kameti" [ngClass]="{'active': router.url.includes('kamkaj-kameti')}">
+              <li>
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="kamkaj-kameti"
+                  [ngClass]="{'active': router.url.includes('kamkaj-kameti')}">
                   <span class="nav-text">कामकाज कमेटी</span>
                 </a>
               </li>
@@ -281,22 +329,24 @@
           </ul>
         </li>
 
-        <li  [ngClass]="{'active': router.url.includes('map')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="">
+        <li [ngClass]="{'active': router.url.includes('map')}">
+          <a href="javascript:void(0)" class="sidenav-item-link" routerLink>
             <i class="mdi mdi-google-maps"></i>
             <span class="nav-text">मैप</span>
           </a>
         </li>
 
-        <li  [ngClass]="{'active': router.url.includes('upload-file')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="upload-file">
+        <li [ngClass]="{'active': router.url.includes('upload-file')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="upload-file">
             <i class="mdi mdi-file-upload"></i>
             <span class="nav-text">अपलोड फाइल</span>
           </a>
         </li>
 
-        <li  [ngClass]="{'active': router.url.includes('bdo')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="bdo">
+        <li [ngClass]="{'active': router.url.includes('bdo')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="bdo">
             <i class="mdi mdi-account-plus"></i>
             <span class="nav-text">बी डी ओ नविन जोड़ा</span>
           </a>
@@ -322,20 +372,27 @@
             <span class="nav-text">उपसरपंच इमेजेस</span>
           </a>
         </li> -->
-        <li class="has-sub" #myImagesElement (click)="toggleClass('images')" [ngClass]="{'expand active': router.url.includes('sachiv') || router.url.includes('sarpanch') || router.url.includes('oopsarpanch')}">
-           <a href="javascript:void(0)"class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#images"
-           [attr.aria-expanded]="router.url.includes('dar') ? 'true' : 'false'" aria-controls="images">
+        <li class="has-sub" #myImagesElement (click)="toggleClass('images')"
+          [ngClass]="{'expand active': router.url.includes('sachiv') || router.url.includes('sarpanch') || router.url.includes('oopsarpanch')}">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            href="javascript:void(0)" data-toggle="collapse"
+            data-target="#images"
+            [attr.aria-expanded]="router.url.includes('dar') ? 'true' : 'false'"
+            aria-controls="images">
             <i class="mdi mdi-image-filter"></i>
             <span class="nav-text">इमेजेस</span> <b class="caret"></b>
           </a>
-          <ul class="collapse" id="images" data-parent="#sidebar-menu" [ngClass]="{'show ':  router.url.includes('sachiv') || router.url.includes('sarpanch') || router.url.includes('oopsarpanch')}">
+          <ul class="collapse" id="images" data-parent="#sidebar-menu"
+            [ngClass]="{'show ':  router.url.includes('sachiv') || router.url.includes('sarpanch') || router.url.includes('oopsarpanch')}">
             <div class="sub-menu">
               <li>
-                 <a href="javascript:void(0)"class="sidenav-item-link" routerLink="sachiv-list" [ngClass]="{'active':  router.url.includes('sachiv') }">
-                  <span class="nav-text">सचिव इमेजेस</span>
+                <a href="javascript:void(0)" class="sidenav-item-link"
+                  routerLink="sachiv-list"
+                  [ngClass]="{'active':  router.url.includes('sachiv') }">
+                  <span class="nav-text"> इमेजेस जोडा</span>
                 </a>
               </li>
-              <li>
+              <!-- <li>
                  <a href="javascript:void(0)"class="sidenav-item-link" routerLink="sarpanch-list" [ngClass]="{'active':  router.url.includes('sarpanch') && !router.url.includes('oopsarpanch') }">
                   <span class="nav-text">सरपंच इमेजेस</span>
                 </a>
@@ -344,19 +401,18 @@
                  <a href="javascript:void(0)"class="sidenav-item-link" routerLink="oopsarpanch-list" [ngClass]="{'active':  router.url.includes('oopsarpanch') }">
                   <span class="nav-text">उपसरपंच इमेजेस</span>
                 </a>
-              </li>
+              </li> -->
             </div>
           </ul>
         </li>
 
         <li>
-           <a href="javascript:void(0)"class="sidenav-item-link" routerLink="admin">
+          <a href="javascript:void(0)" class="sidenav-item-link"
+            routerLink="admin">
             <i class="mdi  mdi-account"></i>
             <span class="nav-text">एडमिन</span>
           </a>
         </li>
-
-
 
       </ul>
     </div>

@@ -134,6 +134,7 @@ export class TaxComponent {
         }
   }
 
+  
 
   editInfo(id: number) {
     console.log(id,"Kundan")
