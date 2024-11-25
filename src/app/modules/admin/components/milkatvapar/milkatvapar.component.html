@@ -1,31 +1,38 @@
-<div class="card card-default">
+<div *ngIf="isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+</div>
+<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>मिलकत वापर</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="milkatVaparForm">
             <div class="row">
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="district">
+                        <select formControlName="malmatteche_prakar_id" name="selectedOption" id="mySelect"
+                            class="form-control my-select2" placeholder="malmatteche prakar">
                             <option value="">-- मालमत्तेचे वर्णन निवडा -- </option>
-                            <option value="1">निवासी</option>
-                            <option value="2">अनिवासी</option>
+                            <option *ngFor="let mPrakar of malmattechePrakarsList" [value]="mPrakar.MILKAT_VAPAR_ID">{{
+                                mPrakar.MILKAT_VAPAR_NAME }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">मिलकत</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="district" name="district" placeholder="उदा. रामटेक">
+                        <input type="text" class="form-control" id="milkat" name="milkat" placeholder="उदा. रामटेक"
+                            formControlName="name" (keydown)="onKeydown($event,'name')">
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group mt-6">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
-                                करा</strong></button>
+                        <button type="button" class="btn btn-pill btn-primary" title="Save"
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                                करा"}}</strong></button>
                     </div>
                 </div>
             </div>
@@ -33,12 +40,13 @@
     </div>
 </div>
 
-<div class="card card-default">
+<div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-        <div class="col-md-4  mt-2 p-0" >
+        <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData()"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
@@ -49,23 +57,18 @@
         <br>
 
         <div class="table-responsive">
-            
-            <app-sorting-table
-            [data]="items"
-            [columns]="displayedColumns"
-            [currentPage]="currentPage"
-            (edit)="editInfo($event)"
-            (delete)="deleteInfo($event)"
-            [keyName]="keyName">
+
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-            </span>{{totalItems}}</div>
+                </span>{{totalItems}}</div>
         </div>
 
 
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-        (pageChange)="onPageChange($event)">
+            (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>

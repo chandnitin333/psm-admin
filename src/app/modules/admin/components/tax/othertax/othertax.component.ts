@@ -1,16 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { GatGramPanchayatService } from '../../../services/gat-gram-panchayat.service';
 import { GramPanchayatService } from '../../../services/gram-panchayat.service';
 import { OtherTaxService } from '../../../services/other-tax.service';
 import { TalukaService } from '../../../services/taluka.service';
 import Util from '../../../utils/utils';
+import { PaginationComponent } from '../../pagination/pagination.component';
+import { SortingTableComponent } from '../../sorting-table/sorting-table.component';
+import { ConfirmationDialogModule } from '../../../module/confirmation-dialog/confirmation-dialog.module';
+import { SkeletonLoaderComponent } from '../../skeleton-loader/skeleton-loader.component';
 @Component({
     selector: 'app-othertax',
     standalone: true,
-    imports: [CommonModule],
+    imports: [
+        PaginationComponent, 
+        SortingTableComponent,
+        ConfirmationDialogModule, 
+        SkeletonLoaderComponent, 
+        CommonModule],
     templateUrl: './othertax.component.html',
     styleUrl: './othertax.component.css'
 })
@@ -25,6 +34,7 @@ export class OthertaxComponent {
     currentPage: number = 1;
     taxList: any = [];
     form: FormGroup;
+    
 
     constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder) {
         this.form = this.fb.group({
@@ -136,6 +146,7 @@ export class OthertaxComponent {
     }
     restrictText(event: Event): void {
         const element = event.target as HTMLElement;
+        // console.log("test", (event.target as HTMLInputElement).value)
         
         // Optional: Restrict to a single line (remove line breaks)
         element.innerText = element.innerText.replace(/\n/g, '');
@@ -146,4 +157,9 @@ export class OthertaxComponent {
           element.innerText = element.innerText.substring(0, maxLength);
         }
       }
+    
+    changeTaxById(event: KeyboardEvent): void {
+        const content = (event.target as HTMLElement).innerText;
+        console.log('Contenteditable value:', content);
+    }
 }

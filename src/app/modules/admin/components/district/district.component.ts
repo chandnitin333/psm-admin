@@ -73,9 +73,9 @@ export class DistrictComponent implements OnInit {
                 this.items = res?.data;
                 this.totalItems = res?.total_count ?? 0;
                 this.itemsPerPage = res?.limit;
-                setTimeout(() => {
-                    this.isLoading = false;
-                }, 1000);
+                this.isLoading = false;
+                // setTimeout(() => {
+                // }, 1000);
             });
     }
     onPageChange(page: number): void {
@@ -207,6 +207,7 @@ export class DistrictComponent implements OnInit {
                         next: () => {
                             this.isSubmitted = true;
                             this.toastr.success('District has been successfully deleted.', 'Success');
+                            this.fetchDistrictData();
                             this.isLoading = false;
                             this.district = this.district.filter((dist: any) => {
                                 return dist.DISTRICT_ID !== districtId;
@@ -232,7 +233,8 @@ export class DistrictComponent implements OnInit {
     onConfirmed(confirmed: boolean) {
         if (confirmed) {
             // Perform the delete action
-            console.log('Taluka deleted');
+            console.log('District deleted', confirmed);
+            //  this.fetchDistrictData();
         } else {
             console.log('Delete action cancelled');
         }

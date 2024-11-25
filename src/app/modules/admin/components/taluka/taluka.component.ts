@@ -48,7 +48,6 @@ export class TalukaComponent implements OnInit {
 	totalItems: number = 0;
 	commonText: string = ''
 	debounceTimeout: any;
-	districts1: any = [];
 	districts: any = [];
 	selectedDistrict = "";
 	searchControl = new FormControl();
@@ -85,12 +84,7 @@ export class TalukaComponent implements OnInit {
 			let data = item as any;
 			this.items = data?.data?.talukas;
 			this.isLoading = false;
-
 		});
-
-
-
-
 	}
 
 	ngAfterViewInit(): void {
@@ -102,7 +96,6 @@ export class TalukaComponent implements OnInit {
 		});
 
 	}
-
 
 	translateText(event: Event) {
 		this.util.getTranslateText(event, this.marathiText).subscribe({
@@ -263,7 +256,7 @@ export class TalukaComponent implements OnInit {
 
 	onConfirmed(confirmed: boolean) {
 		if (confirmed) {
-
+			this.fetchDistrictData();
 		} else {
 			console.log('Delete action cancelled');
 		}
@@ -291,8 +284,6 @@ export class TalukaComponent implements OnInit {
 			}
 		}
 		);
-
-
 	}
 
 

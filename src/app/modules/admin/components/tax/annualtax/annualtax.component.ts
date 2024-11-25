@@ -1,22 +1,29 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import $ from 'jquery'; // Import jQuery
+import $, { param } from 'jquery'; // Import jQuery
 import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 import { AnualTaxService } from '../../../services/anual-tax.service';
 import Util from '../../../utils/utils';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { SortingTableComponent } from '../../sorting-table/sorting-table.component';
+import { ApiService } from '../../../../../services/api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-annualtax',
     standalone: true,
-    imports: [FormsModule, CommonModule, PaginationComponent, SortingTableComponent],
+    imports: [FormsModule, CommonModule, PaginationComponent, SortingTableComponent,ReactiveFormsModule],
     templateUrl: './annualtax.component.html',
     styleUrl: './annualtax.component.css'
 })
 export class AnnualtaxComponent {
+    isLoading: boolean = true;
+    isEdit: boolean = false;
+    isSubmitted: boolean = false;
+    private annualTaxId: number = 0;
+
     currentPage: number = 1;
     searchValue: string = '';
     items: any = [];
@@ -34,20 +41,32 @@ export class AnnualtaxComponent {
     keyName: string = 'ANNUALTAX_ID';
     marathiText: string = '';
     districtList: any = [];
+    malmattaList:any =[];
+    malmattaVarnanList:any =[];
     selectTab: number = 0;
     collapsedDistricts: { [district: string]: boolean } = {};
     groupedData: any = [];
     selectedDistrict: any;
-    constructor(private titleService: Title, private anual: AnualTaxService, private util: Util) { }
+    annualTaxForm = new FormGroup({
+		district_id: new FormControl<number | null>(null),
+		malmattaId: new FormControl<number | null>(null),
+        malmattaPrakarId: new FormControl<number | null>(null),
+        mulyaDar: new FormControl(undefined),
+        aakarniDar: new FormControl(undefined),
+	});
+    constructor(private titleService: Title, private anual: AnualTaxService, private util: Util,private apiService: ApiService,private toastr: ToastrService,) { }
     ngOnInit(): void {
         this.titleService.setTitle('Annual Tax');
+        // this.getAllDistricts();
         this.fetchDistrict();
+        this.fetchMalmattechePrakar();
+        this.getAllMalmattaVarnanList();
         // this.fetchAnualList();
 
 
     }
     fetchDistrict() {
-        this.anual.getDistrictList().subscribe({
+        this.apiService.post("district-list-ddl",{}).subscribe({
             next: (res: any) => {
                 this.districtList = res.data;
                 this.districtList.forEach((item: any) => {
@@ -60,7 +79,110 @@ export class AnnualtaxComponent {
         });
     }
 
+    // async getAllDistricts() {
+	// 	this.districtList = await this.util.getDistrictDDL('district-list-ddl')
+	// }
 
+    async getAllMalmattaVarnanList() {
+		this.malmattaVarnanList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
+	}
+
+    fetchMalmattechePrakar()
+    {
+        let params = {};
+        this.apiService.post('malmatta-list-ddl', params).subscribe({
+            next: (res: any) => {
+                this.malmattaList = res.data;
+            },
+            error: (err: any) => {
+                console.error('Error::  fetch District List :', err);
+            }
+        });
+    }
+
+    submitData() {
+        this.isSubmitted = true;
+
+        // console.log(this.milkatVaparForm.value);
+        if (this.annualTaxForm.valid && this.annualTaxForm.value.district_id && this.annualTaxForm.value.malmattaId && this.annualTaxForm.value.malmattaPrakarId && this.annualTaxForm.value.mulyaDar && this.annualTaxForm.value.aakarniDar) {
+            let params: any = {
+                district_id: this.annualTaxForm.value.district_id,
+                malmatta_id: this.annualTaxForm.value.malmattaId,
+                milkat_vapar_id: this.annualTaxForm.value.malmattaPrakarId,
+                annualprice_name: this.annualTaxForm.value.mulyaDar,
+                levyrate_name: this.annualTaxForm.value.aakarniDar
+            }
+             this.apiService.post('add-annual-tax', params).subscribe((res: any) => {
+                if(res.status !== 400)
+                {
+                    // console.log("id", this.annualTaxForm.value.district_id)
+                    // console.log("param", params.district_id)
+                    this.fetchData(this.annualTaxForm.value.district_id);
+                    this.reset();
+                    this.toastr.success(res.message,'Success');
+                    this.isSubmitted = true;
+                    // this.fetchDistrict();
+                }
+                else{
+                    this.toastr.warning("Annual Tax already exits. please try another one.",'Warning');
+                }
+                // if (res.status == 201) {
+                //     this.toastr.success(res.message, "Success");
+                //     this.reset();
+                //     this.isSubmitted = false;
+                //     // this.fetchData();
+                // } else {
+                //     this.toastr.error(res.message, "Error");
+                // }
+            });
+        } else {
+            this.toastr.error('Please fill all the fields','Error');
+        }
+    }
+
+    reset() {
+        this.annualTaxForm.reset();
+        $('#mySelect').val('').trigger('change');
+        $('#malmatta_id').val('').trigger('change');
+        $('#malmatta_varnan').val('').trigger('change');
+        this.isEdit = false;
+    }
+    updateData() {
+        this.isSubmitted = true;
+        if (this.annualTaxForm.valid && this.annualTaxForm.value.district_id && this.annualTaxForm.value.malmattaId && this.annualTaxForm.value.malmattaPrakarId && this.annualTaxForm.value.mulyaDar && this.annualTaxForm.value.aakarniDar) {
+            let params: any = {
+                district_id: this.annualTaxForm.value.district_id,
+                malmatta_id: this.annualTaxForm.value.malmattaId,
+                milkat_vapar_id: this.annualTaxForm.value.malmattaPrakarId,
+                annualprice_name: this.annualTaxForm.value.mulyaDar,
+                levyrate_name: this.annualTaxForm.value.aakarniDar,
+                annualtax_id: this.annualTaxId
+            }
+            this.apiService.put("update-annual-tax",params).subscribe({
+                next: (res: any) => {
+                    if (res.status == 200) {
+                        this.isSubmitted = false;
+                        this.toastr.success(res?.message, 'Success');
+                        this.fetchData(this.annualTaxForm.value.district_id);
+                        this.reset();
+                        //  this.fetchDistrict();
+                    } else {
+                        this.toastr.warning(res?.message, 'Success');
+                    }
+                },
+                error: (err: Error) => {
+                    console.error('Error updating annual tax:', err);
+                    this.toastr.error('There was an error updating annual tax.', 'Error');
+                }
+            });
+        } else {
+            this.toastr.error('Please fill all the fields', 'Error');
+        }
+
+    }
+    onKeydown(event: KeyboardEvent, controlName: string): void {
+        this.util.onKeydown(event, controlName, this.annualTaxForm);
+    }
 
     ngAfterViewInit(): void {
         // Initialize jQuery click handlers
