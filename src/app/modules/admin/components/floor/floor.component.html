@@ -1,8 +1,7 @@
 <div *ngIf="isLoading">
     <app-skeleton-loader></app-skeleton-loader>
 </div>
-<app-confirmation-dialog #confirmationDialog
-    (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>फ्लोर</strong></h2>
@@ -10,13 +9,9 @@
     <div class="px-6 py-4">
         <form [formGroup]="floorForm">
             <div class="form-group row">
-                <label for="floor" class="col-sm-2 col-form-label">बांधकामाचा
-                    मजला </label>
+                <label for="floor" class="col-sm-2 col-form-label">बांधकामाचा मजला </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="floor"
-                        name="floor" placeholder="उदा. प. मजला"
-                        formControlName="floorName"
-                        (keypress)="keyDownText($event,'floorName')">
+                    <input type="text" class="form-control" id="floor" name="floor" placeholder="उदा. प. मजला" formControlName="floorName" (keypress)="keyDownText($event,'floorName')">
                 </div>
                 <div class="col-sm-3">
                    
@@ -34,15 +29,11 @@
     <div class="card-body">
         <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
-                <input type="text" autocomplete="off" name="query"
-                    id="search-input" class="form-control"
-                    placeholder="Search..."
-                    (keyup.enter)="translateText($event); "
-                    (input)="filterData($event)"
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData($event)"
                     [(ngModel)]="searchValue">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                        (click)="resetFilter($event)">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
                     </button>
                 </div>
@@ -52,19 +43,16 @@
 
         <div class="table-responsive">
 
-            <app-sorting-table [data]="items" [columns]="displayedColumns"
-                [currentPage]="currentPage"
-                (edit)="editInfo($event)" (delete)="deleteInfo($event)"
-                [keyName]="keyName">
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
-            <div class="float-left font-weight-bold mt-1"><span
-                    class="font-weight-bold">Total Records :
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
                 </span>{{totalItems}}</div>
         </div>
 
+
         <br>
-        <app-pagination class="float-right" [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage"
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
             (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
