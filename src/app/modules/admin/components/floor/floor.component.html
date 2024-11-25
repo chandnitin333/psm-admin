@@ -19,13 +19,12 @@
                         (keypress)="keyDownText($event,'floorName')">
                 </div>
                 <div class="col-sm-3">
-                    <!-- <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
-                            करा</strong></button> -->
+                   
                     <button type="button" class="btn btn-pill btn-primary"
                         title="Save"
-                        (click)="(!isEdit)  ? addFloor() : updateFloor()"><strong>{{(isEdit)
+                        (click)="(!isEdit)  ? addFloor() : updateFloor()"><strong> {{ (isEdit)
                             ? "बदल करा" : "जतन
-                            करा"}}</strong></button>
+                            करा" }}</strong></button>
                 </div>
             </div>
         </form>
