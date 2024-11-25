@@ -13,5 +13,18 @@ export class FloorService {
   }
 
 
+  addFloor(params: any) {
+    return this.api.post(`floor`, params);
+  }
 
+  updateFloor(params: any) {
+    return this.api.put(`update-floor`, params);
+  }
+
+  getFloorById(id: number) {
+    return this.api.get(`floor/${id}`);
+  }
+  deleteFloor(id: number) {
+    return this.api.delete(`delete-floor/${id}`);
+  }
 }
