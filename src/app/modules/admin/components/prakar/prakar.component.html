@@ -13,10 +13,12 @@
                 <label for="prakar" class="col-sm-1 col-form-label">प्रकार
                 </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="prakar" name="prakar" placeholder="उदा. गावठान">
+                    <input type="text" class="form-control" id="prakar"
+                        name="prakar" placeholder="उदा. गावठान">
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary" title="Save"><strong>जतन
+                    <button type="button" class="btn btn-pill btn-primary"
+                        title="Save"><strong>जतन
                             करा</strong></button>
                 </div>
             </div>
@@ -28,8 +30,11 @@
     <div class="card-body">
         <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
-                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                <input type="text" autocomplete="off" name="query"
+                    id="search-input" class="form-control"
+                    placeholder="Search..."
+                    (keyup.enter)="translateText($event); filterData($event); "
+                    (input)="filterData($event)" [(ngModel)]="searchValue">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button"
                         (click)="resetFilter($event)">
@@ -41,14 +46,14 @@
         <br>
 
         <div class="table-responsive">
-            
+
             <app-sorting-table
-            [data]="items"
-            [columns]="displayedColumns"
-            [currentPage]="currentPage"
-            (edit)="editInfo($event)"
-            (delete)="deleteInfo($event)"
-            [keyName]="keyName">
+                [data]="items"
+                [columns]="displayedColumns"
+                [currentPage]="currentPage"
+                (edit)="editInfo($event)"
+                (delete)="deleteInfo($event)"
+                [keyName]="keyName">
             </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span
                     class="font-weight-bold">Total Records :
@@ -62,4 +67,3 @@
         </app-pagination>
     </div>
 </div>
-
