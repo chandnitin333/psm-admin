@@ -7,25 +7,26 @@ import { HttpHeaderInterceptor } from '../../http.interceptor';
 import { ApiService } from '../../services/api.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { LoaderComponent } from './components/loader/loader.component';
-import { GatGramPanchayatService } from './services/gat-gram-panchayat.service';
-import { GramPanchayatService } from './services/gram-panchayat.service';
-import { TalukaService } from './services/taluka.service';
-import { FloorService } from './services/floor.service';
-import { PrakarService } from './services/prakar.service';
-import { MalamataPrakarService } from './services/malamata-prakar.service';
-import { MilkatVaparService } from './services/milkat-vapar.service';
-import { MalmataService } from './services/malmata.service';
-import { TaxService } from './services/tax.service';
-import { OtherTaxService } from './services/other-tax.service';
 import { AnualTaxService } from './services/anual-tax.service';
-import { OpenPlotRatesService } from './services/open-plot-rates.service';
-import { GhasaraRatesService } from './services/ghasara-rates.service';
-import { BharankRatesService } from './services/bharank-rates.service';
-import { TawarService } from './services/tawar.service';
-import { KaryaKaraniKametiService } from './services/karya-karani-kameti.service';
-import { KamkajKametiService } from './services/kamkaj-kameti.service';
 import { BdoService } from './services/bdo.service';
+import { BharankRatesService } from './services/bharank-rates.service';
+import { FloorService } from './services/floor.service';
+import { GatGramPanchayatService } from './services/gat-gram-panchayat.service';
+import { GhasaraRatesService } from './services/ghasara-rates.service';
+import { GramPanchayatService } from './services/gram-panchayat.service';
+import { KamkajKametiService } from './services/kamkaj-kameti.service';
+import { KaryaKaraniKametiService } from './services/karya-karani-kameti.service';
+import { MalamataPrakarService } from './services/malamata-prakar.service';
+import { MalmataService } from './services/malmata.service';
+import { MilkatVaparService } from './services/milkat-vapar.service';
+import { OpenPlotRatesService } from './services/open-plot-rates.service';
+import { OtherTaxService } from './services/other-tax.service';
+import { PrakarService } from './services/prakar.service';
 import { SachiveImagesService } from './services/sachive-images.service';
+import { TalukaService } from './services/taluka.service';
+import { TawarService } from './services/tawar.service';
+import { TaxService } from './services/tax.service';
+import { TowerService } from './services/tower.service';
 import { UploadFileService } from './services/upload-file.service';
 import { UsersService } from './services/users.service';
 
@@ -77,7 +78,8 @@ import { UsersService } from './services/users.service';
     BdoService,
     SachiveImagesService,
     UploadFileService,
-    UsersService
+    UsersService,
+    TowerService
     ,
     {
       provide: HTTP_INTERCEPTORS,
