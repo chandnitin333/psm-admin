@@ -52,7 +52,8 @@ export class DistrictComponent implements OnInit {
         private apiService: ApiService,
         private toastr: ToastrService,
         private util: Util,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private toast: ToastrService
     ) { }
     @ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
     ngOnInit(): void {
@@ -156,7 +157,7 @@ export class DistrictComponent implements OnInit {
                 this.districtForm.setValue({
                     districtName: res?.data?.DISTRICT_NAME,
                 });
-                
+
 
                 this.districtId = res?.data?.DISTRICT_ID;
                 this.isEdit = true;
@@ -199,35 +200,35 @@ export class DistrictComponent implements OnInit {
 
     deleteDistrict(districtId: number): void {
 
-        if (this.confirmationDialog) {
-            this.confirmationDialog.open();
-            const subscription = this.confirmationDialog.confirmed.subscribe((confirmed) => {
-                if (confirmed) {
-                    this.isLoading = true;
-                    this.apiService.delete('district/' + districtId).subscribe({
-                        next: () => {
-                            this.isSubmitted = true;
-                            this.toastr.success('District has been successfully deleted.', 'Success');
-                            this.isLoading = false;
-                            this.district = this.district.filter((dist: any) => {
-                                return dist.DISTRICT_ID !== districtId;
-                            });
-                            this.items = this.district;
-                            this.confirmationDialog.close();
-                            subscription.unsubscribe();
-                        },
-                        error: (err: Error) => {
-                            this.isLoading = false;
-                            console.error('Error deleting district:', err);
-                            this.toastr.error('There was an error deleting the district.', 'Error');
-                            subscription.unsubscribe();
-                        },
-                    });
-                } else {
-                    subscription.unsubscribe();
-                }
-            });
-        }
+        this.util.showConfirmAlert().then((res) => {
+            if (!districtId) {
+                this.toast.warning("Gat Sachive Id is required", "Warning!");
+                return
+            }
+            if (res) {
+                this.isLoading = true;
+                this.apiService.delete('district/' + districtId).subscribe({
+                    next: () => {
+                        this.isSubmitted = true;
+                        this.toastr.success('District has been successfully deleted.', 'Success');
+                        this.isLoading = false;
+                        this.district = this.district.filter((dist: any) => {
+                            return dist.DISTRICT_ID !== districtId;
+                        });
+                        this.items = this.district;
+                        this.confirmationDialog.close();
+
+                    },
+                    error: (err: Error) => {
+                        this.isLoading = false;
+                        console.error('Error deleting district:', err);
+                        this.toastr.error('There was an error deleting the district.', 'Error');
+
+                    },
+                });
+            }
+        });
+
     }
 
     onConfirmed(confirmed: boolean) {
