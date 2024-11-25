@@ -1,89 +1,87 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ITEM_PER_PAGE } from '../../constants/admin.constant';
-import { PrakarService } from '../../services/prakar.service';
-import Util from '../../utils/utils';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { SortingTableComponent } from '../sorting-table/sorting-table.component';
-import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../../services/api.service';
-import { CommonModule } from '@angular/common';
+import { ITEM_PER_PAGE } from '../../constants/admin.constant';
+import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
+import { PrakarService } from '../../services/prakar.service';
+import Util from '../../utils/utils';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { PaginationComponent } from '../pagination/pagination.component';
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { SortingTableComponent } from '../sorting-table/sorting-table.component';
 
 @Component({
-  selector: 'app-prakar',
-  standalone: true,
-  imports: [PaginationComponent, SortingTableComponent, FormsModule, ConfirmationDialogModule, SkeletonLoaderComponent, ReactiveFormsModule, CommonModule],
-  templateUrl: './prakar.component.html',
-  styleUrl: './prakar.component.css'
+    selector: 'app-prakar',
+    standalone: true,
+    imports: [PaginationComponent, SortingTableComponent, FormsModule, ConfirmationDialogModule, SkeletonLoaderComponent, ReactiveFormsModule, CommonModule],
+    templateUrl: './prakar.component.html',
+    styleUrl: './prakar.component.css'
 })
 export class PrakarComponent {
-  isLoading: boolean = true;
-  isEdit: boolean = false;
-  isSubmitted: boolean = false;
-  currentPage: number = 1;
-  searchValue: string = '';
-  private prakarId: number = 0;
-  items: any = [];
-  totalItems: number = 0;
-  itemsPerPage: number = ITEM_PER_PAGE
-  displayedColumns: any = [
-    { key: 'sr_no', label: 'अनुक्रमांक' },
-    { key: 'PRAKAR_NAME', label: 'प्रकार' }
-  ];
+    isLoading: boolean = true;
+    isEdit: boolean = false;
+    isSubmitted: boolean = false;
+    currentPage: number = 1;
+    searchValue: string = '';
+    private prakarId: number = 0;
+    items: any = [];
+    totalItems: number = 0;
+    itemsPerPage: number = ITEM_PER_PAGE
+    displayedColumns: any = [
+        { key: 'sr_no', label: 'अनुक्रमांक' },
+        { key: 'PRAKAR_NAME', label: 'प्रकार' }
+    ];
 
-  prakarForm = new FormGroup({
-      prakarName: new FormControl(undefined),
-  });
-
-  keyName: string = 'PRAKAR_ID';
-  marathiText: string = '';
-
-  constructor(private titleService: Title, private prakar: PrakarService, private util: Util, private toastr: ToastrService,private apiService: ApiService,) { }
-
-  @ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
-  ngOnInit(): void {
-    this.titleService.setTitle('Prakar');
-    this.fetchData();
-  }
-
-  fetchData() {
-    this.prakar.fetchPrakarList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
-      next: (res: any) => {
-        this.items = res?.data ?? [];
-        this.totalItems = res?.totalRecords;
-        this.isLoading = false;
-      },
-      error: (err: any) => {
-        console.error('Error fetch Parkar Data:', err);
-      }
+    prakarForm = new FormGroup({
+        prakarName: new FormControl(undefined),
     });
-  }
 
-  keyDownText(event: KeyboardEvent, controlName: string): void {
+    keyName: string = 'PRAKAR_ID';
+    marathiText: string = '';
+
+    constructor(private titleService: Title, private prakar: PrakarService, private util: Util, private toastr: ToastrService, private apiService: ApiService,) { }
+
+    @ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
+    ngOnInit(): void {
+        this.titleService.setTitle('Prakar');
+        this.fetchData();
+    }
+
+    fetchData() {
+        this.prakar.fetchPrakarList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
+            next: (res: any) => {
+                this.items = res?.data ?? [];
+                this.totalItems = res?.totalRecords;
+                this.isLoading = false;
+            },
+            error: (err: any) => {
+                console.error('Error fetch Parkar Data:', err);
+            }
+        });
+    }
+
+    keyDownText(event: KeyboardEvent, controlName: string): void {
         this.util.onKeydown(event, controlName, this.prakarForm);
-  }
-  addPrakar(): void
-  {
-    if (!this.prakarForm.invalid && this.prakarForm.value.prakarName != null) {
+    }
+    addPrakar(): void {
+        if (!this.prakarForm.invalid && this.prakarForm.value.prakarName != null) {
             this.isLoading = true;
             let params = {
                 name: this.prakarForm.value.prakarName,
             };
             this.apiService.post('prakar', params).subscribe({
                 next: (res: any) => {
-                    if(res.status !== 400)
-                    {
+                    if (res.status !== 400) {
                         this.reset();
-                        this.toastr.success('Prakar has been successfully added.','Success');
+                        this.toastr.success('Prakar has been successfully added.', 'Success');
                         this.isSubmitted = true;
                         this.fetchData();
                     }
-                    else{
-                        this.toastr.warning("Prakar already exits. please try another one.",'Warning');
+                    else {
+                        this.toastr.warning("Prakar already exits. please try another one.", 'Warning');
                     }
                     this.isLoading = false;
                 },
@@ -95,16 +93,15 @@ export class PrakarComponent {
         } else {
             this.toastr.warning('Please fill all required fields.', 'warning');
         }
-  }
+    }
 
-  reset() {
-    this.prakarForm.reset();
-    this.isEdit = false;
-  }
+    reset() {
+        this.prakarForm.reset();
+        this.isEdit = false;
+    }
 
-  updatePrakar()
-  {
-    if (!this.prakarForm.invalid && this.prakarForm.value.prakarName != null) {
+    updatePrakar() {
+        if (!this.prakarForm.invalid && this.prakarForm.value.prakarName != null) {
             this.isLoading = true;
             let params = {
                 name: this.prakarForm.value.prakarName,
@@ -112,17 +109,15 @@ export class PrakarComponent {
             };
             this.apiService.put('update-prakar', params).subscribe({
                 next: (res: any) => {
-                    if(res.status !== 400)
-                    {
+                    if (res.status !== 400) {
                         this.reset();
                         this.isSubmitted = true;
                         this.toastr.success('Prakar has been successfully updated.', 'Success');
                         this.searchValue = '';
                         this.fetchData();
                     }
-                    else
-                    {
-                        this.toastr.warning("Updated prakar name already exists. Please choose a different name",'Warning');
+                    else {
+                        this.toastr.warning("Updated prakar name already exists. Please choose a different name", 'Warning');
                     }
                     this.isLoading = false;
                 },
@@ -134,10 +129,10 @@ export class PrakarComponent {
         } else {
             this.toastr.warning('Please fill all required fields.', 'warning');
         }
-  }
+    }
 
-  editInfo(id: number) {
-    this.isLoading = true;
+    editInfo(id: number) {
+        this.isLoading = true;
         this.apiService.get('prakar/' + id).subscribe({
             next: (res: any) => {
                 this.prakarForm.patchValue({
@@ -153,21 +148,21 @@ export class PrakarComponent {
                 this.toastr.error('There was an error getting the prakar.', 'Error');
             },
         });
-  }
+    }
 
-  deleteInfo(id: number) {
-    this.util.showConfirmAlert().then((res) => {
+    deleteInfo(id: number) {
+        this.util.showConfirmAlert().then((res) => {
             if (id === 0) {
                 this.toastr.error('This Prakar cannot be deleted.', 'Error');
                 return;
             }
             if (res) {
-                 this.apiService.delete('/delete-prakar/' + id).subscribe({
+                this.apiService.delete('/delete-prakar/' + id).subscribe({
                     next: (res: any) => {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
                             this.fetchData();
-                            
+
                         } else {
                             this.toastr.error(res.message, "Error");
                         }
@@ -180,31 +175,31 @@ export class PrakarComponent {
                 });
             }
         });
-  }
+    }
 
-  onPageChange(page: number) {
-    this.currentPage = page;
-    this.fetchData();
-  }
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.fetchData();
+    }
 
-  translateText(event: Event) {
-    this.util.getTranslateText(event, this.marathiText).subscribe({
-      next: (translatedText: string) => {
-        this.marathiText = translatedText;
-      },
-      error: (error: any) => {
-        console.error('Error translating text:', error);
-      },
-    });
-  }
+    translateText(event: Event) {
+        this.util.getTranslateText(event, this.marathiText).subscribe({
+            next: (translatedText: string) => {
+                this.marathiText = translatedText;
+            },
+            error: (error: any) => {
+                console.error('Error translating text:', error);
+            },
+        });
+    }
 
-  filterData(event: Event) {
-      const searchText = (event.target as HTMLInputElement).value.toLowerCase();
+    filterData(event: Event) {
+        const searchText = (event.target as HTMLInputElement).value.toLowerCase();
         this.currentPage = 1;
         this.searchValue = searchText;
         this.debounceFetchData();
-  }
-  private debounceFetchData = this.debounce(() => {
+    }
+    private debounceFetchData = this.debounce(() => {
         this.fetchData();
     }, 1000);
 
@@ -218,13 +213,13 @@ export class PrakarComponent {
         };
     }
 
-  resetFilter(event: Event) {
-      this.searchValue = '';
+    resetFilter(event: Event) {
+        this.searchValue = '';
         this.currentPage = 1;
         this.fetchData();
-  }
+    }
 
-   onConfirmed(confirmed: boolean) {
+    onConfirmed(confirmed: boolean) {
         if (confirmed) {
             console.log('prakar deleted', confirmed);
         } else {
