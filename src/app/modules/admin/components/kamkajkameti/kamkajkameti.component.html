@@ -3,15 +3,16 @@
         <h2 class="card-header-label"><strong>कामकाज कमेटी</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="kamkajComiteeForm">
             <div class="row">
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
+                        <select formControlName="panchayatName" class="my-select2 form-control" name="panchayat_name"
+                            id="panchayat_id" placeholder="Panchayat Name">
                             <option value="">-- ग्राम पंचायत निवडा -- </option>
-                            <option value="1">मनसर</option>
-                            <option value="2">वरठी</option>
+                            <option *ngFor="let panchayat of panchayatList" [value]="panchayat.PANCHAYAT_ID">{{
+                                panchayat.PANCHAYAT_NAME }}</option>
                         </select>
                     </div>
                 </div>
@@ -19,7 +20,7 @@
                     <label class="text-dark font-weight-medium">फर्स्ट नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="first_name" name="first_name"
-                            placeholder="उदा. रवि ">
+                            placeholder="उदा. रवि" formControlName="first_name" (keydown)="onKeydown($event,'first_name')">
                     </div>
                 </div>
             </div>
@@ -28,14 +29,14 @@
                     <label class="text-dark font-weight-medium">मधली नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="middle_name" name="middle_name"
-                            placeholder="उदा. सुरज ">
+                            placeholder="उदा. सुरज " formControlName="middle_name" (keydown)="onKeydown($event,'middle_name')">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">लास्ट नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="last_name" name="last_name"
-                            placeholder="उदा. शर्मा ">
+                            placeholder="उदा. शर्मा " formControlName="firstName" (keydown)="onKeydown($event,'firstName')">
                     </div>
                 </div>
             </div>
@@ -43,10 +44,11 @@
                 <div class=" col-sm-6">
                     <label class="text-dark font-weight-medium">पद</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
+                        <select formControlName="designationName" class="my-select2 form-control"
+                            name="designation_name" id="designation_id" placeholder="designation Name">
                             <option value="">-- पद निवडा -- </option>
-                            <option value="1">सचिव</option>
-                            <option value="2">सरपंच</option>
+                            <option *ngFor="let pad of DesignationsList" [value]="pad.DESIGNATION_ID">{{
+                                pad.DESIGNATION_NAME }}</option>
                         </select>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
                     <label class="text-dark font-weight-medium">मोबाईल न.</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="mobile_no" name="mobile_no"
-                            placeholder="उदा. 9125548545">
+                            placeholder="उदा. 9125548545" formControlName="firstName" (keydown)="onKeydown($event,'firstName')">
                     </div>
                 </div>
             </div>
