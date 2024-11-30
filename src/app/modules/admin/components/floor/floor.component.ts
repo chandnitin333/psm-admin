@@ -1,22 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { ApiService } from '../../../../services/api.service';
 import { ITEM_PER_PAGE } from '../../constants/admin.constant';
+import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { FloorService } from '../../services/floor.service';
 import Util from '../../utils/utils';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { SortingTableComponent } from '../sorting-table/sorting-table.component';
-import { ApiService } from '../../../../services/api.service';
-import { ToastrService } from 'ngx-toastr';
-import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-import { CommonModule } from '@angular/common';
+import { SortingTableComponent } from '../sorting-table/sorting-table.component';
 
 @Component({
     selector: 'app-floor',
     standalone: true,
-    imports: [SortingTableComponent, PaginationComponent, FormsModule,ReactiveFormsModule, ConfirmationDialogModule, SkeletonLoaderComponent, CommonModule],
+    imports: [SortingTableComponent, PaginationComponent, FormsModule, ReactiveFormsModule, ConfirmationDialogModule, SkeletonLoaderComponent, CommonModule],
     templateUrl: './floor.component.html',
     styleUrl: './floor.component.css'
 })
@@ -48,14 +48,14 @@ export class FloorComponent {
         private apiService: ApiService,
         private toastr: ToastrService) { }
 
-@ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
+    @ViewChild('confirmationDialog') confirmationDialog!: ConfirmationDialogComponent;
     ngOnInit(): void {
         this.titleService.setTitle('Floor');
         this.fetchFloorData();
     }
 
     addFloor(): void {
-        if (!this.floorForm.invalid &&  this.floorForm.value.floorName != null) {
+        if (!this.floorForm.invalid && this.floorForm.value.floorName != null) {
 
             this.isLoading = true;
             let params = {
@@ -63,15 +63,14 @@ export class FloorComponent {
             };
             this.apiService.post('floor', params).subscribe({
                 next: (res: any) => {
-                    if(res.status !== 400)
-                    {
+                    if (res.status !== 400) {
                         this.reset();
-                        this.toastr.success('District has been successfully added.','Success');
+                        this.toastr.success('District has been successfully added.', 'Success');
                         this.isSubmitted = true;
                         this.fetchFloorData();
                     }
-                    else{
-                        this.toastr.warning("Floor already exits. please try another one.",'Warning');
+                    else {
+                        this.toastr.warning("Floor already exits. please try another one.", 'Warning');
                     }
                     this.isLoading = false;
                 },
@@ -103,8 +102,8 @@ export class FloorComponent {
         });
     }
 
-    updateFloor() { 
-         if (!this.floorForm.invalid && this.floorForm.value.floorName != null) {
+    updateFloor() {
+        if (!this.floorForm.invalid && this.floorForm.value.floorName != null) {
             this.isLoading = true;
             let params = {
                 name: this.floorForm.value.floorName,
@@ -155,12 +154,12 @@ export class FloorComponent {
                 return;
             }
             if (res) {
-                 this.apiService.delete('delete-floor/' + id).subscribe({
+                this.apiService.delete('delete-floor/' + id).subscribe({
                     next: (res: any) => {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
                             this.fetchFloorData();
-                            
+
                         } else {
                             this.toastr.error(res.message, "Error");
                         }
@@ -227,7 +226,7 @@ export class FloorComponent {
         };
     }
 
-     resetFilter(event: Event) {
+    resetFilter(event: Event) {
         this.searchValue = '';
         this.currentPage = 1;
         this.fetchFloorData();
