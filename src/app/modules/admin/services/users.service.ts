@@ -15,8 +15,8 @@ export class UsersService {
   addUsers(params: any) {
     return this.api.post(`add-new-user`, params)
   }
-  getUserDistrict() {
-    return this.api.get('get-user-district')
+  getUserDistrict(params:any) {
+    return this.api.post('get-user-district',params)
   }
 
   getAllUserList(params: any) {
