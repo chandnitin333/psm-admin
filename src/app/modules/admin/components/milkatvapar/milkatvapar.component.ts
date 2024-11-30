@@ -84,7 +84,7 @@ export class MilkatvaparComponent{
 
     async getAllMalmattechePrakar() {
 		this.malmattechePrakarsList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
-        console.log('malmattechePrakarsList', this.malmattechePrakarsList);
+        // console.log('malmattechePrakarsList', this.malmattechePrakarsList);
 	}
 
     submitData() {
@@ -165,7 +165,7 @@ export class MilkatvaparComponent{
     deleteInfo(id: number) {
         this.util.showConfirmAlert().then((res) => {
             if (id === 0) {
-                this.toastr.error('This taluka cannot be deleted.', 'Error');
+                this.toastr.error('This milkat vapar cannot be deleted.', 'Error');
                 return;
             }
             if (res) {

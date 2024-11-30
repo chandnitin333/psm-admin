@@ -144,7 +144,7 @@ export class AnnualtaxComponent {
         this.annualTaxForm.reset();
         $('#mySelect').val('').trigger('change');
         $('#malmatta_id').val('').trigger('change');
-        $('#malmatta_varnan').val('').trigger('change');
+        $('#malmattache_varnan').val('').trigger('change');
         this.isEdit = false;
     }
     updateData() {
@@ -253,11 +253,53 @@ export class AnnualtaxComponent {
     }
 
     editInfo(id: number) {
+        this.apiService.get("get-annual-tax/"+id).subscribe((res: any) => {
+            this.annualTaxId = id;
+            this.isEdit = true;
+            console.log("REs", res)
+            if (res.status == 200) {
+                this.annualTaxForm.get('district_id')?.setValue(res.data.DISTRICT_ID);
+                $("#mySelect").val(res.data.DISTRICT_ID).trigger('change');
 
+                this.annualTaxForm.get('malmattaId')?.setValue(res.data.MALMATTA_ID);
+                $("#malmatta_id").val(res.data.MALMATTA_ID).trigger('change');
+
+                this.annualTaxForm.get('malmattaPrakarId')?.setValue(res.data.MILKAT_VAPAR_ID);
+                $("#malmattache_varnan").val(res.data.MILKAT_VAPAR_ID).trigger('change');
+                
+                this.annualTaxForm.get('mulyaDar')?.setValue(res.data.ANNUALPRICE_NAME);
+                this.annualTaxForm.get('aakarniDar')?.setValue(res.data.LEVYRATE_NAME);
+
+            } else {
+                this.toastr.error(res.message, "Error");
+            }
+
+        });
     }
 
     deleteInfo(id: number) {
-
+        this.util.showConfirmAlert().then((res) => {
+            if (id === 0) {
+                this.toastr.error('This annual tax cannot be deleted.', 'Error');
+                return;
+            }
+            if (res) {
+               this.apiService.delete("delete-annual-tax/"+id).subscribe({
+                    next: (res: any) => {
+                        if (res.status == 200) {
+                            this.toastr.success(res.message, "Success");
+                            this.fetchData(parseInt(res.data.DISTRICT_ID));
+                        } else {
+                            this.toastr.error(res.message, "Error");
+                        }
+                    },
+                    error: (err: Error) => {
+                        console.error('Error deleting annual tax:', err);
+                        this.toastr.error('There was an error deleting the annual tax.', 'Error');
+                    }
+                });
+            }
+        });
     }
 
     onPageChange(page: number) {
