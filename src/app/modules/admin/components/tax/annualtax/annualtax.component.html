@@ -68,11 +68,11 @@
                     <label class="text-dark font-weight-medium">मालमत्तेचे
                         वर्णन</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control"
-                            name="gramPanchayat">
+                        <select formControlName="malmattaPrakarId" class="my-select2 form-control" name="malmattache_varnan"
+                            id="malmattache_varnan">
                             <option value>-- मालमत्तेचे वर्णन निवडा -- </option>
-                            <option value="1">निवासी</option>
-                            <option value="2">अनिवासी</option>
+                            <option *ngFor="let mVarnan of malmattaVarnanList" [value]="mVarnan.MILKAT_VAPAR_ID">{{
+                                mVarnan.MILKAT_VAPAR_NAME }}</option>
                         </select>
                     </div>
                 </div>
@@ -80,9 +80,9 @@
                     <label class="text-dark font-weight-medium">पवार्षिक मूल्य
                         दर</label>
                     <div class>
-                        <input type="text" class="form-control"
-                            id="kranchi_nave" name="kranchi_nave"
-                            placeholder="उदा. 1200">
+                        <input type="text" class="form-control" id="mulyaDar" name="mulyaDar"
+                            placeholder="उदा. 1200" formControlName="mulyaDar"
+                            (keydown)="onKeydown($event,'mulyaDar')">
                     </div>
                 </div>
             </div>
@@ -92,20 +92,22 @@
                     <label class="text-dark font-weight-medium">आकारणी दर</label>
                     <div class="">
                         <input type="text" class="form-control" id="aakarniDar" name="aakarniDar"
-                            placeholder="उदा. 1.20" formControlName="aakarniDar" (keydown)="onKeydown($event,'aakarniDar')">
+                            placeholder="उदा. 1.20" formControlName="aakarniDar"
+                            (keydown)="onKeydown($event,'aakarniDar')">
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">&nbsp;</label>
                     <div class="form-group">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                        <button type="button" class="btn btn-pill btn-primary" title="Save"
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
                     </div>
                 </div>
             </div>
             <!-- <div class="row"> -->
 
-                <!-- <div class="col-sm-3">
+            <!-- <div class="col-sm-3">
                     <div class="form-group">
                         <button type="button" class="btn btn-pill btn-primary"
                             title="Save"><strong>जतन
@@ -163,12 +165,11 @@
 
 
 
-         <div class="table-responsive">
+        <div class="table-responsive">
             <table class="table table-bordered ">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center"
-                            style="width:2%">#</th>
+                        <th class="text-center" style="width:2%">#</th>
                         <th>जिल्हा</th>
                     </tr>
                 </thead>
@@ -180,13 +181,11 @@
                         <table class="table">
                             <thead class>
                                 <tr>
-                                    <th class="text-center border"
-                                        (click)="toggleCollapse(ele?.DISTRICT_ID)"
-                                        style="width:2%"><i
-                                            class=" toggle-nested "
-                                            [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
-                                    <th class="border"> <span
-                                            class="text-dark font-weight-bold ml-2 ">{{
+                                    <th class="text-center border" (click)="toggleCollapse(ele?.DISTRICT_ID)"
+                                        style="width:2%"><i class=" toggle-nested "
+                                            [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                                    </th>
+                                    <th class="border"> <span class="text-dark font-weight-bold ml-2 ">{{
                                             ele?.DISTRICT_NAME }}</span></th>
                                 </tr>
                             </thead>
@@ -194,28 +193,19 @@
 
                     </div>
                 </div>
-                <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]"
-                    class="mt-0 mb-2">
+                <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]" class="mt-0 mb-2">
 
                     <div class=" mt-0">
 
-                        <app-sorting-table
-                            [data]="items"
-                            [columns]="displayedColumns"
-                            [currentPage]="currentPage"
-                            (edit)="editInfo($event)"
-                            (delete)="deleteInfo($event)"
-                            [keyName]="keyName">
+                        <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                            (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
                         </app-sorting-table>
-                        <div class="float-left font-weight-bold mt-1"><span
-                                class="font-weight-bold">Total Records :
+                        <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
                             </span>{{totalItems}}</div>
                     </div>
 
                     <div class="col-md-12 p-2">
-                        <app-pagination class="float-right "
-                            [totalItems]="totalItems"
-                            [itemsPerPage]="itemsPerPage"
+                        <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
                             (pageChange)="onPageChange($event)">
                         </app-pagination>
                     </div>

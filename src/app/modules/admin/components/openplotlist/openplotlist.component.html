@@ -1,11 +1,100 @@
-
-
+<div class="card card-default">
+    <div class="card-header card-header-nk">
+        <h2 class="card-header-label"><strong>ओपन प्लाट रेट्स जोडा</strong></h2>
+    </div>
+    <div class="px-6 py-4">
+        <form>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">जिल्हा</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control" name="district">
+                            <option value="">-- जिल्हा निवडा -- </option>
+                            <option value="1">नागपुर</option>
+                            <option value="2">भंडारा</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">तालुका</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control" name="district">
+                            <option value="">-- तालुका निवडा -- </option>
+                            <option value="1">रामटेक</option>
+                            <option value="2">तुमसर</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-sm-6">
+                    <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
+                            <option value="">-- ग्राम पंचायत निवडा -- </option>
+                            <option value="1">मनसर</option>
+                            <option value="2">वरठी</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">गट ग्राम पंचायत</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
+                            <option value="">-- गट ग्राम पंचायत निवडा -- </option>
+                            <option value="1">मनसर</option>
+                            <option value="2">वरठी</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-sm-6">
+                    <label class="text-dark font-weight-medium">वार्षिक मूल्य दर प्रकार</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control" name="gramPanchayat">
+                            <option value="">-- वार्षिक मूल्य दर प्रकार निवडा -- </option>
+                            <option value="1">Test1</option>
+                            <option value="2">Test2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">वार्षिक मूल्य दर</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="gatGramPanchayat" name="gatGramPanchayat"
+                            placeholder="उदा. 1200">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">आकारणी दर</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="gatGramPanchayat" name="gatGramPanchayat"
+                            placeholder="उदा. 1000">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group ">
+                        <button type="button" class="btn btn-pill btn-primary col-md-12 col-sm-12"
+                            title="Save"><strong>जतन
+                                करा</strong></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="card card-default">
     <div class="card-body">
-        <div class="col-md-4  mt-2 p-0" >
+        <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()" [(ngModel)]="searchValue" >
+                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
@@ -16,23 +105,18 @@
         <br>
 
         <div class="table-responsive">
-            
-            <app-sorting-table
-            [data]="items"
-            [columns]="displayedColumns"
-            [currentPage]="currentPage"
-            (edit)="editInfo($event)"
-            (delete)="deleteInfo($event)"
-            [keyName]="keyName">
+
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-            </span>{{totalItems}}</div>
+                </span>{{totalItems}}</div>
         </div>
 
 
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-        (pageChange)="onPageChange($event)">
+            (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>

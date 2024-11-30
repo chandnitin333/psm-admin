@@ -137,7 +137,6 @@ export class TaxComponent {
   
 
   editInfo(id: number) {
-    console.log(id,"Kundan")
     this.isLoading = true;
         this.apiService.get('tax/' + id).subscribe({
             next: (res: any) => {
@@ -157,30 +156,30 @@ export class TaxComponent {
   }
 
   deleteInfo(id: number) {
-    this.util.showConfirmAlert().then((res) => {
-            if (id === 0) {
-                this.toastr.error('This Tax cannot be deleted.', 'Error');
-                return;
-            }
-            if (res) {
-                 this.apiService.delete('/delete-tax/' + id).subscribe({
-                    next: (res: any) => {
-                        if (res.status == 200) {
-                            this.toastr.success(res.message, "Success");
-                            this.fetchData();
-                            
-                        } else {
-                            this.toastr.error(res.message, "Error");
-                        }
-                        // this.isLoading = false;
-                    },
-                    error: (err: Error) => {
-                        console.error('Error deleting tax:', err);
-                        this.toastr.error('There was an error deleting the tax.', 'Error');
+      this.util.showConfirmAlert().then((res) => {
+        if (id === 0) {
+            this.toastr.error('This Tax cannot be deleted.', 'Error');
+            return;
+        }
+        if (res) {
+              this.apiService.delete('/delete-tax/' + id).subscribe({
+                next: (res: any) => {
+                    if (res.status == 200) {
+                        this.toastr.success(res.message, "Success");
+                        this.fetchData();
+                        
+                    } else {
+                        this.toastr.error(res.message, "Error");
                     }
-                });
-            }
-        });
+                    // this.isLoading = false;
+                },
+                error: (err: Error) => {
+                    console.error('Error deleting tax:', err);
+                    this.toastr.error('There was an error deleting the tax.', 'Error');
+                }
+            });
+        }
+    });
   }
 
   onPageChange(page: number) {
