@@ -73,7 +73,7 @@ export class UsersComponent {
     vasuli_user: boolean = false;
     selectedTabInd: number = 1;
     userTypeList = ['', 'new_user', 'ferfar_user', 'ferfar_pdf_user', 'vasuli_user'];
-    selectUserType: string = ''
+    selectUserType: string = 'new_user'
     tabTitleList: any = ['नविन यूजर जोडा', 'फेरफार यूजर जोडा', 'फेरफार PDF यूजर जोडा', 'वसुली यूजर जोडा']
     tabTitle: string = 'नविन यूजर जोडा'
     constructor(private titleService: Title,
