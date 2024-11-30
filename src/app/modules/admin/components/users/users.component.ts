@@ -116,7 +116,7 @@ export class UsersComponent {
     }
 
     getUserDistrict() {
-        this.user.getUserDistrict().subscribe((res: any) => {
+        this.user.getUserDistrict({ "user_type": this.selectUserType }).subscribe((res: any) => {
             this.userDistrict = res?.data ?? [];
 
         })
@@ -345,7 +345,7 @@ export class UsersComponent {
                 }
             });
         } catch (error) {
-            console.log("Error:: ",error)
+            console.log("Error:: ", error)
         }
     }
 
@@ -366,6 +366,7 @@ export class UsersComponent {
             this.keyName = this.keysList[tabId - 1];
             this.getAllDistricts();
             this.getUserList(this.selectedDistrict);
+            this.getUserDistrict();
             console.log("keyName==", this.keyName)
         }, 700);
 

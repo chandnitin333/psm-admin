@@ -15,4 +15,12 @@ export class OtherTaxService {
     fetchTaxList() {
         return this.api.post('get-tax-list', { page_number: 1, search_text: '', is_page: false });
     }
+
+    addOtherTax(params: any) {
+        return this.api.post(`add-other-tax`, params)
+    }
+
+    updateOtherTax(params: any) {
+        return this.api.put(`update-other-tax`, params)
+    }
 }
