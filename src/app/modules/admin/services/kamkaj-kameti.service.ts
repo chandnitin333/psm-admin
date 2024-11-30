@@ -12,7 +12,7 @@ export class KamkajKametiService {
     return  this.api.post(`get-member-list`, params)
   }
 
-  fetchDistrict() {
+  fetchPanchayatUser() {
     return this.api.get('get-panchayat-users')
   }
 }

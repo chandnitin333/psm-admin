@@ -117,6 +117,7 @@ export class AnnualtaxComponent {
                 {
                     // console.log("id", this.annualTaxForm.value.district_id)
                     // console.log("param", params.district_id)
+                    this.fetchDistrict();
                     this.fetchData(this.annualTaxForm.value.district_id);
                     this.reset();
                     this.toastr.success(res.message,'Success');
@@ -163,6 +164,7 @@ export class AnnualtaxComponent {
                     if (res.status == 200) {
                         this.isSubmitted = false;
                         this.toastr.success(res?.message, 'Success');
+                        this.fetchDistrict();
                         this.fetchData(this.annualTaxForm.value.district_id);
                         this.reset();
                         //  this.fetchDistrict();
@@ -288,6 +290,7 @@ export class AnnualtaxComponent {
                     next: (res: any) => {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
+                            this.fetchDistrict();
                             this.fetchData(parseInt(res.data.DISTRICT_ID));
                         } else {
                             this.toastr.error(res.message, "Error");

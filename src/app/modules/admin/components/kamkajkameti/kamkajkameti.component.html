@@ -8,7 +8,7 @@
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
-                        <select formControlName="panchayatName" class="my-select2 form-control" name="panchayat_name"
+                        <select formControlName="panchayatName" class="form-control my-select2" name="panchayat_name"
                             id="panchayat_id" placeholder="Panchayat Name">
                             <option value="">-- ग्राम पंचायत निवडा -- </option>
                             <option *ngFor="let panchayat of panchayatList" [value]="panchayat.PANCHAYAT_ID">{{
@@ -19,8 +19,8 @@
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">फर्स्ट नाव</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="first_name" name="first_name"
-                            placeholder="उदा. रवि" formControlName="first_name" (keydown)="onKeydown($event,'first_name')">
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="उदा. रवि"
+                            formControlName="first_name" (keydown)="onKeydown($event,'first_name')">
                     </div>
                 </div>
             </div>
@@ -29,14 +29,16 @@
                     <label class="text-dark font-weight-medium">मधली नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="middle_name" name="middle_name"
-                            placeholder="उदा. सुरज " formControlName="middle_name" (keydown)="onKeydown($event,'middle_name')">
+                            placeholder="उदा. सुरज " formControlName="middle_name"
+                            (keydown)="onKeydown($event,'middle_name')">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label class="text-dark font-weight-medium">लास्ट नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="last_name" name="last_name"
-                            placeholder="उदा. शर्मा " formControlName="firstName" (keydown)="onKeydown($event,'firstName')">
+                            placeholder="उदा. शर्मा " formControlName="last_name"
+                            (keydown)="onKeydown($event,'last_name')">
                     </div>
                 </div>
             </div>
@@ -44,7 +46,7 @@
                 <div class=" col-sm-6">
                     <label class="text-dark font-weight-medium">पद</label>
                     <div class="form-group">
-                        <select formControlName="designationName" class="my-select2 form-control"
+                        <select formControlName="designationName" class="form-control my-select2"
                             name="designation_name" id="designation_id" placeholder="designation Name">
                             <option value="">-- पद निवडा -- </option>
                             <option *ngFor="let pad of DesignationsList" [value]="pad.DESIGNATION_ID">{{
@@ -56,7 +58,8 @@
                     <label class="text-dark font-weight-medium">मोबाईल न.</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="mobile_no" name="mobile_no"
-                            placeholder="उदा. 9125548545" formControlName="firstName" (keydown)="onKeydown($event,'firstName')">
+                            placeholder="उदा. 9125548545" formControlName="mobile_no"
+                            (keydown)="onKeydown($event,'mobile_no')">
                     </div>
                 </div>
             </div>
@@ -64,7 +67,8 @@
                 <div class="col-sm-4">
                     <div class="form-group ">
                         <button type="button" class="btn btn-pill btn-primary col-md-12 col-sm-12"
-                            title="Save"><strong>जतन करा</strong></button>
+                            title="Save" (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                                करा"}}</strong></button>
                     </div>
                 </div>
             </div>
@@ -81,8 +85,7 @@
             <table class="table ">
                 <thead class="thead-dark">
                     <tr>
-                        <th class="text-center"
-                            style="width:2%">#</th>
+                        <th class="text-center" style="width:2%">#</th>
                         <th>जिल्हा</th>
                     </tr>
                 </thead>
@@ -94,13 +97,11 @@
                         <table class="table">
                             <thead class>
                                 <tr>
-                                    <th class="text-center border"
-                                        (click)="toggleCollapse(ele?.PANCHAYAT_ID)"
-                                        style="width:2%"><i
-                                            class=" toggle-nested "
-                                            [ngClass]="collapsedDistricts[ele.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
-                                    <th class="border"> <span
-                                            class="text-dark font-weight-bold ml-2 ">{{
+                                    <th class="text-center border" (click)="toggleCollapse(ele?.PANCHAYAT_ID)"
+                                        style="width:2%"><i class=" toggle-nested "
+                                            [ngClass]="collapsedDistricts[ele.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                                    </th>
+                                    <th class="border"> <span class="text-dark font-weight-bold ml-2 ">{{
                                             ele?.PANCHAYAT_NAME
                                             }}</span></th>
                                 </tr>
@@ -109,30 +110,20 @@
 
                     </div>
                 </div>
-                <div *ngIf="collapsedDistricts[ele.PANCHAYAT_ID]"
-                    class="mt-0 mb-2">
+                <div *ngIf="collapsedDistricts[ele.PANCHAYAT_ID]" class="mt-0 mb-2">
 
                     <div class=" mt-0">
 
-                        <app-sorting-table
-                            [data]="items"
-                            [columns]="displayedColumns"
-                            [currentPage]="currentPage"
-                            (edit)="editInfo($event)"
-                            (delete)="deleteInfo($event)"
-                            [keyName]="keyName">
+                        <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                            (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
                         </app-sorting-table>
-                        <div
-                            class="float-left font-weight-bold mt-1"><span
-                                class="font-weight-bold">Total
+                        <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total
                                 Records :
                             </span>{{totalItems}}</div>
                     </div>
 
                     <div class="col-md-12 p-2">
-                        <app-pagination class="float-right "
-                            [totalItems]="totalItems"
-                            [itemsPerPage]="itemsPerPage"
+                        <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
                             (pageChange)="onPageChange($event)">
                         </app-pagination>
                     </div>
