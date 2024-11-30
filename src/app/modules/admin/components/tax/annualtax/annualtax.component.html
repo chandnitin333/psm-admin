@@ -1,49 +1,55 @@
 <div class="card card-default">
     <div class="card-header card-header-nk">
-       <h2 class="card-header-label"><strong>एनुअल टैक्स</strong></h2>
+        <h2 class="card-header-label"><strong>एनुअल टैक्स</strong></h2>
     </div>
     <div class="px-6 py-4">
-       <form [formGroup]="annualTaxForm">
-          <div class="row">
-             <!-- जिल्हा -->
-             <div class="col-sm-3">
-                <label class="text-dark font-weight-medium">जिल्हा</label>
-                <div class="form-group">
-                   <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2" placeholder="Select district">
-                      <option value="">-- जिल्हा निवडा --</option>
-                      <option *ngFor="let district of districtList" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
-                   </select>
+        <form>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">जिल्हा</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="district">
+                            <option value>-- जिल्हा निवडा -- </option>
+                            <option value="1">नागपुर</option>
+                            <option value="2">भंडारा</option>
+                        </select>
+                    </div>
                 </div>
-             </div>
-             
-             <!-- मालमत्तेचे प्रकार -->
-             <div class="col-sm-3">
-                <label class="text-dark font-weight-medium">मालमत्तेचे प्रकार</label>
-                <div class="form-group">
-                   <select formControlName="malmattaId" class="my-select2 form-control" name="malmatta_prakar" id="malmatta_id" placeholder="Malmatta Prakar">
-                      <option value="">-- मालमत्तेचे प्रकार निवडा --</option>
-                      <option *ngFor="let malmatta of malmattaList" [value]="malmatta.MALMATTA_ID">{{ malmatta.DESCRIPTION_NAME }}</option>
-                   </select>
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">तालुका</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="district">
+                            <option value>-- तालुका निवडा -- </option>
+                            <option value="1">रामटेक</option>
+                            <option value="2">तुमसर</option>
+                        </select>
+                    </div>
                 </div>
-             </div>
-             
-             <!-- मालमत्तेचे वर्णन -->
-             <div class="col-sm-3">
-                <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
-                <div class="form-group">
-                   <select class="form-control" name="description">
-                      <option value="">-- मालमत्तेचे वर्णन निवडा --</option>
-                      <option value="1">निवासी</option>
-                      <option value="2">अनिवासी</option>
-                   </select>
+                <div class=" col-sm-3">
+                    <label class="text-dark font-weight-medium">ग्राम
+                        पंचायत</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat">
+                            <option value>-- ग्राम पंचायत निवडा -- </option>
+                            <option value="1">मनसर</option>
+                            <option value="2">वरठी</option>
+                        </select>
+                    </div>
                 </div>
-             </div>
- 
-             <!-- पवार्षिक मूल्य दर -->
-             <div class="col-sm-3">
-                <label class="text-dark font-weight-medium">पवार्षिक मूल्य दर</label>
-                <div>
-                   <input type="text" class="form-control" id="annualValueRate" name="annualValueRate" placeholder="उदा. 1200">
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">गट ग्राम
+                        पंचायत</label>
+                    <div class="form-group">
+                        <select class="js-example-basic-multiple1 form-control"
+                            name="gramPanchayat">
+                            <option value>-- गट ग्राम पंचायत निवडा -- </option>
+                            <option value="1">मनसर</option>
+                            <option value="2">वरठी</option>
+                        </select>
+                    </div>
                 </div>
                 <div class=" col-sm-3">
                     <label class="text-dark font-weight-medium">मालमत्तेचे
@@ -98,24 +104,46 @@
             <!-- </div> -->
         </form>
     </div>
- </div>
- 
- <div class="card card-default">
+</div>
+<div class="card card-default">
     <div class="card-body">
-       <div *ngFor="let ele of districtList" class="district-header p-2">
-          <div class="row mt-1">
-             <div class="col-md-12">
-                <button (click)="toggleCollapse(ele?.DISTRICT_ID)">
-                   <i class="toggle-nested" [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle'"></i>
-                   <span class="text-dark font-weight-bold ml-2">{{ ele?.DISTRICT_NAME }}</span>
-                </button>
-             </div>
-          </div>
-          <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]">
-             <div class="table-responsive mt-1">
-                <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage" (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName"></app-sorting-table>
-                <div class="float-left font-weight-bold mt-1">
-                   <span class="font-weight-bold">Total Records:</span> {{ totalItems }}
+        <!-- <form action="#" method="get">
+            <div class="col-md-4" id="input-group-search">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search...">
+            </div>
+        </form>
+        <br> -->
+        <div>
+            <table class="table ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center"
+                            style="width:2%">#</th>
+                        <th>जिल्हा</th>
+                    </tr>
+                </thead>
+            </table>
+            <div *ngFor="let ele of districtList" class="m-0">
+                <div class="row mt-0">
+
+                    <div class="col-md-12 mb-0">
+                        <table class="table">
+                            <thead class>
+                                <tr>
+                                    <th class="text-center border"
+                                        (click)="toggleCollapse(ele?.DISTRICT_ID)"
+                                        style="width:2%"><i
+                                            class=" toggle-nested "
+                                            [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
+                                    <th class="border"> <span
+                                            class="text-dark font-weight-bold ml-2 ">{{
+                                            ele?.DISTRICT_NAME }}</span></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
                 </div>
             </div>
             <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]">
