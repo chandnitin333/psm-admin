@@ -2,19 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import $, { param } from 'jquery'; // Import jQuery
+import $ from 'jquery'; // Import jQuery
+import { ToastrService } from 'ngx-toastr';
+import { ApiService } from '../../../../../services/api.service';
 import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 import { AnualTaxService } from '../../../services/anual-tax.service';
 import Util from '../../../utils/utils';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { SortingTableComponent } from '../../sorting-table/sorting-table.component';
-import { ApiService } from '../../../../../services/api.service';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-annualtax',
     standalone: true,
-    imports: [FormsModule, CommonModule, PaginationComponent, SortingTableComponent,ReactiveFormsModule],
+    imports: [FormsModule, CommonModule, PaginationComponent, SortingTableComponent, ReactiveFormsModule],
     templateUrl: './annualtax.component.html',
     styleUrl: './annualtax.component.css'
 })
@@ -41,32 +41,33 @@ export class AnnualtaxComponent {
     keyName: string = 'ANNUALTAX_ID';
     marathiText: string = '';
     districtList: any = [];
-    malmattaList:any =[];
-    malmattaVarnanList:any =[];
+    malmattaList: any = [];
+    malmattaVarnanList: any = [];
     selectTab: number = 0;
     collapsedDistricts: { [district: string]: boolean } = {};
     groupedData: any = [];
     selectedDistrict: any;
     annualTaxForm = new FormGroup({
-		district_id: new FormControl<number | null>(null),
-		malmattaId: new FormControl<number | null>(null),
+        district_id: new FormControl<number | null>(null),
+        malmattaId: new FormControl<number | null>(null),
         malmattaPrakarId: new FormControl<number | null>(null),
         mulyaDar: new FormControl(undefined),
         aakarniDar: new FormControl(undefined),
-	});
-    constructor(private titleService: Title, private anual: AnualTaxService, private util: Util,private apiService: ApiService,private toastr: ToastrService,) { }
+    });
+    userDistrict: any = [];
+    constructor(private titleService: Title, private anual: AnualTaxService, private util: Util, private apiService: ApiService, private toastr: ToastrService,) { }
     ngOnInit(): void {
         this.titleService.setTitle('Annual Tax');
         // this.getAllDistricts();
         this.fetchDistrict();
         this.fetchMalmattechePrakar();
         this.getAllMalmattaVarnanList();
-        // this.fetchAnualList();
+        this.fetchDistristAnula();
 
 
     }
     fetchDistrict() {
-        this.apiService.post("district-list-ddl",{}).subscribe({
+        this.apiService.post("district-list-ddl", {}).subscribe({
             next: (res: any) => {
                 this.districtList = res.data;
                 this.districtList.forEach((item: any) => {
@@ -80,15 +81,14 @@ export class AnnualtaxComponent {
     }
 
     // async getAllDistricts() {
-	// 	this.districtList = await this.util.getDistrictDDL('district-list-ddl')
-	// }
+    // 	this.districtList = await this.util.getDistrictDDL('district-list-ddl')
+    // }
 
     async getAllMalmattaVarnanList() {
-		this.malmattaVarnanList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
-	}
+        this.malmattaVarnanList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
+    }
 
-    fetchMalmattechePrakar()
-    {
+    fetchMalmattechePrakar() {
         let params = {};
         this.apiService.post('malmatta-list-ddl', params).subscribe({
             next: (res: any) => {
@@ -100,6 +100,11 @@ export class AnnualtaxComponent {
         });
     }
 
+    fetchDistristAnula() {
+        this.anual.getDistrictList().subscribe((res: any) => {
+            this.userDistrict = res?.data;
+        })
+    }
     submitData() {
         this.isSubmitted = true;
 
@@ -112,19 +117,18 @@ export class AnnualtaxComponent {
                 annualprice_name: this.annualTaxForm.value.mulyaDar,
                 levyrate_name: this.annualTaxForm.value.aakarniDar
             }
-             this.apiService.post('add-annual-tax', params).subscribe((res: any) => {
-                if(res.status !== 400)
-                {
+            this.apiService.post('add-annual-tax', params).subscribe((res: any) => {
+                if (res.status !== 400) {
                     // console.log("id", this.annualTaxForm.value.district_id)
                     // console.log("param", params.district_id)
                     this.fetchData(this.annualTaxForm.value.district_id);
                     this.reset();
-                    this.toastr.success(res.message,'Success');
+                    this.toastr.success(res.message, 'Success');
                     this.isSubmitted = true;
                     // this.fetchDistrict();
                 }
-                else{
-                    this.toastr.warning("Annual Tax already exits. please try another one.",'Warning');
+                else {
+                    this.toastr.warning("Annual Tax already exits. please try another one.", 'Warning');
                 }
                 // if (res.status == 201) {
                 //     this.toastr.success(res.message, "Success");
@@ -136,7 +140,7 @@ export class AnnualtaxComponent {
                 // }
             });
         } else {
-            this.toastr.error('Please fill all the fields','Error');
+            this.toastr.error('Please fill all the fields', 'Error');
         }
     }
 
@@ -158,7 +162,7 @@ export class AnnualtaxComponent {
                 levyrate_name: this.annualTaxForm.value.aakarniDar,
                 annualtax_id: this.annualTaxId
             }
-            this.apiService.put("update-annual-tax",params).subscribe({
+            this.apiService.put("update-annual-tax", params).subscribe({
                 next: (res: any) => {
                     if (res.status == 200) {
                         this.isSubmitted = false;
@@ -253,7 +257,7 @@ export class AnnualtaxComponent {
     }
 
     editInfo(id: number) {
-        this.apiService.get("get-annual-tax/"+id).subscribe((res: any) => {
+        this.apiService.get("get-annual-tax/" + id).subscribe((res: any) => {
             this.annualTaxId = id;
             this.isEdit = true;
             console.log("REs", res)
@@ -266,7 +270,7 @@ export class AnnualtaxComponent {
 
                 this.annualTaxForm.get('malmattaPrakarId')?.setValue(res.data.MILKAT_VAPAR_ID);
                 $("#malmattache_varnan").val(res.data.MILKAT_VAPAR_ID).trigger('change');
-                
+
                 this.annualTaxForm.get('mulyaDar')?.setValue(res.data.ANNUALPRICE_NAME);
                 this.annualTaxForm.get('aakarniDar')?.setValue(res.data.LEVYRATE_NAME);
 
@@ -284,7 +288,7 @@ export class AnnualtaxComponent {
                 return;
             }
             if (res) {
-               this.apiService.delete("delete-annual-tax/"+id).subscribe({
+                this.apiService.delete("delete-annual-tax/" + id).subscribe({
                     next: (res: any) => {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
