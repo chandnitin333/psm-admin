@@ -71,82 +71,77 @@
         </form>
     </div>
 </div>
-<div class="card card-default">
-    <!-- <div class="card-header card-header-nk">
-        <h2 class="card-header-label"><strong>कामकाज कमेटी</strong></h2>
-        <a routerLink="/admin/new-kamkaj-kameti" class="btn btn-secondary btn-sm float-right open-plot-add-btn"><i
-                class="mdi mdi-plus-circle"></i> नवीन कामकाज कमेटी जोडा</a>
-    </div> -->
 
-    <div class="card-body">
-        <form action="#" method="get">
-            <div class="col-md-4" id="input-group-search">
-                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search...">
-            </div>
-        </form>
-        <br>
-        <div class="table-responsive">
-            <table class="table table-bordered">
+
+
+<div class="card card-default">
+    <div>
+
+        <div>
+            <table class="table ">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="width:2%">अनुक्रमांक</th>
-                        <!-- <th>जिल्हा</th>
-                        <th>तालुका</th> -->
-                        <th>ग्राम पंचायत</th>
-                        <!-- <th>गट ग्राम पंचायत</th>
-                        <th>वार्षिक मूल्य दर प्रकार</th>
-                        <th>वार्षिक मूल्य दर</th>
-                        <th>आकारणी दर</th>
-                        <th>क्रिया</th> -->
+                        <th class="text-center"
+                            style="width:2%">#</th>
+                        <th>जिल्हा</th>
                     </tr>
                 </thead>
-                <tbody>
-
-                    <tr class="font-weight-bold">
-                        <td>1</td>
-                        <!-- <td>नागपुर</td>
-                        <td>रामटेक</td> -->
-                        <td>मनसर</td>
-                        <!-- <td>सावंगी</td>
-                        <td>test</td>
-                        <td>1250</td>
-                        <td>1.20</td>
-                        <td><a href="" class="btn btn-sm btn-outline-success font-weight-bold"><i
-                                    class="mdi mdi-square-edit-outline"></i>
-                                एडिट</a> &nbsp;<a href="" class="btn btn-sm btn-outline-danger font-weight-bold"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</a></td> -->
-                    </tr>
-                </tbody>
             </table>
+            <div *ngFor="let ele of userPanchayt" class="m-0">
+                <div class="row mt-0">
+
+                    <div class="col-md-12 mb-0">
+                        <table class="table">
+                            <thead class>
+                                <tr>
+                                    <th class="text-center border"
+                                        (click)="toggleCollapse(ele?.PANCHAYAT_ID)"
+                                        style="width:2%"><i
+                                            class=" toggle-nested "
+                                            [ngClass]="collapsedDistricts[ele.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
+                                    <th class="border"> <span
+                                            class="text-dark font-weight-bold ml-2 ">{{
+                                            ele?.PANCHAYAT_NAME
+                                            }}</span></th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                    </div>
+                </div>
+                <div *ngIf="collapsedDistricts[ele.PANCHAYAT_ID]"
+                    class="mt-0 mb-2">
+
+                    <div class=" mt-0">
+
+                        <app-sorting-table
+                            [data]="items"
+                            [columns]="displayedColumns"
+                            [currentPage]="currentPage"
+                            (edit)="editInfo($event)"
+                            (delete)="deleteInfo($event)"
+                            [keyName]="keyName">
+                        </app-sorting-table>
+                        <div
+                            class="float-left font-weight-bold mt-1"><span
+                                class="font-weight-bold">Total
+                                Records :
+                            </span>{{totalItems}}</div>
+                    </div>
+
+                    <div class="col-md-12 p-2">
+                        <app-pagination class="float-right "
+                            [totalItems]="totalItems"
+                            [itemsPerPage]="itemsPerPage"
+                            (pageChange)="onPageChange($event)">
+                        </app-pagination>
+                    </div>
+                    <br />
+
+                </div>
+
+            </div>
         </div>
-        <br>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-seperated pagination-seperated-rounded">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
-                        <span class="d-none d-lg-inline-block">Prev</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span class="d-none d-lg-inline-block">Next</span>
-                        <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+
     </div>
 </div>

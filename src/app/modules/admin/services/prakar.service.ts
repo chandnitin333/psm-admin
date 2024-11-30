@@ -6,10 +6,24 @@ import { ApiService } from '../../../services/api.service';
 })
 export class PrakarService {
 
-  constructor(private api:ApiService) { }
+  constructor(private api: ApiService) { }
 
-  fetchPrakarList(params:any){
+  fetchPrakarList(params: any) {
 
-    return this.api.post('get-prakar-list',params);
+    return this.api.post('get-prakar-list', params);
+  }
+
+  addPrakar(params: any) {
+    return this.api.post(`prakar`, params);
+  }
+  updatePrakar(params: any) {
+    return this.api.put(`update-prakar`, params);
+  }
+  deletePrakar(id: number) {
+    return this.api.delete(`delete-prakar/${id}`);
+  }
+
+  getPrakarById(id: number) {
+    return this.api.get(`prakar/${id}`);
   }
 }
