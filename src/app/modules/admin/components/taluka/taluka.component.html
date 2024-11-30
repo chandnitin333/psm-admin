@@ -1,0 +1,118 @@
+<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"
+    message="Are you sure you want to delete {{deleteTalukaName}} taluka?"></app-confirmation-dialog>
+
+<div *ngIf="isLoading">
+    <app-skeleton-loader [rows]="4" [columns]="3"></app-skeleton-loader>
+</div>
+<div class="card card-default" *ngIf="!isLoading">
+    <div class="card-header card-header-nk">
+        <h2 class="card-header-label"><strong>तालुका</strong></h2>
+    </div>
+    <div class="px-6 py-4">
+        <form [formGroup]="talukaForm">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label class="text-dark font-weight-medium">जिल्हा</label>
+                    <div class="form-group">
+                        <select formControlName="district_id" name="selectedOption" id="mySelect" class="form-control my-select2" placeholder="Select district" >
+                            <option value="">-- जिल्हा निवडा -- </option>
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{ district.DISTRICT_NAME }}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !talukaForm.value.district_id">Please select district</span>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <label class="text-dark font-weight-medium">तालुका</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="district" name="district" placeholder="उदा. रामटेक"
+                            formControlName="name" (keydown)="onKeydown($event,'name')">
+                        <span class="text-danger" *ngIf="isSubmitted && !talukaForm.value.name">Please select
+                            district</span>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group mt-6">
+                        <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="addTaluka()"
+                            *ngIf="!isEdit"><strong>जतन
+                                करा</strong></button>
+
+                        <button type="button" class="btn btn-pill btn-primary" title="Update" (click)="editTaluka()"
+                            *ngIf="isEdit"><strong>बदल
+                                करा</strong></button>
+
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>पुन्हा रचना
+                                करा</strong></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card card-default" *ngIf="!isLoading">
+    <div class="card-body">
+        <div class="col-md-4" id="input-group-search">
+            <div class="input-group">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event); getTalukas(); " (input)="getTalukas()" [(ngModel)]="searchValue" >
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+      
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width:10%">अनुक्रमांक</th>
+                        <th style="width:30%">जिल्हा</th>
+                        <th style="width:30%">तालुका</th>
+                        <th style="width:20%">क्रिया</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr *ngFor="let item of paginatedItems let i = index">
+                      
+                        @if(item.is_delete == 1){
+                        <td class="text-decoration-line-through">{{ srNo(i) }}
+                        </td>
+                        <td class="text-decoration-line-through">{{ item.DISTRICT_NAME }}</td>
+                        <td class="text-decoration-line-through">{{ item.TALUKA_NAME }}</td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold"
+                                (click)="getTaluka(item.TALUKA_ID)"><i class="mdi mdi-square-edit-outline"></i>
+                                पुनर्संचयित करा</button>
+
+                            } @else{
+                        <td class="isDelete">{{ srNo(i) }}</td>
+                        <td>{{ item.DISTRICT_NAME  }}</td>
+                        <td>{{  item.TALUKA_NAME }}</td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold"
+                                (click)="getTaluka(item.TALUKA_ID)"><i class="mdi mdi-square-edit-outline"></i>
+                                एडिट</button> &nbsp;<button class="btn btn-sm btn-outline-danger font-weight-bold"
+                                (click)="deleteTaluka(item.TALUKA_ID,item.TALUKA_ID)"><i class="mdi mdi-trash-can-outline"></i>
+                                डिलीट</button></td>
+
+                        }
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+                </span>{{totalItems}}</div>
+        </div>
+        <br>
+
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)">
+        </app-pagination>
+    </div>
+</div>

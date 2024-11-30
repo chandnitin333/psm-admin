@@ -1,0 +1,182 @@
+
+
+<div class="tab-container">
+    <ul class="tabs">
+        <li class="tab-link active" data-tab="tab-1"
+            (click)="activeTab(1)"
+            [ngClass]="{'active': selectedTabInd === 1}">सचिव इमेजेस</li>
+        <li class="tab-link" data-tab="tab-2" (click)="activeTab(2)"
+            [ngClass]="{'active': selectedTabInd === 2}">सरपंच इमेजेस</li>
+        <li class="tab-link" data-tab="tab-3" (click)="activeTab(3)"
+            [ngClass]="{'active': selectedTabInd === 3}">उपसरपंच इमेजेस</li>
+
+    </ul>
+    <div id="tab-1 " class="tab-content  bg-white active-tab"
+        [ngClass]="{'active-tab': (selectedTabInd === 1)}">
+        <div class="card card-default">
+            <div class="card-header card-header-nk">
+                <h2 class="card-header-label"><strong>{{tabTitle}}</strong></h2>
+                <a
+                    href="javascript:void(0)" (click)="addInfo()"
+                    class="btn btn-secondary btn-sm float-right open-plot-add-btn"><i
+                        class="mdi mdi-plus-circle"></i> नवीन इमेजेस
+                    जोडा</a>
+            </div>
+            <div class="card-body">
+                <div class="col-md-4  mt-2 p-0">
+                    <div class="input-group ">
+                        <input type="text" autocomplete="off" name="query"
+                            id="search-input" class="form-control"
+                            placeholder="Search..."
+                            (keyup.enter)="translateText($event); filterData(); "
+                            (input)="filterData()"
+                            [(ngModel)]="searchValue">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                type="button"
+                                (click)="resetFilter($event)">
+                                <i class="mdi mdi-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+
+                    <app-sorting-table
+                        [data]="items"
+                        [columns]="displayedColumns"
+                        [currentPage]="currentPage"
+                        (edit)="editInfo($event)"
+                        (delete)="deleteInfo($event)"
+                        [keyName]="keyName">
+                    </app-sorting-table>
+                    <div class="float-left font-weight-bold mt-1"><span
+                            class="font-weight-bold">Total Records :
+                        </span>{{totalItems}}</div>
+                </div>
+
+                <br>
+                <app-pagination class="float-right"
+                    [totalItems]="totalItems"
+                    [itemsPerPage]="itemsPerPage"
+                    (pageChange)="onPageChange($event)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+    <div id="tab-2" class="tab-content bg-white"
+        [ngClass]="{'active-tab': (selectedTabInd === 2)}">
+        <div class="card card-default">
+            <div class="card-header card-header-nk">
+                <h2 class="card-header-label"><strong>{{tabTitle}}</strong></h2>
+                <a
+                    href="javascript:void(0)" (click)="addInfo()"
+                    class="btn btn-secondary btn-sm float-right open-plot-add-btn"><i
+                        class="mdi mdi-plus-circle"></i> नवीन इमेजेस
+                    जोडा</a>
+            </div>
+            <div class="card-body">
+                <div class="col-md-4  mt-2 p-0">
+                    <div class="input-group ">
+                        <input type="text" autocomplete="off" name="query"
+                            id="search-input" class="form-control"
+                            placeholder="Search..."
+                            (keyup.enter)="translateText($event); filterData(); "
+                            (input)="filterData()"
+                            [(ngModel)]="searchValue">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                type="button"
+                                (click)="resetFilter($event)">
+                                <i class="mdi mdi-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+
+                    <app-sorting-table
+                        [data]="items"
+                        [columns]="displayedColumns"
+                        [currentPage]="currentPage"
+                        (edit)="editInfo($event)"
+                        (delete)="deleteInfo($event)"
+                        [keyName]="keyName">
+                    </app-sorting-table>
+                    <div class="float-left font-weight-bold mt-1"><span
+                            class="font-weight-bold">Total Records :
+                        </span>{{totalItems}}</div>
+                </div>
+
+                <br>
+                <app-pagination class="float-right"
+                    [totalItems]="totalItems"
+                    [itemsPerPage]="itemsPerPage"
+                    (pageChange)="onPageChange($event)">
+                </app-pagination>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="tab-2" class="tab-content bg-white"
+        [ngClass]="{'active-tab': (selectedTabInd === 3)}">
+        <div class="card card-default">
+            <div class="card-header card-header-nk">
+                <h2 class="card-header-label"><strong>{{tabTitle}}</strong></h2>
+                <a
+                    href="javascript:void(0)" (click)="addInfo()"
+                    class="btn btn-secondary btn-sm float-right open-plot-add-btn"><i
+                        class="mdi mdi-plus-circle"></i> नवीन इमेजेस
+                    जोडा</a>
+            </div>
+            <div class="card-body">
+                <div class="col-md-4  mt-2 p-0">
+                    <div class="input-group ">
+                        <input type="text" autocomplete="off" name="query"
+                            id="search-input" class="form-control"
+                            placeholder="Search..."
+                            (keyup.enter)="translateText($event); filterData(); "
+                            (input)="filterData()"
+                            [(ngModel)]="searchValue">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary"
+                                type="button"
+                                (click)="resetFilter($event)">
+                                <i class="mdi mdi-close"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="table-responsive">
+
+                    <app-sorting-table
+                        [data]="items"
+                        [columns]="displayedColumns"
+                        [currentPage]="currentPage"
+                        (edit)="editInfo($event)"
+                        (delete)="deleteInfo($event)"
+                        [keyName]="keyName">
+                    </app-sorting-table>
+                    <div class="float-left font-weight-bold mt-1"><span
+                            class="font-weight-bold">Total Records :
+                        </span>{{totalItems}}</div>
+                </div>
+
+                <br>
+                <app-pagination class="float-right"
+                    [totalItems]="totalItems"
+                    [itemsPerPage]="itemsPerPage"
+                    (pageChange)="onPageChange($event)">
+                </app-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

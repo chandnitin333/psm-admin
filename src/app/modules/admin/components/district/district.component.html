@@ -1,0 +1,99 @@
+<div *ngIf="isLoading">
+    <app-skeleton-loader></app-skeleton-loader>
+  </div>
+  <app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+
+<div class="card card-default" *ngIf="!isLoading">
+    <div class="card-header card-header-nk">
+        <h2 class="card-header-label"><strong>जिल्हा</strong></h2>
+    </div>
+    <div class="px-6 py-4">
+        <form [formGroup]="districtForm">
+            <div class="form-group row">
+                <label for="district" class="col-sm-1 col-form-label">जिल्हा </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="district_name" name="district_name" placeholder="उदा. नागपुर"  formControlName="districtName" (keypress)="keyDownText($event,'districtName')">
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? addDistrict() : updateDistrict()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="card card-default" *ngIf="!isLoading">
+    <div class="card-body">
+       
+            <div class="col-md-4" id="input-group-search">
+                <div class="input-group">
+                    <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                        placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)" [(ngModel)]="searchValue" >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                            <i class="mdi mdi-close"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+       
+        <br>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width:10%">अनुक्रमांक</th>
+                        <th style="width:30%">जिल्हा</th>
+                        <th style="width:20%">क्रिया</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                    <tr class=""  *ngFor="let item of paginatedItems let i = index">
+                        <td>{{getSerialNumber(i)}}</td>
+                        <td>{{ item.DISTRICT_NAME }}</td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="getDistrict(item.DISTRICT_ID)"><i
+                                    class="mdi mdi-square-edit-outline"></i>
+                                एडिट</button> &nbsp;<button href="" class="btn btn-sm btn-outline-danger font-weight-bold" (click)="deleteDistrict(item.DISTRICT_ID)"><i
+                                    class="mdi mdi-trash-can-outline"></i> डिलीट</button></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+            </span>{{totalItems}}</div>
+        </div>
+        <br>
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        (pageChange)="onPageChange($event)">
+        </app-pagination>
+        <!-- <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-seperated pagination-seperated-rounded">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true" class="mdi mdi-chevron-left mr-1"></span>
+                        <span class="d-none d-lg-inline-block">Prev</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span class="d-none d-lg-inline-block">Next</span>
+                        <span aria-hidden="true" class="mdi mdi-chevron-right ml-1"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav> -->
+    </div>
+</div>

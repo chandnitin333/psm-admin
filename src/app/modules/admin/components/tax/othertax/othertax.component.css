@@ -1,0 +1,9 @@
+.card-header-label{
+    margin-top: -0.5rem;
+}
+
+td[contenteditable="true"] {
+    min-height: 20px;
+    overflow-y: auto;
+    white-space: pre-wrap; /* Allow text wrapping */
+  }

@@ -1,0 +1,80 @@
+<div class="card card-default">
+    <div class="card-header card-header-nk">
+        <h2 class="card-header-label"><strong>घसारा दर</strong></h2>
+    </div>
+    <div class="px-6 py-4">
+        <form [formGroup]="ghasaraDarForm">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">मालमत्तेचे वय व वर्ष</label>
+                    <div class="form-group">
+                        <select formControlName="ageOfBuilding" class="my-select2 form-control" name="age_building"
+                            id="age_building" placeholder="Age of Building">
+                            <option value="">--मालमत्तेचे वय व वर्ष निवडा -- </option>
+                            <option *ngFor="let building of buildingAgeList" [value]="building.AGEOFBUILDING_ID">{{
+                                building.AGEOFBUILDING_NAME }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
+                    <div class="form-group">
+                        <select formControlName="malmattaId" class="my-select2 form-control" name="malmatta_prakar"
+                            id="malmatta_id" placeholder="Malmatta Prakar">
+                            <option value="">-- मालमत्तेचे प्रकार निवडा -- </option>
+                            <option *ngFor="let malmatta of malmattaList" [value]="malmatta.MALMATTA_ID">{{
+                                malmatta.DESCRIPTION_NAME }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <label class="text-dark font-weight-medium">टक्केवारी</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="takkevari" name="takkevari" placeholder="उदा. 25%"
+                            formControlName="percentage" (keydown)="onKeydown($event,'percentage')">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group mt-6">
+                        <button type="button" class="btn btn-pill btn-primary" title="Save"
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                                करा"}}</strong></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card card-default">
+    <div class="card-body">
+        <div class="col-md-4  mt-2 p-0">
+            <div class="input-group ">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event);  " (input)="filterData($event)"
+                    [(ngModel)]="searchValue">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="table-responsive">
+
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
+            </app-sorting-table>
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+                </span>{{totalItems}}</div>
+        </div>
+
+
+        <br>
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)">
+        </app-pagination>
+    </div>
+</div>

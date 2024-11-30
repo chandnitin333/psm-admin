@@ -1,0 +1,37 @@
+/* Style for Active Top-Level Links */
+.sidenav-item-link.active {
+    color: #ffffff;
+    background-color: #9e6de066;  /* Highlight color for active link */
+    font-weight: bold;
+    border-radius: 4px;
+  }
+  
+  /* Style for Collapsible Menu Items */
+  .has-sub > a {
+    color: #dddddd;
+    transition: color 0.3s;
+  }
+  
+  .has-sub.open > a {
+    color: #ffffff;
+    background-color: #343a40;  /* Background color for opened submenu */
+    font-weight: bold;
+  }
+  
+  /* Style for Active Submenu Links */
+  .collapse .sidenav-item-link.active {
+    color: #ffffff;
+    background-color: #6c757d;  /* Background for active submenu item */
+    font-weight: bold;
+    padding-left: 20px; /* Indent for submenu item */
+    border-radius: 4px;
+  }
+  
+  /* Indicator for Open/Closed Submenu */
+  .has-sub .caret {
+    transition: transform 0.3s;
+  }
+  .has-sub.open .caret {
+    transform: rotate(90deg);  /* Rotate caret to indicate open state */
+  }
+  

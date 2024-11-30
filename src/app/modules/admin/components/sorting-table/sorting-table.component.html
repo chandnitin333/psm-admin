@@ -1,0 +1,37 @@
+<!-- -->
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th *ngFor="let column of columns">{{ column.label }}</th>
+        <th>क्रिया</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let item of data; let i = index">
+        <td *ngFor="let column of columns">
+          <ng-container *ngIf="column.key === 'sr_no' ">
+            {{ srNo(i) }}
+          </ng-container>
+          <ng-container
+            *ngIf="column.key !== 'sr_no' && column.key !== 'inner_html' ">
+            {{ item[column.key] }}
+          </ng-container>
+          <ng-container *ngIf="column.key === 'inner_html'">
+            <div [innerHTML]="item[column.key]"></div>
+          </ng-container>
+        </td>
+        <td>
+          <button (click)="onEdit(item)"
+            class="btn btn-sm btn-outline-success font-weight-bold mr-2"><i
+              class="mdi mdi-square-edit-outline"></i>एडिट</button>
+          <button (click)="onDelete(item)"
+            class="btn btn-sm btn-outline-danger font-weight-bold mr-2"><i
+              class="mdi mdi-trash-can-outline"></i> डिलीट</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,28 @@
+<nav aria-label="Page navigation example" style="font-size: 0.875rem; margin-bottom: 5px;">
+  <ul class="pagination pagination-sm" style="margin: 0; padding: 0; list-style: none; display: flex;">
+    <li class="page-item" [class.disabled]="currentPage === 1" style="margin: 0 2px;">
+      <a class="page-link btn btn-outline" aria-label="Previous" (click)="changePage(currentPage - 1)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+        <span aria-hidden="true">&laquo; Prev</span>
+        
+      </a>
+    </li>
+    <ng-container *ngFor="let page of pages">
+      <ng-container *ngIf="page === -1">
+        <li class="page-item disabled" style="margin: 0 2px;">
+          <span class="page-link" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem;">...</span>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="page !== -1">
+        <li class="page-item" [class.active]="page === currentPage" style="margin: 0 2px;">
+          <a class="page-link" (click)="changePage(page)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">{{ page }}</a>
+        </li>
+      </ng-container>
+    </ng-container>
+    <li class="page-item" [class.disabled]="currentPage === totalPages" style="margin: 0 2px;">
+      <a class="page-link btn btn-outline" aria-label="Next" (click)="changePage(currentPage + 1)" style="padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+        <span aria-hidden="true">Next &raquo;</span>
+
+      </a>
+    </li>
+  </ul>
+</nav>

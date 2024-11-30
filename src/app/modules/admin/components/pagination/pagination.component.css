@@ -1,0 +1,8 @@
+.pagination-seperated-rounded .page-item .page-link {
+    padding: 10px !important;
+    cursor: pointer;
+}
+
+.pagination-seperated-rounded .page-item .page-link{
+    line-height: 27px;
+}
