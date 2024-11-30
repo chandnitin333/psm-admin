@@ -14,6 +14,10 @@ export class GatGramPanchayatService {
     return this.api.post(`panchayat-list-by-taluka-id`, params);
   }
 
+  getGatGatGramPanchayatById(params: any) {
+    return this.api.post(`gat-gram-panchayat-list-by-panchayat-id`, params);
+  }
+
   createGatGramPanchayat(params: any) {
     return this.api.post(`gat-gram-panchayat`, params);
   }
