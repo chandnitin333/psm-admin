@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 import { ConfirmationDialogModule } from '../../../module/confirmation-dialog/confirmation-dialog.module';
 import { GatGramPanchayatService } from '../../../services/gat-gram-panchayat.service';
 import { GramPanchayatService } from '../../../services/gram-panchayat.service';
@@ -37,6 +38,19 @@ export class OthertaxComponent {
     taxtNameList: any = []
     taxtNameSet: any;
     isManula: boolean = true
+    taxDataFormate: any = {
+        taxid1: 0,
+        taxid2: 0,
+        taxid3: 0,
+        taxid4: 0,
+        taxid5: 0,
+        taxrate1: 0,
+        taxrate2: 0,
+        taxrate3: 0,
+        taxrate4: 0,
+        taxrate5: 0
+
+    };
     taxData: any = {
         taxid1: 0,
         taxid2: 0,
@@ -53,7 +67,7 @@ export class OthertaxComponent {
     isEdit: boolean = false;
     otherTaxFrm = new FormGroup({
         district_id: new FormControl<string | null>(null, Validators.required),
-        grampanchayat_id: new FormControl<string | null>(null, Validators.required),
+        panchayat_id: new FormControl<string | null>(null, Validators.required),
         taluka_id: new FormControl<string | null>(null, Validators.required),
         othertax_id: new FormControl<number | string>(''),
         taxid1: new FormControl<number | string>(''),
@@ -67,13 +81,15 @@ export class OthertaxComponent {
         taxrate4: new FormControl<number | string>(''),
         taxrate5: new FormControl<number | string>('')
     })
-    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder) {
+    isSubmitted: boolean = false;
+    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder, private toastr: ToastrService) {
 
     }
     ngOnInit(): void {
         this.titleService.setTitle('Other Tax');
         this.getDistrictList();
         this.getTaxList();
+        console.log("this.taxData====-", this.taxData)
     }
 
     ngAfterViewInit(): void {
@@ -103,7 +119,7 @@ export class OthertaxComponent {
             const selectedValue: string = String($(event.target).val());
             this.selectGramPanchayat = Number(selectedValue);
             if (this.selectGramPanchayat) {
-                this.otherTaxFrm.get('grampanchayat_id')?.setValue(selectedValue.toString());
+                this.otherTaxFrm.get('panchayat_id')?.setValue(selectedValue.toString());
                 this.fetchData(Number(this.selectGramPanchayat));
 
             }
@@ -131,33 +147,69 @@ export class OthertaxComponent {
                     }
 
                 }
+                const data = this.taxtNameList.sort((a: any, b: any) => Number(a.id) - Number(b.id));
+                this.taxtNameList = data
+
+
+
+
             });
+
+            console.log("First taxtNameList ====", this.taxtNameList)
 
         })
 
-        console.log("Tax taxtNameList=====", this.taxtNameList);
+
     }
 
     fetchData(id: Number) {
 
         this.otherTax.fetchOtherTaxList({ page_number: this.currentPage, search_text: '', panchayat_id: id }).subscribe((res: any) => {
             this.otherTaxList = res?.data ?? [];
-            if (this.otherTaxList.length == 0) {
-                this.isManula = false
-            }
-            let data: any = [];
-            let taxData = res?.data[0];
-            for (const key in taxData) {
-                if (key.startsWith('TAXID')) {
-                    let id = taxData[key] ?? '';
+            console.log("otherTaxList====  ", this.otherTaxList)
 
-                    let obj = { name: this.taxList[taxData[key]], tax_rate: taxData[key.replace('TAXID', 'TAXRATE')] ?? 0, tax_id: id ?? '', isChecked: false };
-                    data.push(obj);
-                    this.isManula = true
+            
+            if (this.otherTaxList.length == 0) {
+                this.isManula = false;
+                this.taxData = this.taxDataFormate;
+                this.taxtNameList = [];
+                this.getTaxList();
+                this.isEdit = false;
+            } else {
+                this.otherTaxFrm.get('othertax_id')?.setValue(res?.data[0]['CREATEOTHERTAX_ID']);
+                this.isManula = false;
+                let data: any = [];
+                let taxData = res?.data[0];
+                for (const key in taxData) {
+                    if (key.startsWith('TAXID') || key.startsWith('TAXRATE')) {
+                        this.otherTaxFrm.get(key.toLowerCase())?.setValue(taxData[key]);
+                    }
+                    if (key.startsWith('TAXID')) {
+                        let id = taxData[key] ?? '';
+
+                        let obj = { id: id, tax_name: this.taxList[taxData[key]], tax_rate: taxData[key.replace('TAXID', 'TAXRATE')] ?? 0, tax_id: id ?? '', isChecked: true };
+                        data.push(obj);
+                        this.isManula = true
+                    }
                 }
+                for (const key in taxData) {
+
+                    if (key.startsWith('TAXID') || key.startsWith('TAXRATE')) {
+
+                        this.taxData[key.toLowerCase()] = taxData[key]
+                        // this.taxtNameList = data;
+                        const tax = this.taxtNameList.find((el: any) => el?.id?.toString().trim() == taxData[key]?.toString().trim());
+                        if (tax) {
+
+                            tax.isChecked = true;
+                        }
+                    }
+                }
+                // const data1 = this.taxtNameList.sort((a: any, b: any) => Number(a.id) - Number(b.id));
+                // this.taxtNameList = data1
+                console.log("taxtNameList===", this.taxtNameList)
+                this.isEdit = true
             }
-            this.otherTaxList = { ...taxData, data };
-            console.log("otherTaxList=", this.otherTaxList);
         });
 
     }
@@ -197,15 +249,13 @@ export class OthertaxComponent {
     }
     restrictText(event: Event, ele: any, i: number): void {
         const element = event.target as HTMLInputElement;
-        console.log("ele===", ele)
-        // Allow only numbers (0-9) and the character 'n'
         element.value = element.value.replace(/[^0-9n.]/g, '');
-
-        // Update the ngModel with the filtered value, keeping 2 decimals
         this.taxData[element.name] = element.value;
-        console.log("iii==",i)
-        this.taxData['taxid' + i+1] = ele.id;
-        console.log("taxData===", this.taxData)
+        let ind = Number(i) + 1
+        this.taxData['taxid' + ind] = Number(ele.id);
+        this.otherTaxFrm.get('taxid' + ind)?.setValue(ele.id);
+        this.otherTaxFrm.get(element.name)?.setValue(element.value);
+
 
     }
 
@@ -224,11 +274,61 @@ export class OthertaxComponent {
     }
 
     submit() {
-        console.log("taxData==", this.taxData)
-        console.log("otherTaxFrm==", this.otherTaxFrm.value)
+        this.isSubmitted = true;
+        if (this.otherTaxFrm.invalid) {
+            return;
+        }
+        const data = this.otherTaxFrm.value;
+        this.otherTax.addOtherTax(data).subscribe({
+            next: (res: any) => {
+                if (res.status == 201) {
+
+                    this.toastr.success(res?.message, 'Success');
+                    this.reset();
+                    this.isSubmitted = false;
+                } else {
+                    this.toastr.success(res?.message, 'Error');
+                }
+            },
+            error: (err: any) => {
+                this.toastr.error('Failed to Add Other tax', 'Error');
+                console.log("error:  Other Tax ::", err);
+                this.isSubmitted = false;
+            }
+
+        });
+
     }
 
     update() {
+        this.isSubmitted = true;
+        if (this.otherTaxFrm.invalid) {
+            return;
+        }
+        const data = this.otherTaxFrm.value;
+        console.log("from data", data)
+        this.otherTax.updateOtherTax(data).subscribe({
+            next: (res: any) => {
+                if (res.status == 200) {
+
+                    this.toastr.success(res?.message, 'Success');
+                    this.reset();
+                    this.isSubmitted = false;
+                } else {
+                    this.toastr.success(res?.message, 'Error');
+                }
+            },
+            error: (err: any) => {
+                this.toastr.error('Failed to Add Other tax', 'Error');
+                console.log("error:  Other Tax ::", err);
+                this.isSubmitted = false;
+            }
+
+        });
+    }
+
+    reset() {
+        this.otherTaxFrm.reset();
 
     }
 }
