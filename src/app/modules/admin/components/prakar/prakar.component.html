@@ -8,7 +8,7 @@
         <h2 class="card-header-label"><strong>प्रकार</strong></h2>
     </div>
     <div class="px-6 py-4">
-        <form>
+        <form [formGroup]="prakarForm">
             <div class="form-group row">
                 <label for="prakar" class="col-sm-1 col-form-label">प्रकार
                 </label>
@@ -18,12 +18,15 @@
                         formControlName="prakarName"
                         (keypress)="keyDownText($event,'prakarName')">
                 </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary"
+
+                <div class="form-group mt-6">
+                    <button type="button col-sm-2"
+                        class="btn btn-pill btn-primary"
                         title="Save"
+                        [disabled]="prakarForm.invalid"
                         (click)="(!isEdit)  ? addPrakar() : updatePrakar()"><strong>{{(isEdit)
-                            ? "बदल करा" : "जतन
-                            करा"}}</strong></button>
+                            ? "बदल करा" :
+                            "जतन करा"}}</strong></button>
                 </div>
             </div>
         </form>
