@@ -67,6 +67,7 @@ export class PrakarComponent {
         this.util.onKeydown(event, controlName, this.prakarForm);
     }
     addPrakar(): void {
+        console.log("this.prakarForm.value", this.prakarForm.value)
         if (!this.prakarForm.invalid && this.prakarForm.value.prakarName != null) {
             this.isLoading = true;
             let params = {
