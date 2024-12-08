@@ -8,14 +8,11 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select formControlName="district_id"
-                            name="selectedOption" id="mySelect"
-                            class="form-control my-select2 col-sm-12"
-                            placeholder="Select district"
+                        <select formControlName="district_id" name="selectedOption" id="mySelect"
+                            class="form-control my-select2 col-sm-12" placeholder="Select district"
                             (change)="getTalukaByDistrict($event)">
                             <option value selected>-- जिल्हा निवडा -- </option>
-                            <option *ngFor="let district of districts"
-                                [value]="district.DISTRICT_ID">{{
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{
                                 district.DISTRICT_NAME }}</option>
                         </select>
                         <!-- <span class="text-danger" *ngIf="isSubmitted && !gramFrom.value.districtName">Please select district</span> -->
@@ -24,13 +21,11 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select
-                            class="js-example-basic-multiple1 form-control   my-select2"
-                            name="taluka" id="taluka"
+                        <select class="js-example-basic-multiple1 form-control   my-select2" name="talukas" id="taluka"
                             formControlName="taluka_id">
                             <option value selected>-- तालुका निवडा -- </option>
-                            <option *ngFor="let taluka of talukas"
-                                value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
+                            <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}
+                            </option>
 
                         </select>
                     </div>
@@ -39,13 +34,11 @@
                     <label class="text-dark font-weight-medium">ग्राम
                         पंचायत</label>
                     <div class="form-group">
-                        <select class="form-control my-select2"
-                            name="gramPanchayat" id="gramPanchayat"
+                        <select class="form-control my-select2" name="gramPanchayat" id="gramPanchayat"
                             formControlName="panchayat_id">
                             <option value selected="selected">- ग्राम पंचायत
                                 निवडा -- </option>
-                            <option
-                                *ngFor="let gramPanchayat of gramPanchayatList"
+                            <option *ngFor="let gramPanchayat of gramPanchayatList"
                                 value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}</option>
 
                         </select>
@@ -112,31 +105,22 @@
                 </thead>
                 <tbody>
 
-                    <tr class="font-weight-bold"
-                        *ngFor="let ele of taxtNameList  let i = index">
+                    <tr class="font-weight-bold" *ngFor="let ele of taxtNameList  let i = index">
 
                         <td class="text-center">
                             <div class="form-check d-inline-block">
-                                <input class="form-check-input" type="checkbox"
-                                    value
-                                    id="{{ele.id}}" [checked]="ele.isChecked"
-                                    (click)="toggleChecktax($event,ele)">
+                                <input class="form-check-input" type="checkbox" value id="{{ele.id}}"
+                                    [checked]="ele.isChecked" (click)="toggleChecktax($event,ele)">
                             </div>
                         </td>
                         <td>{{ele.tax_name}}</td>
 
                         <td style="padding: 0px;">
                             <input type="hidden" [attr.name]="'taxid' + (i + 1)"
-                                [(ngModel)]="taxData['taxid' + (i + 1)]"
-                                value="{{ele.id}}" />
-                            <input *ngIf="ele.isChecked"
-                                type="text"
-                                class="form-control"
-                                [attr.name]="'taxrate' + (i + 1)"
-                                [(ngModel)]="taxData['taxrate' + (i + 1)]"
-                                [attr.id]="ele.id"
-                                [value]="ele.tax_rate"
-                                (input)="restrictText($event,ele,i)"
+                                [(ngModel)]="taxData['taxid' + (i + 1)]" value="{{ele.id}}" />
+                            <input *ngIf="ele.isChecked" type="text" class="form-control"
+                                [attr.name]="'taxrate' + (i + 1)" [(ngModel)]="taxData['taxrate' + (i + 1)]"
+                                [attr.id]="ele.id" [value]="ele.tax_rate" (input)="restrictText($event,ele,i)"
                                 style="margin: 0px; height: 55px; font-weight: 600; border: none" />
 
                             <span *ngIf="!ele.isChecked"
@@ -149,6 +133,17 @@
 
                 </tbody>
             </table>
+        </div>
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save"
+                    (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
+                        ? "बदल करा" :
+                        "जतन करा"}}</strong></button>
+                <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा
+                        रचना
+                        करा</strong></button>
+            </div>
         </div>
     </div>
 </div>
@@ -206,13 +201,3 @@
         </div>
     </div>
 </div> -->
-<div class="row">
-    <div class="col-sm-12">
-        <button type="button col-sm-2"
-            class="btn btn-pill btn-primary"
-            title="Save"
-            (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
-                ? "बदल करा" :
-                "जतन करा"}}</strong></button>
-    </div>
-</div>

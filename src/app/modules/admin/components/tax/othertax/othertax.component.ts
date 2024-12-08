@@ -128,6 +128,7 @@ export class OthertaxComponent {
 
     getTaxList() {
         this.taxtNameSet = new Set();
+        this.taxtNameList = [];
         this.otherTax.fetchTaxList().subscribe((res: any) => {
 
             let data = res?.data ?? [];
@@ -149,9 +150,6 @@ export class OthertaxComponent {
                 }
                 const data = this.taxtNameList.sort((a: any, b: any) => Number(a.id) - Number(b.id));
                 this.taxtNameList = data
-
-
-
 
             });
 
@@ -329,6 +327,9 @@ export class OthertaxComponent {
 
     reset() {
         this.otherTaxFrm.reset();
-
+        $('#mySelect').val('').trigger('change');
+        $('#taluka').val('').trigger('change');
+        $('#gramPanchayat').val('').trigger('change');
+        this.getTaxList();
     }
 }

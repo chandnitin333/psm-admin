@@ -5,7 +5,7 @@
     <div class="px-6 py-4">
         <form [formGroup]="openPlotRatesForm">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
                         <select formControlName="district_id" name="selectedOption" id="mySelect"
@@ -19,7 +19,7 @@
                             select जिल्हा</span>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
                         <select class="js-example-basic-multiple1 form-control my-select2" name="taluka" id="taluka"
@@ -33,9 +33,8 @@
                             select तालुका</span>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class=" col-sm-6">
+
+                <div class=" col-sm-4">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
                         <select class="form-control my-select2" name="gramPanchayat" id="gramPanchayat"
@@ -46,12 +45,14 @@
                                 {{gramPanchayat.PANCHAYAT_NAME}}</option>
 
                         </select>
-                        <span class="text-danger"
-                            *ngIf="isSubmitted && !openPlotRatesForm.value.panchayat_id">Please select ग्राम पंचायत
+                        <span class="text-danger" *ngIf="isSubmitted && !openPlotRatesForm.value.panchayat_id">Please
+                            select ग्राम पंचायत
                             निवडा</span>
                     </div>
                 </div>
-                <div class="col-sm-6">
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">गट ग्राम पंचायत</label>
                     <div class="form-group">
                         <select class="form-control my-select2" name="gatgramPanchayat" id="gatgramPanchayat"
@@ -67,9 +68,7 @@
                             पंचायत</span>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class=" col-sm-6">
+                <div class=" col-sm-4">
                     <label class="text-dark font-weight-medium">वार्षिक मूल्य दर प्रकार</label>
                     <div class="form-group">
 
@@ -80,10 +79,11 @@
                                 {{prakar.PRAKAR_NAME}}</option>
 
                         </select>
-                        <span class="text-danger" *ngIf="isSubmitted && !openPlotRatesForm.value.prakar_id">Please select वार्षिक मूल्य दर प्रकार</span>
+                        <span class="text-danger" *ngIf="isSubmitted && !openPlotRatesForm.value.prakar_id">Please
+                            select वार्षिक मूल्य दर प्रकार</span>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">वार्षिक मूल्य दर</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="annualcost_name" name="annualcost_name"
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">आकारणी दर</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="levyrate_name" name="levyrate_name"
@@ -105,13 +105,14 @@
                             fill आकारणी दर</span>
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-sm-4">
-                    <div class="form-group ">
-                        <button type="button" class="btn btn-pill btn-primary col-md-12 col-sm-12" title="Save"
+                    <div class="form-group mt-6">
+                        <button type="button" class="btn btn-pill btn-primary" title="Save"
                             (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>पुन्हा रचना
+                                करा</strong></button>
                     </div>
                 </div>
             </div>

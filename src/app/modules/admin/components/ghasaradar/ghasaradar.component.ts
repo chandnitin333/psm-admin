@@ -35,7 +35,7 @@ export class GhasaradarComponent {
     { key: 'sr_no', label: 'अनुक्रमांक' },
     { key: 'AGEOFBUILDING_NAME', label: 'मालमत्तेचे वय व वर्ष' },
     { key: 'MALAMATA_NAME', label: 'मालमत्तेचे वर्णन' },
-    { key: 'DEPRECIATION_NAME', label: 'टक्केवारी' }
+    { key: 'DEPRECIATION_NAME', label: 'टक्केवारी (%)' }
 
 
   ];
@@ -59,7 +59,13 @@ export class GhasaradarComponent {
   fetchData() {
     this.openPlot.getGhasaraList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
       next: (res: any) => {
-        this.items = res?.data ?? [];
+        let items1 = res?.data ?? [];
+         this.items =  items1.map((item: { DEPRECIATION_NAME: string; }) => {
+            return {
+                ...item,
+                DEPRECIATION_NAME: item.DEPRECIATION_NAME + ' %',
+            };
+        });
         this.totalItems = res?.totalRecords;
       },
       error: (err: any) => {

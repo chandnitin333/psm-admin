@@ -130,7 +130,7 @@ export class TalukaComponent implements OnInit {
 
 		this.talukaService.getTalukas('taluka-list', { page_number: this.currentPage, search_text: this.searchValue }).subscribe({
 			next: (res: any) => {
-				console.log('Talukas:', res);
+				// console.log('Talukas:', res);
 				this.items = res?.data;
 				this.totalItems = res?.totalRecords;
 				this.isLoading = false;
@@ -178,7 +178,7 @@ export class TalukaComponent implements OnInit {
 	}
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe(); // Clean up the subscription on component destroy
-		$('#mySelect').select2('destroy');
+		// $('#mySelect').select2('destroy');
 	}
 
 	addTaluka() {
@@ -211,7 +211,7 @@ export class TalukaComponent implements OnInit {
 	}
 
 	getTaluka(id: number) {
-
+		this.isLoading = true;
 		let taluka = this.items.find((item) => item.TALUKA_ID == id);
 		if (!taluka) {
 			this.toastr.error('Taluka not found.', 'Error');
@@ -227,11 +227,12 @@ export class TalukaComponent implements OnInit {
 			district_id: this.talukaForm.value.district_id || 0,
 			name: this.talukaName
 		};
-
+		this.isLoading = false;
 	}
 
 	reset() {
 		this.talukaForm.reset();
+		$('#mySelect').val('').trigger('change');
 		this.isEdit = false;
 	}
 	editTaluka() {
@@ -241,7 +242,7 @@ export class TalukaComponent implements OnInit {
 			district_id: this.talukaForm?.value?.district_id,
 			taluka_name: this.talukaForm?.value?.name,
 		};
-
+		this.isLoading = true;
 		this.talukaService.UpdateTaluka('update-taluka', data).subscribe({
 			next: (res: any) => {
 				this.getTalukas();
@@ -264,7 +265,7 @@ export class TalukaComponent implements OnInit {
 	}
 	deleteTaluka(id: number, name = '') {
 		this.util.showConfirmAlert().then((res) => {
-
+		this.isLoading = true;
 			if (res) {
 				if (id === 0) {
 					this.toastr.error('This taluka cannot be deleted.', 'Error');
