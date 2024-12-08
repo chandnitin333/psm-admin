@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 export class HttpHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Set common headers
+   
     let token = localStorage.getItem('token');
     const modifiedReq = req.clone({
       setHeaders: {
@@ -15,8 +15,7 @@ export class HttpHeaderInterceptor implements HttpInterceptor {
         'Authorization': `Bearer ${token}`
       }
     });
-    // console.log('modifiedReq', modifiedReq);
-    // Handle errors
+  
     return next.handle(modifiedReq).pipe(
       catchError((error: HttpErrorResponse) => {
 

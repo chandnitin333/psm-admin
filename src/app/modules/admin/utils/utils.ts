@@ -120,6 +120,18 @@ export class Util {
         });
     }
 
+    async showAlertMessage(msg: string, title: string, type: 'success' | 'error' | 'warning' | 'info' | 'question'): Promise<boolean> {
+        const result = await Swal.fire({
+            title: title,
+            text: msg,
+            icon: type,
+            confirmButtonText: 'OK'
+        });
+        return result.isConfirmed;
+    }
+    
+
+
     async getDistrictDDL(url: string = "district-list-ddl") {
         const cacheKey = 'districts';
         const cachedData = localStorage.getItem(cacheKey);
