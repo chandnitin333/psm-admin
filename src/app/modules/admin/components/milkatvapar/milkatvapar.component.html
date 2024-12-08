@@ -1,7 +1,5 @@
-<div *ngIf="isLoading">
-    <app-skeleton-loader></app-skeleton-loader>
-</div>
-<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+
+
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>मिलकत वापर</strong></h2>
@@ -10,12 +8,17 @@
         <form [formGroup]="milkatVaparForm">
             <div class="row">
                 <div class="col-sm-4">
-                    <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
+                    <label class="text-dark font-weight-medium">मालमत्तेचे
+                        वर्णन</label>
                     <div class="form-group">
-                        <select formControlName="malmatteche_prakar_id" name="selectedOption" id="mySelect"
-                            class="form-control my-select2" placeholder="malmatteche prakar">
-                            <option value="">-- मालमत्तेचे वर्णन निवडा -- </option>
-                            <option *ngFor="let mPrakar of malmattechePrakarsList" [value]="mPrakar.MILKAT_VAPAR_ID">{{
+                        <select formControlName="malmatteche_prakar_id"
+                            name="selectedOption" id="mySelect"
+                            class="form-control my-select2"
+                            placeholder="malmatteche prakar">
+                            <option value>-- मालमत्तेचे वर्णन निवडा -- </option>
+                            <option
+                                *ngFor="let mPrakar of malmattechePrakarsList"
+                                [value]="mPrakar.MILKAT_VAPAR_ID">{{
                                 mPrakar.MILKAT_VAPAR_NAME }}</option>
                         </select>
                     </div>
@@ -23,17 +26,22 @@
                 <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">मिलकत</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="milkat" name="milkat" placeholder="उदा. रामटेक"
-                            formControlName="name" (keydown)="onKeydown($event,'name')">
+                        <input type="text" class="form-control" id="milkat"
+                            name="milkat" placeholder="उदा. रामटेक"
+                            formControlName="name"
+                            (keydown)="onKeydown($event,'name')">
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group mt-6">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save"
-                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                        <button type="button" class="btn btn-pill btn-primary"
+                            title="Save"
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit)
+                                ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
-                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना
+                        <button type="button" class="btn btn-pill btn-info ml-1"
+                            title="Update" (click)="reset()"><strong>पुन्हा रचना
                                 करा</strong></button>
                     </div>
                 </div>
@@ -46,11 +54,15 @@
     <div class="card-body">
         <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
-                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData()"
+                <input type="text" autocomplete="off" name="query"
+                    id="search-input" class="form-control"
+                    placeholder="Search..."
+                    (keyup.enter)="translateText($event); "
+                    (input)="filterData()"
                     [(ngModel)]="searchValue">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                    <button class="btn btn-outline-secondary" type="button"
+                        (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
                     </button>
                 </div>
@@ -60,21 +72,23 @@
 
         <div class="table-responsive">
 
-            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
-                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
+            <app-sorting-table [data]="items" [columns]="displayedColumns"
+                [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)"
+                [keyName]="keyName">
             </app-sorting-table>
-            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
+            <div class="float-left font-weight-bold mt-1"><span
+                    class="font-weight-bold">Total Records :
                 </span>{{totalItems}}</div>
         </div>
 
-
         <br>
-        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+        <app-pagination class="float-right" [totalItems]="totalItems"
+            [itemsPerPage]="itemsPerPage"
             (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>
-
 
 <!-- <div class="card card-default">
     <div class="card-body">
