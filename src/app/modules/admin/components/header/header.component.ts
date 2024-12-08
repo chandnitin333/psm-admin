@@ -12,10 +12,16 @@ declare var $: any;
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+ loggedInUser:any;
  isSidebarOpen: boolean = true; // Track whether the sidebar is open
  isNotificationOpen: boolean = false; // Track whether the notification panel is open
   constructor(private auth:AuthService,private domService: DomService){
-
+    let userDetails = localStorage.getItem('userDetals');
+    if (userDetails) {
+      this.loggedInUser = JSON.parse(userDetails);
+      console.log('Retrieved User Details:', this.loggedInUser);
+    }
+    // console.log("userDetals", userDetails)
   }
   logout(){
     this.auth.logout();

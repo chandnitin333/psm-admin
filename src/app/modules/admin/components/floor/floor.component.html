@@ -11,15 +11,15 @@
             <div class="form-group row">
                 <label for="floor" class="col-sm-2 col-form-label">बांधकामाचा मजला </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="floor" name="floor" placeholder="उदा. प. मजला" formControlName="floorName" (keypress)="keyDownText($event,'floorName')">
+                    <input type="text" class="form-control" id="floor" name="floor" placeholder="उदा. प. मजला"
+                        formControlName="floorName" (keypress)="keyDownText($event,'floorName')">
                 </div>
                 <div class="col-sm-3">
-                   
-                    <button type="button" class="btn btn-pill btn-primary"
-                        title="Save"
-                        (click)="(!isEdit)  ? addFloor() : updateFloor()"><strong> {{ (isEdit)
-                            ? "बदल करा" : "जतन
-                            करा" }}</strong></button>
+                    <button type="button" class="btn btn-pill btn-primary" title="Save"
+                        (click)="(!isEdit)  ? addFloor() : updateFloor()"><strong> {{ (isEdit) ? "बदल करा" : "जतन करा"
+                            }}</strong></button>
+                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                        (click)="reset()"><strong>पुन्हा रचना करा</strong></button>
                 </div>
             </div>
         </form>

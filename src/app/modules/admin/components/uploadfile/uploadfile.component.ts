@@ -185,4 +185,12 @@ export class UploadfileComponent {
     this.searchValue = '';
     this.fetchUploadData();
   }
+  reset()
+  {
+    $("#file_name").val("");
+    const fileInput = document.getElementById('data_file') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ''; 
+    }
+  }
 }

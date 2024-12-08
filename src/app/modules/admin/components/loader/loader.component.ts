@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="loader-overlay" *ngIf="loading">
+    <div class="loader-overlay" *ngIf="isLoading">
       <div class="loader"></div>
     </div>
   `,
@@ -14,7 +14,7 @@ import { Component, Input } from '@angular/core';
 })
 export class LoaderComponent {
 
-  @Input() loading: boolean = false;
+  @Input() isLoading: boolean = false;
 
 
 }
