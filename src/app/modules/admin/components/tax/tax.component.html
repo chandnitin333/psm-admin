@@ -12,11 +12,16 @@
                 <label for="kranchi_nave" class="col-sm-2 col-form-label">करांची नावे</label>
                 <div class="col-sm-4">
                     <input type="text" class="form-control" id="kranchi_nave" name="kranchi_nave"
-                        placeholder="उदा. विजकर व दिवाबत्ती कर " formControlName="name" (keypress)="keyDownText($event,'name')">
+                        placeholder="उदा. विजकर व दिवाबत्ती कर " formControlName="name"
+                        (keypress)="keyDownText($event,'name')">
                 </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
-                                करा"}}</strong></button>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-pill btn-primary" title="Save"
+                        (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                            करा"}}</strong></button>
+                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                        (click)="reset()"><strong>पुन्हा रचना
+                            करा</strong></button>
                 </div>
             </div>
         </form>
@@ -26,10 +31,11 @@
 
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-        <div class="col-md-4  mt-2 p-0" >
+        <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
                 <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData($event)" [(ngModel)]="searchValue" >
+                    placeholder="Search..." (keyup.enter)="translateText($event); " (input)="filterData($event)"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
@@ -40,23 +46,18 @@
         <br>
 
         <div class="table-responsive">
-            
-            <app-sorting-table
-            [data]="items"
-            [columns]="displayedColumns"
-            [currentPage]="currentPage"
-            (edit)="editInfo($event)"
-            (delete)="deleteInfo($event)"
-            [keyName]="keyName">
+
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-            </span>{{totalItems}}</div>
+                </span>{{totalItems}}</div>
         </div>
 
 
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-        (pageChange)="onPageChange($event)">
+            (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>

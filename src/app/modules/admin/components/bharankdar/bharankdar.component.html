@@ -5,7 +5,7 @@
     <div class="px-6 py-4">
         <form [formGroup]="bharankDarForm">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
                     <div class="form-group">
                         <select formControlName="milkat_vapar_id" name="selectedOption" id="mySelect"
@@ -16,7 +16,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">भारांक</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="takkevari" name="takkevari" placeholder="उदा. 1.00"
@@ -24,11 +24,14 @@
                     </div>
                 </div>
 
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <div class="form-group mt-6">
                         <button type="button" class="btn btn-pill btn-primary" title="Save"
                             (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>पुन्हा रचना
+                                करा</strong></button>
                     </div>
                 </div>
             </div>

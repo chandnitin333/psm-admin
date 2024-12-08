@@ -1,5 +1,3 @@
-
-
 <div class="card card-default">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>बी डी ओ नविन जोड़ा</strong></h2>
@@ -7,90 +5,73 @@
     <div class="px-6 py-4">
         <form [formGroup]="frmBDO">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select
-                            class="js-example-basic-multiple1 form-control my-select2"
-                            name="district"
-                            id="district"
+                        <select class="js-example-basic-multiple1 form-control my-select2" name="district" id="district"
                             formControlName="district_id">
                             <option value>-- जिल्हा निवडा --
                             </option>
-                            <option
-                                *ngFor="let district of districts"
-                                [value]="district.DISTRICT_ID">{{
+                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{
                                 district.DISTRICT_NAME }}</option>
 
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select
-                            class="js-example-basic-multiple1 form-control my-select2"
-                            name="taluka"
-                            id="taluka"
-                            placeholder="Select taluka"
-                            formControlName="taluka_id">
+                        <select class="js-example-basic-multiple1 form-control my-select2" name="taluka" id="taluka"
+                            placeholder="Select taluka" formControlName="taluka_id">
                             <option value>-- तालुका निवडा --
                             </option>
-                            <option *ngFor="let taluka of talukas"
-                                value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
+                            <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}
+                            </option>
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class=" col-sm-6">
+
+                <div class=" col-sm-4">
                     <label class="text-dark font-weight-medium">नाव</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="full_name"
-                            name="name"
-                            formControlName="name" id="name"
-                            placeholder="उदा. रवी सुरज शर्मा ">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <label class="text-dark font-weight-medium">इमेल</label>
-                    <div class="form-group">
-                        <input type="email" class="form-control" id="email"
-                            name="email"
-                            formControlName="email" id="email"
-                            placeholder="उदा. abc@gmail.com ">
+                        <input type="text" class="form-control" id="full_name" name="name" formControlName="name"
+                            id="name" placeholder="उदा. रवी सुरज शर्मा ">
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class=" col-sm-6">
-                    <label class="text-dark font-weight-medium">यूजरनेम</label>
+                <div class="col-sm-4">
+                    <label class="text-dark font-weight-medium">इमेल</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="username"
-                            formControlName="username"
-                            name="username" placeholder="उदा. ravi03">
+                        <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                            id="email" placeholder="उदा. abc@gmail.com ">
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class=" col-sm-4">
+                    <label class="text-dark font-weight-medium">यूजरनेम</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" formControlName="username" name="username"
+                            placeholder="उदा. ravi03">
+                    </div>
+                </div>
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">पासवर्ड</label>
                     <div class="form-group">
-                        <input type="password" class="form-control"
-                            id="password" name="password"
-                            formControlName="password"
-                            placeholder="उदा. ********">
+                        <input type="password" class="form-control" id="password" name="password"
+                            formControlName="password" placeholder="उदा. ********">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group ">
-                        <button type="button col-sm-2"
-                            class="btn btn-pill btn-primary"
-                            title="Save"
-                            [disabled]="frmBDO.invalid"
-                            (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
+                        <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save"
+                            [disabled]="frmBDO.invalid" (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
                                 ? "बदल करा" :
                                 "जतन करा"}}</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>पुन्हा रचना
+                                करा</strong></button>
                     </div>
                 </div>
                 <!-- <div class="col-sm-4">
@@ -112,14 +93,11 @@
     <div class="card-body">
         <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
-                <input type="text" autocomplete="off" name="query"
-                    id="search-input" class="form-control"
-                    placeholder="Search..."
-                    (keyup.enter)="translateText($event); filterData(); "
-                    (input)="filterData()" [(ngModel)]="searchValue">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                        (click)="resetFilter($event)">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
                     </button>
                 </div>
@@ -129,22 +107,15 @@
 
         <div class="table-responsive">
 
-            <app-sorting-table
-                [data]="items"
-                [columns]="displayedColumns"
-                [currentPage]="currentPage"
-                (edit)="editInfo($event)"
-                (delete)="deleteInfo($event)"
-                [keyName]="keyName">
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
-            <div class="float-left font-weight-bold mt-1"><span
-                    class="font-weight-bold">Total Records :
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
                 </span>{{totalItems}}</div>
         </div>
 
         <br>
-        <app-pagination class="float-right" [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage"
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
             (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>

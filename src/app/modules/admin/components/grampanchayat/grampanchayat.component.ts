@@ -7,11 +7,13 @@ import { ITEM_PER_PAGE } from '../../constants/admin.constant';
 import { GramPanchayatService } from '../../services/gram-panchayat.service';
 import Util from '../../utils/utils';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
     selector: 'app-grampanchayat',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginationComponent],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, PaginationComponent, SkeletonLoaderComponent, LoaderComponent],
     templateUrl: './grampanchayat.component.html',
     styleUrl: './grampanchayat.component.css'
 })
@@ -32,22 +34,27 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     searchValue: string = '';
     panchayatId: number = 0;
     marathiText: string = '';
+    isLoading: boolean = true;
     constructor(private titleService: Title, private util: Util, private gramPanchayt: GramPanchayatService, private toastr: ToastrService) {
         this.titleService.setTitle('Gram Panchayat');
     }
     ngOnInit(): void {
-
+        this.isLoading = false;
         this.fetchGramPanchayatData();
         this.getAllDistricts();
+
     }
     ngAfterViewInit(): void {
         $('.my-select2').select2();
 
         $('#mySelect').on('change', (event) => {
             const selectedValue: string = String($(event.target).val());
+            // this.isLoading = true;
             this.getTalukaByDistrict(selectedValue);
+            // this.isLoading = false;
             if (selectedValue) {
                 this.gramFrom.get('districtName')?.setValue(selectedValue || '');
+                 
             }
         });
 
@@ -61,9 +68,11 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     }
 
     fetchGramPanchayatData() {
+        //  this.isLoading=true;
         this.gramPanchayt.getGramPanchayatList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe((res: any) => {
             this.gramPanchaytData = res.data ?? [];
             this.totalItems = res.totalRecords;
+            this.isLoading = false;
         });
     }
     get paginatedItems() {
@@ -78,7 +87,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         this.gramPanchayt.getTalukaById({ id: id }).subscribe((res: any) => {
             this.talukas = res.data ?? [];
         });
-
+        this.isLoading = false;
     }
 
     keyDownText(event: KeyboardEvent, controlName: string): void {
@@ -87,7 +96,8 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     addGramPanyachayt() {
         this.isSubmitted = true;
-        console.log(this.gramFrom.value);
+        // console.log(this.gramFrom.value);
+        //  this.isLoading = true;
         if (this.gramFrom.valid && this.gramFrom.value.districtName && this.gramFrom.value.talukaName && this.gramFrom.value.gramPanchayatName) {
             let params: any = {
                 district_id: this.gramFrom.value.districtName,
@@ -100,6 +110,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                     this.reset();
                     this.isSubmitted = false;
                     this.fetchGramPanchayatData();
+                    // this.isLoading = false;
                 } else {
                     this.toastr.error(res.message, "Error");
                 }
@@ -111,9 +122,10 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     reset() {
         this.gramFrom.reset();
-        $('#taluka').val('').trigger('change');
         $('#mySelect').val('').trigger('change');
+        $('#taluka').val('').trigger('change');
         this.isEdit = false;
+         $('.my-select2').select2();
     }
 
     srNo(index: number): number {
@@ -126,15 +138,21 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     }
     editInfo(id: number) {
+        
+        // this.isLoading = true;
         this.gramPanchayt.getGramPanchayatById(id).subscribe((res: any) => {
             this.panchayatId = id;
             this.isEdit = true;
             if (res.status == 200) {
                 this.gramFrom.get('districtName')?.setValue(res.data.DISTRICT_ID);
-                $("#mySelect").val(res.data.DISTRICT_ID).trigger('change');
-                this.gramFrom.get('talukaName')?.setValue(res.data.TALUKA_ID);
-                this.gramFrom.get('gramPanchayatName')?.setValue(res.data.PANCHAYAT_NAME);
-
+                setTimeout(() => {
+                    $("#mySelect").val(res.data.DISTRICT_ID).trigger('change');
+                    this.gramFrom.get('talukaName')?.setValue(res.data.TALUKA_ID);
+                    this.gramFrom.get('gramPanchayatName')?.setValue(res.data.PANCHAYAT_NAME);
+                }, 300)
+                // this.isLoading = false;
+               
+                
             } else {
                 this.toastr.error(res.message, "Error");
             }
@@ -144,6 +162,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     updateGramPanchayat() {
         this.isSubmitted = true;
+        // this.isLoading = true;
         if (this.gramFrom.valid && this.gramFrom.value.districtName && this.gramFrom.value.talukaName && this.gramFrom.value.gramPanchayatName) {
             let params: any = {
                 district_id: this.gramFrom.value.districtName,
@@ -176,6 +195,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     deleteGramPanchayat(id: number) {
         this.util.showConfirmAlert().then((res) => {
+             this.isLoading = true;
             if (id === 0) {
                 this.toastr.error('This taluka cannot be deleted.', 'Error');
                 return;
@@ -186,6 +206,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
                             this.fetchGramPanchayatData();
+                            this.reset();
                         } else {
                             this.toastr.error(res.message, "Error");
                         }

@@ -5,7 +5,7 @@
     <div class="px-6 py-4">
         <form [formGroup]="kamkajComiteeForm">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
                         <select formControlName="panchayatName" class="form-control my-select2" name="panchayat_name"
@@ -16,16 +16,14 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">फर्स्ट नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="first_name" name="first_name" placeholder="उदा. रवि"
                             formControlName="first_name" (keydown)="onKeydown($event,'first_name')">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class=" col-sm-6">
+                <div class=" col-sm-3">
                     <label class="text-dark font-weight-medium">मधली नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="middle_name" name="middle_name"
@@ -33,7 +31,7 @@
                             (keydown)="onKeydown($event,'middle_name')">
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">लास्ट नाव</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="last_name" name="last_name"
@@ -43,7 +41,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class=" col-sm-6">
+                <div class=" col-sm-3">
                     <label class="text-dark font-weight-medium">पद</label>
                     <div class="form-group">
                         <select formControlName="designationName" class="form-control my-select2"
@@ -54,7 +52,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">मोबाईल न.</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="mobile_no" name="mobile_no"
@@ -62,13 +60,14 @@
                             (keydown)="onKeydown($event,'mobile_no')">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group ">
-                        <button type="button" class="btn btn-pill btn-primary col-md-12 col-sm-12"
-                            title="Save" (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                <div class="col-sm-4 ">
+                    <div class="form-group mt-6">
+                        <button type="button" class="btn btn-pill btn-primary" title="Save"
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>पुन्हा रचना
+                                करा</strong></button>
                     </div>
                 </div>
             </div>

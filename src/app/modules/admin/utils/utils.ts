@@ -120,6 +120,18 @@ export class Util {
         });
     }
 
+    async showAlertMessage(msg: string, title: string, type: 'success' | 'error' | 'warning' | 'info' | 'question'): Promise<boolean> {
+        const result = await Swal.fire({
+            title: title,
+            text: msg,
+            icon: type,
+            confirmButtonText: 'OK'
+        });
+        return result.isConfirmed;
+    }
+    
+
+
     async getDistrictDDL(url: string = "district-list-ddl") {
         const cacheKey = 'districts';
         const cachedData = localStorage.getItem(cacheKey);
@@ -179,6 +191,40 @@ export class Util {
         };
         return await this.http.post(`${API_URL}panchayat-list-by-taluka-id`, params, { headers }).toPromise();
     }
+    
+
+    // check only integer entered
+    async validateInteger(input: any): Promise<boolean> {
+        const parsedInput = Number(input);
+        if (isNaN(parsedInput) || !Number.isInteger(parsedInput)) {
+            return false;
+        }
+        return true; 
+    }
+
+    // accept only decimal digit
+    async validateFloat(input: any): Promise<boolean> {
+        const parsedInput = parseFloat(input); // Try to parse the input as a float
+        if (isNaN(parsedInput) || !input.includes('.') || parsedInput === Math.floor(parsedInput)) {
+            return false;
+        }
+        return true;
+    }
+
+    async validateString(input: any): Promise<boolean> {
+        if (typeof input !== 'string' || input.trim() === '') {
+            return false;
+        }
+        return true;
+    }
+
+    async validateStringWithSpaces(input: any): Promise<boolean> {
+    // Check if input is a non-empty string containing at least one non-whitespace character
+        if (typeof input !== 'string' || !/\S/.test(input)) {
+            return false;
+        }
+        return true;
+  }
 }
 
 

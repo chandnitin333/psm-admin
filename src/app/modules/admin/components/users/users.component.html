@@ -183,17 +183,10 @@
                         </div>
                         <div class="row mt-3">
 
-                            <div class="col-sm-3 ">
+                            <div class="col-sm-6 ">
                                 <div class="form-group">
-
-                                    <button type="button col-sm-2"
-                                        class="btn btn-pill btn-primary"
-                                        title="Save"
-                                        [disabled]="usrFrm.invalid"
-                                        (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
-                                            ? "बदल करा" :
-                                            "जतन करा"}}</strong></button>
-
+                                    <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save" [disabled]="usrFrm.invalid" (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
+                                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना करा</strong></button>
                                 </div>
                             </div>
                         </div>

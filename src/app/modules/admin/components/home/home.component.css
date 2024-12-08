@@ -1,4 +1,22 @@
-.dashboard-card :hover{
-    background-color: #ae8ed8;
-    color: white;
+.dashboard-card :hover {
+  border-radius: 7%;
+  background-color: #ae8ed8;
+  color: white;
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+a:hover {
+color: #fff !important;
+background: rgba(0, 0, 0, 0.5) !important;
+
+}
+
+.card.card-default{
+    border-radius: 5%;
+}
+.d-flex.p-4.align-items-center.flex-column {
+  border-radius: 5%;
+  /* background: rgba(0, 0, 0, 0.5) !important; */
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

@@ -61,7 +61,7 @@ export class TalukaComponent implements OnInit {
 		name: new FormControl(undefined)
 	});
 	deleteTalukaName: string = '';
-	isLoading: boolean = true;
+	isLoading: boolean = false;
 	private destroy$ = new Subject<void>();
 	constructor(
 		private titleService: Title,
@@ -72,10 +72,10 @@ export class TalukaComponent implements OnInit {
 		this.titleService.setTitle('Taluka');
 	}
 	ngOnInit(): void {
-		this.isLoading = false;
-		this.getTalukas();
-		this.getAllDistricts();
 
+		this.getTalukas();
+
+		this.getAllDistricts();
 		this.subscription = this.searchControl.valueChanges.pipe(
 			debounceTime(1000),
 			distinctUntilChanged(),
@@ -83,7 +83,7 @@ export class TalukaComponent implements OnInit {
 		).subscribe(item => {
 			let data = item as any;
 			this.items = data?.data?.talukas;
-			this.isLoading = false;
+			this.isLoading = true
 		});
 	}
 
@@ -94,7 +94,6 @@ export class TalukaComponent implements OnInit {
 			let selectedValue: string = $(event.target).val() as string;
 			this.talukaForm.get('district_id')?.setValue(selectedValue || '');
 		});
-
 	}
 
 	translateText(event: Event) {
@@ -131,10 +130,10 @@ export class TalukaComponent implements OnInit {
 
 		this.talukaService.getTalukas('taluka-list', { page_number: this.currentPage, search_text: this.searchValue }).subscribe({
 			next: (res: any) => {
-				console.log('Talukas:', res);
+				// console.log('Talukas:', res);
 				this.items = res?.data;
 				this.totalItems = res?.totalRecords;
-
+				this.isLoading = false;
 			},
 			error: (err) => {
 				console.error('API error:', err);
@@ -179,7 +178,7 @@ export class TalukaComponent implements OnInit {
 	}
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe(); // Clean up the subscription on component destroy
-		$('#mySelect').select2('destroy');
+		// $('#mySelect').select2('destroy');
 	}
 
 	addTaluka() {
@@ -212,7 +211,7 @@ export class TalukaComponent implements OnInit {
 	}
 
 	getTaluka(id: number) {
-
+		this.isLoading = true;
 		let taluka = this.items.find((item) => item.TALUKA_ID == id);
 		if (!taluka) {
 			this.toastr.error('Taluka not found.', 'Error');
@@ -228,11 +227,12 @@ export class TalukaComponent implements OnInit {
 			district_id: this.talukaForm.value.district_id || 0,
 			name: this.talukaName
 		};
-
+		this.isLoading = false;
 	}
 
 	reset() {
 		this.talukaForm.reset();
+		$('#mySelect').val('').trigger('change');
 		this.isEdit = false;
 	}
 	editTaluka() {
@@ -242,7 +242,7 @@ export class TalukaComponent implements OnInit {
 			district_id: this.talukaForm?.value?.district_id,
 			taluka_name: this.talukaForm?.value?.name,
 		};
-
+		this.isLoading = true;
 		this.talukaService.UpdateTaluka('update-taluka', data).subscribe({
 			next: (res: any) => {
 				this.getTalukas();
@@ -265,7 +265,7 @@ export class TalukaComponent implements OnInit {
 	}
 	deleteTaluka(id: number, name = '') {
 		this.util.showConfirmAlert().then((res) => {
-
+		this.isLoading = true;
 			if (res) {
 				if (id === 0) {
 					this.toastr.error('This taluka cannot be deleted.', 'Error');

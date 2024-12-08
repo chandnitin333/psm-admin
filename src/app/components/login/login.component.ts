@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+// import { ToastrService } from 'ngx-toastr';
+import Util from '../../modules/admin/utils/utils';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
 		password: new FormControl('')
 	});
 
-	constructor(private auth: AuthService, private router: Router) {
+	constructor(private auth: AuthService, private router: Router, private util: Util) {
 
 	}
 	ngOnInit(): void {
@@ -31,9 +33,17 @@ export class LoginComponent implements OnInit {
 		if (this.loginFrom.valid) {
 			this.auth.login(this.loginFrom.value).subscribe(
 				(result) => {
-					this.router.navigate(['admin']);
+					// this.toast.success('Login Successful.', 'Success');
+
+					if (result) {
+						this.util.showAlertMessage("Login Success!", "Login", 'success');
+						this.router.navigate(['admin']);
+					} else {
+
+					}
 				}, (err: Error) => {
-					alert(err.message);
+					this.util.showAlertMessage("Login Failed", "Login", 'error');
+					// this.toast.error('Login Failed..!', 'Failed');
 				}
 			)
 		}
