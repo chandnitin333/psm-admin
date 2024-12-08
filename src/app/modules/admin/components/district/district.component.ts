@@ -32,7 +32,7 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
 })
 export class DistrictComponent implements OnInit {
     district: any = [];
-    isLoading: boolean = true;
+    isLoading: boolean = false;
     currentPage: number = 1;
     itemsPerPage: number = ITEM_PER_PAGE;
     isSubmitted: boolean = false;
