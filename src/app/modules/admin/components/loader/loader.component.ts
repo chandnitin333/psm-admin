@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="loader-overlay" *ngIf="isLoading">
-      <div class="loader"></div>
+    <div class="box" *ngIf="loading">
+      <div class="loader-16"></div>
     </div>
   `,
   styleUrl: './loader.component.css'

@@ -61,7 +61,7 @@ export class TalukaComponent implements OnInit {
 		name: new FormControl(undefined)
 	});
 	deleteTalukaName: string = '';
-	isLoading: boolean = true;
+	isLoading: boolean = false;
 	private destroy$ = new Subject<void>();
 	constructor(
 		private titleService: Title,
@@ -72,10 +72,10 @@ export class TalukaComponent implements OnInit {
 		this.titleService.setTitle('Taluka');
 	}
 	ngOnInit(): void {
-		this.isLoading = false;
-		this.getTalukas();
-		this.getAllDistricts();
 
+		this.getTalukas();
+
+		this.getAllDistricts();
 		this.subscription = this.searchControl.valueChanges.pipe(
 			debounceTime(1000),
 			distinctUntilChanged(),
@@ -83,7 +83,7 @@ export class TalukaComponent implements OnInit {
 		).subscribe(item => {
 			let data = item as any;
 			this.items = data?.data?.talukas;
-			this.isLoading = false;
+			this.isLoading = true
 		});
 	}
 
@@ -94,7 +94,6 @@ export class TalukaComponent implements OnInit {
 			let selectedValue: string = $(event.target).val() as string;
 			this.talukaForm.get('district_id')?.setValue(selectedValue || '');
 		});
-
 	}
 
 	translateText(event: Event) {
