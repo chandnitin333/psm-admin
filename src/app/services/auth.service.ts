@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { API_URL } from '../modules/admin/constants/admin.constant';
-import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
     providedIn: 'root'
@@ -28,14 +28,14 @@ export class AuthService {
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('userDetals');
-        this.router.navigate(['login']);
+        this.router.navigate(['admin/login']);
     }
 
 
     login({ username, password }: any): Observable<any> {
         if (!username || !password) {
             console.log("Error: Username and password are required");
-            this.router.navigate(['login']);
+            this.router.navigate(['admin/login']);
             return throwError(new Error('Username and password are required'));
         }
 
@@ -64,15 +64,15 @@ export class AuthService {
                         console.log("An unexpected error occurred: ", error.error.message);
                     }
 
-                    this.router.navigate(['login']);
+                    this.router.navigate(['admin/login']);
                     return throwError(error);
                 })
             );
     }
-    decodeToken(token:any): void {
+    decodeToken(token: any): void {
         try {
-        this.decodedToken = jwtDecode(token);
-            const params:any = {
+            this.decodedToken = jwtDecode(token);
+            const params: any = {
                 "email": this.decodedToken.emailId,
                 "role": this.decodedToken.userId
             }

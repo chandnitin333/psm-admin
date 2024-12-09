@@ -51,3 +51,7 @@ https://themewagon.com/themes/kaiadmin/
 
 
 ng g s modules/admin/services/malamateche-parakar  --skip-tests
+
+
+
+ng g m modules/main-psm-app --routing 

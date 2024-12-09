@@ -110,6 +110,50 @@
           }
         }
       }
+    },
+    "main": {
+      "root": "modules/main-psm-app",
+      "sourceRoot": "modules/main-psm-app/src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "modules/main-psm-app/tsconfig.lib.json",
+            "project": "modules/main-psm-app/project.json",
+            "outputPath": "dist/psm",
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/select2/dist/js/select2.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/plugins/simplebar/simplebar.min.js",
+              "src/assets/js/hotkeys.min.js",
+              "src/assets/plugins/nprogress/nprogress.js",
+              "src/assets/js/mono.js",
+              "src/assets/js/custom.js"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "modules/main-psm-app/src/test.ts",
+            "tsConfig": "modules/main-psm-app/tsconfig.spec.json",
+            "karmaConfig": "modules/main-psm-app/karma.conf.js"
+          }
+        }
+      }
     }
   },
   "cli": {
