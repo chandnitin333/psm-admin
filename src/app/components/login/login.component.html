@@ -46,29 +46,29 @@
     <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh">
         <div class="d-flex flex-column justify-content-between">
             <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-10">
+                <div class="col-lg-8 col-md-10">
                     <div class="card card-default mb-0">
                         <div class="card-header pb-0">
                             <div class="app-brand w-100 d-flex justify-content-center border-bottom-0">
                                 <a class="w-auto pl-0" href="/index.html">
-                                    <img src="images/logo.png" alt="Mono">
-                                    <span class="brand-name text-dark">MONO</span>
+                                    <img src="assets/gramvikas_images/trap.png" alt="Mono" style="height: 110%;">
                                 </a>
                             </div>
                         </div>
                         <div class="card-body px-5 pb-5 pt-0">
 
-                            <h4 class="text-dark mb-6 text-center">Sign in for free</h4>
+                            <h4 class="text-dark mb-6 text-center"><strong>Sign in for Gram Vikas</strong></h4>
 
-                            <form  [formGroup]="loginFrom" (ngSubmit)="onSubmit()">
+                            <form [formGroup]="loginFrom" (ngSubmit)="onSubmit()">
                                 <div class="row">
                                     <div class="form-group col-md-12 mb-4">
                                         <input type="text" class="form-control input-lg" id="username"
-                                            aria-describedby="username" placeholder="username" formControlName="username" >
+                                            aria-describedby="username" placeholder="Username"
+                                            formControlName="username">
                                     </div>
                                     <div class="form-group col-md-12 ">
                                         <input type="password" class="form-control input-lg" id="password"
-                                            placeholder="Password" formControlName="password" >
+                                            placeholder="Password" formControlName="password">
                                     </div>
                                     <div class="col-md-12">
 
@@ -80,15 +80,13 @@
                                                     me</label>
                                             </div>
 
-                                            <a class="text-color" routerLink="../forgot-password"> Forgot password? </a>
+                                            <!-- <a class="text-color" routerLink="../forgot-password"> Forgot password? </a> -->
 
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-pill mb-4">Sign In</button>
-
-                                        <p>Don't have an account yet ?
-                                            <a class="text-blue" routerLink="../sign-up">Sign Up</a>
-                                        </p>
+                                        <button type="submit"
+                                            class="btn btn-primary btn-pill mb-4 col-md-12 font-weight-bold">Sign
+                                            In</button>
                                     </div>
                                 </div>
                             </form>

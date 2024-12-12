@@ -107,7 +107,7 @@ export class UsersComponent {
                 this.userList = res?.data ?? [];
                 this.items = res.data ?? [];
                 this.totalItems = res.totalRecords ?? 0;
-                console.log("userList==", this.userList)
+                // console.log("userList==", this.userList)
             })
         } catch (error) {
             console.log("getUserList:: error :: ", error)

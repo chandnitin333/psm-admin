@@ -9,23 +9,19 @@
                     <label class="text-dark font-weight-medium">टावर
                         प्रकार</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="takkevari"
-                            name="takkevari" formControlName="name"
+                        <input type="text" class="form-control" id="takkevari" name="takkevari" formControlName="name"
                             placeholder="उदा. मनोरा टॉवर बांधकाम">
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group mt-6">
-                        <button type="button col-sm-2"
-                            class="btn btn-pill btn-primary"
-                            title="Save"
-                            [disabled]="towerFrm.invalid"
-                            (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
+                        <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save"
+                            [disabled]="towerFrm.invalid" (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
                                 ? "बदल करा" :
                                 "जतन करा"}}</strong></button>
-                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना
-                                करा</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>रीसेट करा</strong></button>
                     </div>
                 </div>
             </div>
@@ -37,14 +33,11 @@
     <div class="card-body">
         <div class="col-md-4  mt-2 p-0">
             <div class="input-group ">
-                <input type="text" autocomplete="off" name="query"
-                    id="search-input" class="form-control"
-                    placeholder="Search..."
-                    (keyup.enter)="translateText($event); filterData(); "
-                    (input)="filterData()" [(ngModel)]="searchValue">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="translateText($event); filterData(); " (input)="filterData()"
+                    [(ngModel)]="searchValue">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button"
-                        (click)="resetFilter($event)">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
                         <i class="mdi mdi-close"></i>
                     </button>
                 </div>
@@ -54,22 +47,15 @@
 
         <div class="table-responsive">
 
-            <app-sorting-table
-                [data]="items"
-                [columns]="displayedColumns"
-                [currentPage]="currentPage"
-                (edit)="editInfo($event)"
-                (delete)="deleteInfo($event)"
-                [keyName]="keyName">
+            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
+                (edit)="editInfo($event)" (delete)="deleteInfo($event)" [keyName]="keyName">
             </app-sorting-table>
-            <div class="float-left font-weight-bold mt-1"><span
-                    class="font-weight-bold">Total Records :
+            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
                 </span>{{totalItems}}</div>
         </div>
 
         <br>
-        <app-pagination class="float-right" [totalItems]="totalItems"
-            [itemsPerPage]="itemsPerPage"
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
             (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>

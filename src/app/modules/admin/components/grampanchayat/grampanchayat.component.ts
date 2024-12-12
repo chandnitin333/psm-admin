@@ -23,6 +23,9 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         talukaName: new FormControl<string | null>(null),
         gramPanchayatName: new FormControl<string | null>(null),
     });
+    errorMessage: string | null = null;
+    errorButton: boolean = false;
+
     isSubmitted: boolean = false;
     private currentPage: number = 1;
     districts: any = [];
@@ -126,6 +129,8 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         $('#taluka').val('').trigger('change');
         this.isEdit = false;
          $('.my-select2').select2();
+         this.errorMessage = "";
+        this.errorButton = false;
     }
 
     srNo(index: number): number {
@@ -256,5 +261,16 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     resetFilter(event: Event) {
         this.searchValue = '';
         this.fetchGramPanchayatData();
+    }
+    async onValidate(event:any)
+    {
+        let status = this.util.validateStringWithSpaces(event.target.value);
+        if(await status){
+            this.errorMessage = "Please enter string only";
+            this.errorButton = false;
+        } else {
+            this.errorButton = true;
+            this.errorMessage = "";
+        }
     }
 }

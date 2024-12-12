@@ -219,11 +219,13 @@ export class Util {
     }
 
     async validateStringWithSpaces(input: any): Promise<boolean> {
-    // Check if input is a non-empty string containing at least one non-whitespace character
-        if (typeof input !== 'string' || !/\S/.test(input)) {
-            return false;
-        }
-        return true;
+        // Regular Expression to allow only letters and spaces
+        const stringPattern = /^[a-zA-Z\s]*$/;
+
+        if (!stringPattern.test(input)) {
+            return true;
+        } 
+        return false;
   }
 }
 

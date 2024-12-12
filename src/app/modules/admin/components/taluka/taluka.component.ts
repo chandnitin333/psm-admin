@@ -40,6 +40,8 @@ export class TalukaComponent implements OnInit {
 	talukaName: string = '';
 	marathiText: string = '';
 	taluka: any = {};
+	errorMessage: string | null = null;
+    errorButton: boolean = false;
 
 	items: any[] = [];
 	currentPage: number = 1;
@@ -234,6 +236,8 @@ export class TalukaComponent implements OnInit {
 		this.talukaForm.reset();
 		$('#mySelect').val('').trigger('change');
 		this.isEdit = false;
+		this.errorMessage = "";
+        this.errorButton = false;
 	}
 	editTaluka() {
 
@@ -288,5 +292,15 @@ export class TalukaComponent implements OnInit {
 		);
 	}
 
-
+	async onValidate(event:any)
+    {
+        let status = this.util.validateStringWithSpaces(event.target.value);
+        if(await status){
+            this.errorMessage = "Please enter string only";
+            this.errorButton = false;
+        } else {
+            this.errorButton = true;
+            this.errorMessage = "";
+        }
+    }
 }

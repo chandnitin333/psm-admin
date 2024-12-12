@@ -15,10 +15,12 @@ export class AuthService {
 
     setToken(token: string): void {
         localStorage.setItem('token', token);
+        sessionStorage.setItem('token', token);
     }
 
     getToken(): string | null {
-        return localStorage.getItem('token');
+        return sessionStorage.getItem('token');
+        // localStorage.getItem('token');
     }
 
     isLoggedIn() {
@@ -28,6 +30,7 @@ export class AuthService {
     logout() {
         localStorage.removeItem('token');
         localStorage.removeItem('userDetals');
+        sessionStorage.clear();
         this.router.navigate(['login']);
     }
 
@@ -45,7 +48,7 @@ export class AuthService {
                     if (res?.data?.token) {
                         this.setToken(res.data.token);
                         this.decodeToken(res.data.token);
-                        console.log("token", res.data.token)
+                        // console.log("token", res.data.token)
                         return res;
                     } else {
                         console.log("Error: Token not found");
@@ -76,8 +79,9 @@ export class AuthService {
                 "email": this.decodedToken.emailId,
                 "role": this.decodedToken.userId
             }
-            console.log('Decoded Token:', params);
+            // console.log('Decoded Token:', params);
             localStorage.setItem('userDetals', JSON.stringify(params));
+            sessionStorage.setItem('userDetals', JSON.stringify(params));
         } catch (error) {
             console.error('Invalid token', error);
         }
