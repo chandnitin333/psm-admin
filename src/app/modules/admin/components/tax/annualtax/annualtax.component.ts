@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import $ from 'jquery'; // Import jQuery
 import { ToastrService } from 'ngx-toastr';
 import { ApiService } from '../../../../../services/api.service';
 import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
@@ -48,9 +47,9 @@ export class AnnualtaxComponent {
     groupedData: any = [];
     selectedDistrict: any;
     annualTaxForm = new FormGroup({
-        district_id: new FormControl<number | null>(null),
-        malmattaId: new FormControl<number | null>(null),
-        malmattaPrakarId: new FormControl<number | null>(null),
+        district_id: new FormControl<string | null>(null),
+        malmattaId: new FormControl<string | null>(null),
+        malmattaPrakarId: new FormControl<string | null>(null),
         mulyaDar: new FormControl(undefined),
         aakarniDar: new FormControl(undefined),
     });
@@ -190,31 +189,8 @@ export class AnnualtaxComponent {
         this.util.onKeydown(event, controlName, this.annualTaxForm);
     }
 
-    ngAfterViewInit(): void {
-        // Initialize jQuery click handlers
-        this.initializeCollapsibleRows();
-
-    }
-
     ngOnDestroy(): void {
         $('.toggle-nested').off('click');
-    }
-
-    private initializeCollapsibleRows(): void {
-        $('.toggle-nested').on('click', function () {
-            var $button = $(this);
-            var $nestedTable = $button.closest('tr').nextUntil('tr:not(.nested-table)', '.nested-table');
-
-            if ($nestedTable.is(':visible')) {
-                $nestedTable.hide().addClass('d-none'); // Hide and add d-none class
-                $button.removeClass('mdi mdi-minus-circle toggle-neste')
-                $button.addClass('mdi mdi-plus-circle toggle-nested')
-            } else {
-                $nestedTable.show().removeClass('d-none'); // Show and remove d-none class
-                $button.removeClass('mdi mdi-plus-circle toggle-neste')
-                $button.addClass('mdi mdi-minus-circle toggle-nested')
-            }
-        });
     }
 
     fetchData(districtId: any) {
@@ -224,10 +200,6 @@ export class AnnualtaxComponent {
                 this.groupedData = res.data ?? []
                 this.items = res?.data ?? [];
                 this.totalItems = res?.totalRecords;
-                console.log('groupedData==', this.groupedData);
-
-
-
             }, error: (err: any) => {
 
             }
@@ -330,6 +302,32 @@ export class AnnualtaxComponent {
     }
 
     resetFilter(event: Event) {
+
+    }
+
+    ngAfterViewInit(): void {
+       
+         $('.my-select2').select2();
+
+         
+        $('#mySelect').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.annualTaxForm.get('district_id')?.setValue(selectedValue || '');
+            }
+        });
+        $('#malmatta_id').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.annualTaxForm.get('malmattaId')?.setValue(selectedValue || '');
+            }
+        });
+        $('#malmattache_varnan').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.annualTaxForm.get('malmattaPrakarId')?.setValue(selectedValue || '');
+            }
+        });
 
     }
 }

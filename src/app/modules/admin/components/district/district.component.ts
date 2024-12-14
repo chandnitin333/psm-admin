@@ -273,6 +273,9 @@ export class DistrictComponent implements OnInit {
         if(await status){
             this.errorMessage = "Please enter string only";
             this.errorButton = false;
+        } else if(event.target.value == ""){
+            this.errorButton = false;
+            this.errorMessage = "जिल्हा must be required";
         } else {
             this.errorButton = true;
             this.errorMessage = "";

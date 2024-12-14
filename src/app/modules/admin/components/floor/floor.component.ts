@@ -21,6 +21,8 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
     styleUrl: './floor.component.css'
 })
 export class FloorComponent {
+    errorMessage: string | null = null;
+    errorButton: boolean = false;
     currentPage: number = 1;
     searchValue: string = '';
     isLoading: boolean = true;
@@ -230,5 +232,15 @@ export class FloorComponent {
         this.searchValue = '';
         this.currentPage = 1;
         this.fetchFloorData();
+    }
+    async onValidate(event:any)
+    {
+        if(event.target.value == ""){
+			this.errorButton = false;
+            this.errorMessage = "This field must be required";
+		} else {
+            this.errorButton = true;
+            this.errorMessage = "";
+        }
     }
 }

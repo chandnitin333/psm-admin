@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ApiService } from '../../../services/api.service';
 import { TranslateService } from '../../../services/translate.service';
 import { API_URL, ITEM_PER_PAGE, TRANSLATE_API_URL } from '../constants/admin.constant';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Injectable({
     providedIn: 'root'
@@ -230,6 +231,14 @@ export class Util {
 }
 
 
+export function onlyStringAndSpacesValidator(control: AbstractControl): ValidationErrors | null {
+  // Allow spaces and letters only (regular expression)
+  const regex = /^[A-Za-z\s]*$/;
+  if (control.value && !regex.test(control.value)) {
+    return { 'invalidInput': true };  // Returns error if invalid characters are found
+  }
+  return null;  // No error if input is valid
+}
 
 
 

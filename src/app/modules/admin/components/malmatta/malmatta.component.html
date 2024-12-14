@@ -15,6 +15,15 @@
                         <input type="text" class="form-control" id="malmattechePrakar" name="malmattechePrakar"
                             placeholder="उदा. कच्चे" formControlName="malmatteche_prakar"
                             (keypress)="keyDownText($event,'malmatteche_prakar')">
+
+                        <div *ngIf="malmattaForm.get('malmatteche_prakar')?.hasError('required')"
+                            class="text-danger small">
+                            This field is required.
+                        </div>
+                        <div *ngIf="malmattaForm.get('malmatteche_prakar')?.hasError('invalidInput')"
+                            class="text-danger small">
+                            Only letters and spaces are allowed.
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -23,12 +32,24 @@
                         <input type="text" class="form-control" id="milkatVarnan" name="milkatVarnan"
                             placeholder="उदा. वीटा, कवेलु, सीमेंट" formControlName="milkat_varnan"
                             (keypress)="keyDownText($event,'milkat_varnan')">
+                        <!-- <div *ngIf="malmattaForm.get('milkat_varnan')?.invalid">
+                            <small *ngIf="malmattaForm.get('milkat_varnan')?.errors"
+                                class="text-danger">required*</small>
+                        </div> -->
+                        <div *ngIf="malmattaForm.get('milkat_varnan')?.hasError('required')" class="text-danger small">
+                            This field is required.
+                        </div>
+                        <div *ngIf="malmattaForm.get('milkat_varnan')?.hasError('invalidInput')"
+                            class="text-danger small">
+                            Only letters and spaces are allowed.
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-sm-4">
                     <div class="form-group mt-6">
                         <button type="button" class="btn btn-pill btn-primary" title="Save"
+                            [disabled]="malmattaForm.invalid"
                             (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
                         <button type="button" class="btn btn-pill btn-info ml-1" title="Update"

@@ -268,7 +268,10 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         if(await status){
             this.errorMessage = "Please enter string only";
             this.errorButton = false;
-        } else {
+        }  else if(event.target.value == ""){
+			this.errorButton = false;
+            this.errorMessage = "This field must be required";
+		} else {
             this.errorButton = true;
             this.errorMessage = "";
         }
