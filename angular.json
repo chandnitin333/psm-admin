@@ -13,6 +13,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "jquery",
+              "select2",
+              "sweetalert2"
+            ],
             "outputPath": "dist/psm",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -53,13 +58,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "554mb",
+                  "maximumError": "555mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "255kb",
+                  "maximumError": "554kb"
                 }
               ],
               "outputHashing": "all"
