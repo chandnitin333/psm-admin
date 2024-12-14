@@ -1,18 +1,16 @@
-
 <div class>
     <div class="tab-container">
         <ul class="tabs">
-            <li class="tab-link active" data-tab="tab-1"
-                (click)="activeTab(1)"
+            <li class="tab-link active" data-tab="tab-1" (click)="activeTab(1)"
                 [ngClass]="{'active': selectedTabInd === 1}">नविन यूजर जोडा</li>
-            <li class="tab-link" data-tab="tab-2" (click)="activeTab(2)"
-                [ngClass]="{'active': selectedTabInd === 2}">फेरफार
+            <li class="tab-link" data-tab="tab-2" (click)="activeTab(2)" [ngClass]="{'active': selectedTabInd === 2}">
+                फेरफार
                 यूजर जोडा</li>
-            <li class="tab-link" data-tab="tab-3" (click)="activeTab(3)"
-                [ngClass]="{'active': selectedTabInd === 3}">फेरफार
+            <li class="tab-link" data-tab="tab-3" (click)="activeTab(3)" [ngClass]="{'active': selectedTabInd === 3}">
+                फेरफार
                 PDF यूजर जोडा</li>
-            <li class="tab-link" data-tab="tab-4" (click)="activeTab(4)"
-                [ngClass]="{'active': selectedTabInd === 4}">वसुली
+            <li class="tab-link" data-tab="tab-4" (click)="activeTab(4)" [ngClass]="{'active': selectedTabInd === 4}">
+                वसुली
                 यूजर जोडा</li>
 
         </ul>
@@ -20,81 +18,60 @@
             [ngClass]="{'active-tab': (selectedTabInd === 1 ||selectedTabInd === 2 || selectedTabInd === 3 || selectedTabInd === 4 )}">
             <div class="card card-default">
                 <div class="card-header card-header-nk">
-                    <h2
-                        class="card-header-label"><strong>{{tabTitle}}</strong></h2>
+                    <h2 class="card-header-label"><strong>{{tabTitle}}</strong></h2>
                 </div>
                 <div class="px-6 py-4">
                     <form [formGroup]="usrFrm">
                         <div class="row">
                             <div class="col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">जिल्हा</label>
+                                <label class="text-dark font-weight-medium">जिल्हा</label>
                                 <div class="form-group">
-                                    <select
-                                        class="js-example-basic-multiple1 form-control my-select2"
-                                        name="district"
-                                        id="district"
-                                        formControlName="district_id">
+                                    <select class="js-example-basic-multiple1 form-control my-select2" name="district"
+                                        id="district" formControlName="district_id">
                                         <option value>-- जिल्हा निवडा --
                                         </option>
-                                        <option
-                                            *ngFor="let district of districts"
-                                            [value]="district.DISTRICT_ID">{{
+                                        <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{
                                             district.DISTRICT_NAME }}</option>
 
                                     </select>
-                                    <div
-                                        *ngIf="usrFrm.get('district_id')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('district_id')?.errors"
+                                    <div *ngIf="usrFrm.get('district_id')?.invalid">
+                                        <small *ngIf="usrFrm.get('district_id')?.errors"
                                             class="text-danger">required*</small>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">तालुका</label>
+                                <label class="text-dark font-weight-medium">तालुका</label>
                                 <div class="form-group">
-                                    <select
-                                        class="js-example-basic-multiple1 form-control my-select2"
-                                        name="taluka"
-                                        id="taluka"
-                                        formControlName="taluka_id">
+                                    <select class="js-example-basic-multiple1 form-control my-select2" name="taluka"
+                                        id="taluka" formControlName="taluka_id">
                                         <option value>-- तालुका निवडा --
                                         </option>
-                                        <option *ngFor="let taluka of talukas"
-                                            value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}</option>
+                                        <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">
+                                            {{taluka.TALUKA_NAME}}</option>
                                     </select>
-                                    <div
-                                        *ngIf="usrFrm.get('taluka_id')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('taluka_id')?.errors"
+                                    <div *ngIf="usrFrm.get('taluka_id')?.invalid">
+                                        <small *ngIf="usrFrm.get('taluka_id')?.errors"
                                             class="text-danger">required*</small>
                                     </div>
                                 </div>
                             </div>
                             <div class=" col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">ग्राम
+                                <label class="text-dark font-weight-medium">ग्राम
                                     पंचायत</label>
                                 <div class="form-group">
-                                    <select
-                                        class="js-example-basic-multiple1 form-control my-select2"
-                                        name="gramPanchayat"
-                                        name="gramPanchayat"
-                                        id="gramPanchayat"
+                                    <select class="js-example-basic-multiple1 form-control my-select2"
+                                        name="gramPanchayat" name="gramPanchayat" id="gramPanchayat"
                                         formControlName="panchayat_id">
                                         <option value>-- ग्राम पंचायत निवडा --
                                         </option>
-                                        <option
-                                            *ngFor="let gramPanchayat of gramPanchayatList"
-                                            value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}</option>
+                                        <option *ngFor="let gramPanchayat of gramPanchayatList"
+                                            value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}
+                                        </option>
 
                                     </select>
-                                    <div
-                                        *ngIf="usrFrm.get('panchayat_id')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('panchayat_id')?.errors"
+                                    <div *ngIf="usrFrm.get('panchayat_id')?.invalid">
+                                        <small *ngIf="usrFrm.get('panchayat_id')?.errors"
                                             class="text-danger">required*</small>
                                     </div>
                                 </div>
@@ -104,22 +81,17 @@
                                     ग्राम
                                     पंचायत</label>
                                 <div class="form-group">
-                                    <select
-                                        class="js-example-basic-multiple1 form-control my-select2"
-                                        name="gatGramPanchayt"
-                                        id="gatGramPanchayt"
+                                    <select class="js-example-basic-multiple1 form-control my-select2"
+                                        name="gatGramPanchayt" id="gatGramPanchayt"
                                         formControlName="gatgrampanchayat_id">
                                         <option value>-- गट ग्राम पंचायत निवडा
                                             --
                                         </option>
-                                        <option
-                                            *ngFor="let ele of gatGramPanchayat"
+                                        <option *ngFor="let ele of gatGramPanchayat"
                                             value="{{ele.GATGRAMPANCHAYAT_ID}}">{{ele.GATGRAMPANCHAYAT_NAME}}</option>
                                     </select>
-                                    <div
-                                        *ngIf="usrFrm.get('gatgrampanchayat_id')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('gatgrampanchayat_id')?.errors"
+                                    <div *ngIf="usrFrm.get('gatgrampanchayat_id')?.invalid">
+                                        <small *ngIf="usrFrm.get('gatgrampanchayat_id')?.errors"
                                             class="text-danger">required*</small>
                                     </div>
                                 </div>
@@ -127,54 +99,34 @@
                         </div>
                         <div class="row">
                             <div class=" col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">नाव</label>
+                                <label class="text-dark font-weight-medium">नाव</label>
                                 <div class>
-                                    <input type="text" class="form-control"
-                                        id="name"
-                                        name="name"
-                                        formControlName="name"
-                                        placeholder="उदा. रवी सुरेश शर्मा"
-                                        (keypress)="keyDownText($event,'name')">
-                                    <div
-                                        *ngIf="usrFrm.get('name')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('name')?.errors"
+                                    <input type="text" class="form-control" id="name" name="name" formControlName="name"
+                                        placeholder="उदा. रवी सुरेश शर्मा" (keypress)="keyDownText($event,'name')">
+                                    <div *ngIf="usrFrm.get('name')?.invalid">
+                                        <small *ngIf="usrFrm.get('name')?.errors" class="text-danger">required*</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col-sm-3">
+                                <label class="text-dark font-weight-medium">युजरनेम</label>
+                                <div class>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        formControlName="username" placeholder="उदा. ravi_03">
+                                    <div *ngIf="usrFrm.get('username')?.invalid">
+                                        <small *ngIf="usrFrm.get('username')?.errors"
                                             class="text-danger">required*</small>
                                     </div>
                                 </div>
                             </div>
                             <div class=" col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">युजरनेम</label>
+                                <label class="text-dark font-weight-medium">पासवर्ड</label>
                                 <div class>
-                                    <input type="text" class="form-control"
-                                        id="username"
-                                        name="username"
-                                        formControlName="username"
-                                        placeholder="उदा. ravi_03">
-                                    <div
-                                        *ngIf="usrFrm.get('username')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('username')?.errors"
-                                            class="text-danger">required*</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class=" col-sm-3">
-                                <label
-                                    class="text-dark font-weight-medium">पासवर्ड</label>
-                                <div class>
-                                    <input type="password" class="form-control"
-                                        id="password" name="password"
-                                        formControlName="pwd"
-                                        placeholder="उदा. *******"
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        formControlName="pwd" placeholder="उदा. *******"
                                         (keypress)="keyDownText($event,'pwd')">
-                                    <div
-                                        *ngIf="usrFrm.get('pwd')?.invalid">
-                                        <small
-                                            *ngIf="usrFrm.get('pwd')?.errors"
-                                            class="text-danger">required*</small>
+                                    <div *ngIf="usrFrm.get('pwd')?.invalid">
+                                        <small *ngIf="usrFrm.get('pwd')?.errors" class="text-danger">required*</small>
                                     </div>
                                 </div>
 
@@ -185,8 +137,12 @@
 
                             <div class="col-sm-6 ">
                                 <div class="form-group">
-                                    <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save" [disabled]="usrFrm.invalid" (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
-                                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना करा</strong></button>
+                                    <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save"
+                                        [disabled]="usrFrm.invalid"
+                                        (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                                            करा"}}</strong></button>
+                                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                                        (click)="reset()"><strong>रीसेट करा</strong></button>
                                 </div>
                             </div>
                         </div>
@@ -200,8 +156,7 @@
                         <table class="table ">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="text-center"
-                                        style="width:2%">#</th>
+                                    <th class="text-center" style="width:2%">#</th>
                                     <th>जिल्हा</th>
                                 </tr>
                             </thead>
@@ -214,12 +169,11 @@
                                         <thead class>
                                             <tr>
                                                 <th class="text-center border"
-                                                    (click)="toggleCollapse(ele?.DISTRICT_ID)"
-                                                    style="width:2%"><i
+                                                    (click)="toggleCollapse(ele?.DISTRICT_ID)" style="width:2%"><i
                                                         class=" toggle-nested "
-                                                        [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i></th>
-                                                <th class="border"> <span
-                                                        class="text-dark font-weight-bold ml-2 ">{{
+                                                        [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                                                </th>
+                                                <th class="border"> <span class="text-dark font-weight-bold ml-2 ">{{
                                                         ele?.DISTRICT_NAME
                                                         }}</span></th>
                                             </tr>
@@ -228,31 +182,22 @@
 
                                 </div>
                             </div>
-                            <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]"
-                                class="mt-0 mb-2">
+                            <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]" class="mt-0 mb-2">
 
                                 <div class=" mt-0">
 
-                                    <app-sorting-table
-                                        [data]="items"
-                                        [columns]="displayedColumns"
-                                        [currentPage]="currentPage"
-                                        (edit)="editInfo($event)"
-                                        (delete)="deleteInfo($event)"
-                                        [keyName]="keyName">
+                                    <app-sorting-table [data]="items" [columns]="displayedColumns"
+                                        [currentPage]="currentPage" (edit)="editInfo($event)"
+                                        (delete)="deleteInfo($event)" [keyName]="keyName">
                                     </app-sorting-table>
-                                    <div
-                                        class="float-left font-weight-bold mt-1"><span
-                                            class="font-weight-bold">Total
+                                    <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total
                                             Records :
                                         </span>{{totalItems}}</div>
                                 </div>
 
                                 <div class="col-md-12 p-2">
-                                    <app-pagination class="float-right "
-                                        [totalItems]="totalItems"
-                                        [itemsPerPage]="itemsPerPage"
-                                        (pageChange)="onPageChange($event)">
+                                    <app-pagination class="float-right " [totalItems]="totalItems"
+                                        [itemsPerPage]="itemsPerPage" (pageChange)="onPageChange($event)">
                                     </app-pagination>
                                 </div>
                                 <br />

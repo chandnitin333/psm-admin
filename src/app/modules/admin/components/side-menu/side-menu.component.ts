@@ -18,7 +18,9 @@ export class SideMenuComponent {
   @ViewChild('myCamiteeElement') myCamiteeElement!: ElementRef;
   @ViewChild('myImagesElement') myImagesElement!: ElementRef;
 
+ 
   constructor(private renderer: Renderer2,public router: Router) { }
+
 
   toggleClass(labels: string): void {
     let element: Element | undefined = undefined; // Initialize element with a default value

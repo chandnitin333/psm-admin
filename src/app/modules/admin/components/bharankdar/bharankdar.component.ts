@@ -215,4 +215,17 @@ export class BharankdarComponent {
         this.fetchData();
     }
 
+    ngAfterViewInit(): void {
+        $('.my-select2').select2();
+
+
+        $('#mySelect').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.bharankDarForm.get('milkat_vapar_id')?.setValue(selectedValue || '');
+            }
+        });
+
+    }
+
 }

@@ -1,7 +1,7 @@
 <div *ngIf="isLoading">
     <app-skeleton-loader></app-skeleton-loader>
-  </div>
-  <app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
+</div>
+<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
 
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
@@ -12,12 +12,18 @@
             <div class="form-group row">
                 <label for="district" class="col-sm-1 col-form-label">जिल्हा </label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" id="district_name" name="district_name" placeholder="उदा. नागपुर"  formControlName="districtName" (keypress)="keyDownText($event,'districtName')">
+                    <input type="text" class="form-control" id="district_name" name="district_name"
+                        placeholder="उदा. नागपुर" formControlName="districtName"
+                        (keypress)="keyDownText($event,'districtName')" (blur)="onValidate($event)"
+                        (keyup)="onValidate($event)">
+                    <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
                 </div>
                 <div class="col-sm-3">
-                    <button type="button" class="btn btn-pill btn-primary" title="Save" (click)="(!isEdit)  ? addDistrict() : updateDistrict()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
-                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना
-                            करा</strong></button>
+                    <button type="button" class="btn btn-pill btn-primary" title="Save" [disabled]="!errorButton"
+                        (click)="(!isEdit)  ? addDistrict() : updateDistrict()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                            करा"}}</strong></button>
+                    <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                        (click)="reset()"><strong>रीसेट करा</strong></button>
                 </div>
             </div>
         </form>
@@ -27,19 +33,20 @@
 
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-body">
-       
-            <div class="col-md-4" id="input-group-search">
-                <div class="input-group">
-                    <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
-                        placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)" [(ngModel)]="searchValue" >
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
-                            <i class="mdi mdi-close"></i>
-                        </button>
-                    </div>
+
+        <div class="col-md-4" id="input-group-search">
+            <div class="input-group">
+                <input type="text" autocomplete="off" name="query" id="search-input" class="form-control"
+                    placeholder="Search..." (keyup.enter)="handleInput($event)" (input)="filterDistricts($event)"
+                    [(ngModel)]="searchValue">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" (click)="resetFilter($event)">
+                        <i class="mdi mdi-close"></i>
+                    </button>
                 </div>
             </div>
-       
+        </div>
+
         <br>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -51,24 +58,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
-                    <tr class=""  *ngFor="let item of paginatedItems let i = index">
+
+                    <tr class="" *ngFor="let item of paginatedItems let i = index">
                         <td>{{getSerialNumber(i)}}</td>
                         <td>{{ item.DISTRICT_NAME }}</td>
-                        <td><button class="btn btn-sm btn-outline-success font-weight-bold" (click)="getDistrict(item.DISTRICT_ID)"><i
-                                    class="mdi mdi-square-edit-outline"></i>
-                                एडिट</button> &nbsp;<button href="" class="btn btn-sm btn-outline-danger font-weight-bold" (click)="deleteDistrict(item.DISTRICT_ID)"><i
-                                    class="mdi mdi-trash-can-outline"></i> डिलीट</button></td>
+                        <td><button class="btn btn-sm btn-outline-success font-weight-bold"
+                                (click)="getDistrict(item.DISTRICT_ID)"><i class="mdi mdi-square-edit-outline"></i>
+                                एडिट</button> &nbsp;<button href=""
+                                class="btn btn-sm btn-outline-danger font-weight-bold"
+                                (click)="deleteDistrict(item.DISTRICT_ID)"><i class="mdi mdi-trash-can-outline"></i>
+                                डिलीट</button></td>
                     </tr>
-                    
+
                 </tbody>
             </table>
             <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total Records :
-            </span>{{totalItems}}</div>
+                </span>{{totalItems}}</div>
         </div>
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-        (pageChange)="onPageChange($event)">
+            (pageChange)="onPageChange($event)">
         </app-pagination>
         <!-- <nav aria-label="Page navigation example">
             <ul class="pagination pagination-seperated pagination-seperated-rounded">

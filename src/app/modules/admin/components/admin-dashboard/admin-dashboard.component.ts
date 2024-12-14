@@ -32,35 +32,9 @@ export class AdminDashboardComponent {
     this.titleService.setTitle('Dashbaord');
   }
   ngAfterViewInit(): void {
-    // Ensure the loader is hidden after the view has been fully initialized
     setTimeout(() => {
       this.loading = false;
     }, 2000);
-
-    $(document).on('select2:open', () => {
-      // Delegate the event to the document to capture dynamically created search fields in all select2 instances
-      $(document).on('keyup', '.select2-search__field', async (event) => {
-        if (event.key === 'Enter') {  // Check if the key pressed is 'Enter'
-          const searchTerm = $(event.target).val();
-          console.log('Enter key pressed. Search term:', searchTerm);
-
-          // Assuming translateText is a function that returns a Promise for the translation
-          try {
-            let convertText: any = await this.translateText(event as unknown as Event);
-            console.log('Translated Text:', convertText);
-
-            // Update the search field with the translated text
-            $(event.target).val(convertText);
-
-            // Trigger the input event to refresh the select2 results with the translated search term
-            $(event.target).trigger('input');
-          } catch (error) {
-            console.error('Error in translation:', error);
-          }
-        }
-      });
-    });
-
 
   }
 

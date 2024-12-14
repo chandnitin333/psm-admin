@@ -18,6 +18,8 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
 	styleUrl: './gatgrampanchayat.component.css'
 })
 export class GatgrampanchayatComponent {
+	errorMessage: string | null = null;
+    errorButton: boolean = false;
 	isSubmitted: boolean = false;
 	currentPage: number = 1;
 	districts: any = [];
@@ -131,7 +133,7 @@ export class GatgrampanchayatComponent {
 					this.fetchGatGramPanchayatData();
 					this.reset();
 				} else {
-					this.toastr.success(res?.message, 'Error');
+					this.toastr.warning(res?.message, 'Error');
 				}
 			},
 			error: (err: any) => {
@@ -155,6 +157,8 @@ export class GatgrampanchayatComponent {
 		// this.districts = [];
 		this.gramPanchayatList = [];
 		this.isEdit = false;
+		this.errorMessage = "";
+        this.errorButton = false;
 	}
 	fetchGatGramPanchayatData() {
 		this.gatGramPanchayatService.getGatGramPanchayatList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
@@ -314,4 +318,19 @@ export class GatgrampanchayatComponent {
 			}
 		});
 	}
+
+	async onValidate(event:any)
+    {
+        let status = this.util.validateStringWithSpaces(event.target.value);
+        if(await status){
+            this.errorMessage = "Please enter string only";
+            this.errorButton = false;
+        }  else if(event.target.value == ""){
+			this.errorButton = false;
+            this.errorMessage = "This field must be required";
+		} else {
+            this.errorButton = true;
+            this.errorMessage = "";
+        }
+    }
 }

@@ -21,6 +21,8 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
     styleUrl: './prakar.component.css'
 })
 export class PrakarComponent {
+    errorMessage: string | null = null;
+    errorButton: boolean = false;
     isLoading: boolean = true;
     isEdit: boolean = false;
     isSubmitted: boolean = false;
@@ -48,6 +50,7 @@ export class PrakarComponent {
     ngOnInit(): void {
         this.titleService.setTitle('Prakar');
         this.fetchData();
+        
     }
 
     fetchData() {
@@ -225,6 +228,21 @@ export class PrakarComponent {
             console.log('prakar deleted', confirmed);
         } else {
             console.log('Delete action cancelled');
+        }
+    }
+
+    async onValidate(event:any)
+    {
+        let status = this.util.validateStringWithSpaces(event.target.value);
+        if(await status){
+            this.errorMessage = "Please enter string only";
+            this.errorButton = false;
+        }  else if(event.target.value == ""){
+			this.errorButton = false;
+            this.errorMessage = "This field must be required";
+		} else {
+            this.errorButton = true;
+            this.errorMessage = "";
         }
     }
 }
