@@ -20,10 +20,12 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the Angular build output to NGINX's html directory
+CMD ["ls"]
+
 COPY dist/psm/browser /usr/share/nginx/html
 
 # Expose port 80 to serve the app
-EXPOSE 80
+EXPOSE 4001
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
