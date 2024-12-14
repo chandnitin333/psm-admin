@@ -39,7 +39,6 @@
               "src/assets/css/style.css",
               "src/assets/plugins/nprogress/nprogress.css",
               "src/assets/plugins/nprogress/nprogress.css",
-              "src/assets/plugins/select2/css/select2.min.css",
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [

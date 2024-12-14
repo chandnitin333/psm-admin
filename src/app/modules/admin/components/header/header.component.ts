@@ -19,9 +19,7 @@ export class HeaderComponent {
     let userDetails = localStorage.getItem('userDetals');
     if (userDetails) {
       this.loggedInUser = JSON.parse(userDetails);
-      console.log('Retrieved User Details:', this.loggedInUser);
     }
-    // console.log("userDetals", userDetails)
   }
   logout(){
     this.auth.logout();

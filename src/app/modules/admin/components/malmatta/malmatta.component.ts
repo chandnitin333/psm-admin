@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ITEM_PER_PAGE } from '../../constants/admin.constant';
 import { MalmataService } from '../../services/malmata.service';
-import Util from '../../utils/utils';
+import Util, { onlyStringAndSpacesValidator } from '../../utils/utils';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SortingTableComponent } from '../sorting-table/sorting-table.component';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,6 @@ import { ApiService } from '../../../../services/api.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-
 @Component({
   selector: 'app-malmatta',
   standalone: true,
@@ -20,6 +19,7 @@ import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.comp
   templateUrl: './malmatta.component.html',
   styleUrl: './malmatta.component.css'
 })
+
 export class MalmattaComponent {
   isLoading: boolean = true;
   isEdit: boolean = false;
@@ -38,8 +38,14 @@ export class MalmattaComponent {
 
   ];
   malmattaForm = new FormGroup({
-      malmatteche_prakar: new FormControl(undefined),
-      milkat_varnan: new FormControl(undefined),
+      malmatteche_prakar: new FormControl<string>('', [
+    Validators.required,
+    onlyStringAndSpacesValidator
+  ]),
+      milkat_varnan: new FormControl<string>('',  [
+    Validators.required,
+    onlyStringAndSpacesValidator
+  ])
   });
   keyName: string = 'MALMATTA_ID';
   marathiText: string = '';
@@ -64,6 +70,10 @@ export class MalmattaComponent {
   }
   submitData(): void
   {
+      if (this.malmattaForm.invalid) {
+
+          return;
+      }
     if (!this.malmattaForm.invalid && this.malmattaForm.value.malmatteche_prakar != null &&  this.malmattaForm.value.milkat_varnan != null) {
             this.isLoading = true;
             let params = {
