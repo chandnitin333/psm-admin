@@ -43,8 +43,8 @@ export class GhasaradarComponent {
   keyName: string = 'DEPRECIATION_ID';
   marathiText: string = '';
   ghasaraDarForm = new FormGroup({
-		ageOfBuilding: new FormControl<number | null>(null),
-		malmattaId: new FormControl<number | null>(null),
+		ageOfBuilding: new FormControl<string | null>(null),
+		malmattaId: new FormControl<string | null>(null),
     percentage: new FormControl(undefined)
 	});
   constructor(private titleService: Title, private openPlot: GhasaraRatesService, private util: Util,private apiService: ApiService,private toastr: ToastrService,) { }
@@ -281,6 +281,24 @@ export class GhasaradarComponent {
         } else {
             console.log('Delete action cancelled');
         }
+    }
+
+    ngAfterViewInit(): void {
+        $('.my-select2').select2();
+
+        $('#age_building').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.ghasaraDarForm.get('ageOfBuilding')?.setValue(selectedValue || '');
+            }
+        });
+        $('#malmatta_id').on('change', (event) => {
+            const selectedValue: string = String($(event.target).val());
+            if (selectedValue) {
+                this.ghasaraDarForm.get('malmattaId')?.setValue(selectedValue || '');
+            }
+        });
+
     }
 
 }

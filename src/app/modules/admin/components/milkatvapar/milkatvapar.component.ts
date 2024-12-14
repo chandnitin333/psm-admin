@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { ApiService } from '../../../../services/api.service';
 import { ITEM_PER_PAGE } from '../../constants/admin.constant';
+import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
 import { MilkatVaparService } from '../../services/milkat-vapar.service';
 import Util from '../../utils/utils';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { SortingTableComponent } from '../sorting-table/sorting-table.component';
-import { ConfirmationDialogModule } from '../../module/confirmation-dialog/confirmation-dialog.module';
-import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
-import { CommonModule } from '@angular/common';
-import { debounceTime, distinctUntilChanged, Subject, Subscription, switchMap } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { ApiService } from '../../../../services/api.service';
 
 @Component({
     selector: 'app-milkatvapar',
     standalone: true,
-    imports: [PaginationComponent, SortingTableComponent, FormsModule, ConfirmationDialogModule, SkeletonLoaderComponent, ReactiveFormsModule, CommonModule, HttpClientModule, RouterLink],
+    imports: [PaginationComponent, SortingTableComponent, FormsModule, ConfirmationDialogModule, ReactiveFormsModule, CommonModule],
     templateUrl: './milkatvapar.component.html',
     styleUrl: './milkatvapar.component.css'
 })
-export class MilkatvaparComponent{
+export class MilkatvaparComponent {
     isLoading: boolean = true;
     isEdit: boolean = false;
     isSubmitted: boolean = false;
@@ -40,16 +37,16 @@ export class MilkatvaparComponent{
         { key: 'sr_no', label: 'अनुक्रमांक' },
         { key: 'MILKAT_VAPAR_NAME', label: 'मालमत्तेचे वर्णन' },
         { key: 'MILKAT_NAME', label: 'मिलकत' },
-       
+
     ];
     milkatVaparForm = new FormGroup({
-		malmatteche_prakar_id: new FormControl<string | null>(null),
-		name: new FormControl(undefined)
-	});
+        malmatteche_prakar_id: new FormControl<string | null>(null),
+        name: new FormControl(undefined)
+    });
 
     keyName: string = 'MILKAT_ID';
     marathiText: string = ''
-    constructor(private titleService: Title, private milkatVapar: MilkatVaparService, private util: Util, private toastr: ToastrService,private apiService: ApiService,) { }
+    constructor(private titleService: Title, private milkatVapar: MilkatVaparService, private util: Util, private toastr: ToastrService, private apiService: ApiService,) { }
 
 
     ngOnInit(): void {
@@ -58,16 +55,18 @@ export class MilkatvaparComponent{
         this.fetchData();
     }
     ngAfterViewInit(): void {
-		$('.my-select2').select2();
-		$('#mySelect').on('change', (event) => {
-			// let selectedValue: string = $(event.target).val() as string; 
-            const selectedValue: string = String($(event.target).val());
-            if (selectedValue) {
-			    this.milkatVaparForm.get('malmatteche_prakar_id')?.setValue(selectedValue || '');
-            }
-		});
+        setTimeout(() => {
+            $('.my-select2').select2();
+            $('#mySelect').on('change', (event) => {
+                const selectedValue: string = String($(event.target).val());
+                if (selectedValue) {
+                    this.milkatVaparForm.get('malmatteche_prakar_id')?.setValue(selectedValue || '');
+                }
+            });
+        }, 2000);
 
-	}
+
+    }
     fetchData() {
         this.milkatVapar.getMilkatVaparList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
             next: (res: any) => {
@@ -83,9 +82,9 @@ export class MilkatvaparComponent{
     }
 
     async getAllMalmattechePrakar() {
-		this.malmattechePrakarsList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
+        this.malmattechePrakarsList = await this.util.getMalmattechePrakartDDL('get-malmatteche-prakar-all-list')
         // console.log('malmattechePrakarsList', this.malmattechePrakarsList);
-	}
+    }
 
     submitData() {
         this.isSubmitted = true;
@@ -95,7 +94,7 @@ export class MilkatvaparComponent{
                 malmatta_id: this.milkatVaparForm.value.malmatteche_prakar_id,
                 name: this.milkatVaparForm.value.name
             }
-             this.apiService.post('milkat-vapar', params).subscribe((res: any) => {
+            this.apiService.post('milkat-vapar', params).subscribe((res: any) => {
                 if (res.status == 201) {
                     this.toastr.success(res.message, "Success");
                     this.reset();
@@ -106,7 +105,7 @@ export class MilkatvaparComponent{
                 }
             });
         } else {
-            this.toastr.error('Please fill all the fields','Error');
+            this.toastr.error('Please fill all the fields', 'Error');
         }
     }
 
@@ -123,7 +122,7 @@ export class MilkatvaparComponent{
                 name: this.milkatVaparForm.value.name,
                 vapar_id: this.milkatId
             }
-            this.apiService.put("update-milkat-vapar",params).subscribe({
+            this.apiService.put("update-milkat-vapar", params).subscribe({
                 next: (res: any) => {
                     if (res.status == 200) {
                         this.reset();
@@ -146,7 +145,7 @@ export class MilkatvaparComponent{
     }
 
     editInfo(id: number) {
-        this.apiService.get("milkat-vapar/"+id).subscribe((res: any) => {
+        this.apiService.get("milkat-vapar/" + id).subscribe((res: any) => {
             this.milkatId = id;
             this.isEdit = true;
             console.log("REs", res)
@@ -169,7 +168,7 @@ export class MilkatvaparComponent{
                 return;
             }
             if (res) {
-               this.apiService.delete("delete-milkat-vapar/"+id).subscribe({
+                this.apiService.delete("delete-milkat-vapar/" + id).subscribe({
                     next: (res: any) => {
                         if (res.status == 200) {
                             this.toastr.success(res.message, "Success");
@@ -210,10 +209,10 @@ export class MilkatvaparComponent{
         });
     }
     onKeydown(event: KeyboardEvent, controlName: string) {
-		this.util.onKeydown(event, controlName, this.milkatVaparForm);
-	}
+        this.util.onKeydown(event, controlName, this.milkatVaparForm);
+    }
 
-     filterData() {
+    filterData() {
 
         this.currentPage = 1;
         this.debounceFetchData();
@@ -238,10 +237,10 @@ export class MilkatvaparComponent{
         this.searchValue = '';
         this.fetchData();
     }
-    
+
     ngOnDestroy(): void {
-		this.subscription.unsubscribe(); // Clean up the subscription on component destroy
-		$('#mySelect').select2('destroy');
-	}
+        this.subscription.unsubscribe(); // Clean up the subscription on component destroy
+        $('#mySelect').select2('destroy');
+    }
 
 }

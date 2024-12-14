@@ -14038,7 +14038,7 @@ label {
   line-height: 76px;
   width: 250px;
   transition: width 0.3s ease-in-out;
-  padding-left: 5px;
+  padding: 0px;
 }
 @media (prefers-reduced-motion: reduce) {
   .app-brand a {

@@ -10,7 +10,7 @@
                     <div class="form-group">
                         <select formControlName="district_id" name="selectedOption" id="mySelect"
                             class="form-control my-select2 col-sm-12" placeholder="Select district"
-                            (change)="getTalukaByDistrict($event)" formControlName="district_id">
+                            (change)="getTalukaByDistrict($event)">
                             <option value="" selected="selected">-- जिल्हा निवडा -- </option>
                             <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{
                                 district.DISTRICT_NAME }}</option>
@@ -51,18 +51,22 @@
                     <label class="text-dark font-weight-medium">गट ग्राम पंचायत</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="gatGramPanchayat" name="gatGramPanchayat"
-                            placeholder="उदा. सावंगी" formControlName="name" (keypress)="keyDownText($event,'name')">
-                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.grampanchayat_id">Please fill
-                            gram panchayat name</span>
+                            placeholder="उदा. सावंगी" formControlName="name" (keypress)="keyDownText($event,'name')"
+                            (blur)="onValidate($event)" (keyup)="onValidate($event)">
+                        <span class="text-danger" *ngIf="isSubmitted && !gatGramFrom.value.name">Please fill
+                            gat gram panchayat name</span>
+                        <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group mt-6">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save"
-                            (click)="(!isEdit)  ? addGatGramPanchayat() : updateGatGramPanchayat()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
-                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना करा</strong></button>
+                        <button type="button" class="btn btn-pill btn-primary" title="Save" [disabled]="!errorButton"
+                            (click)="(!isEdit)  ? addGatGramPanchayat() : updateGatGramPanchayat()"><strong>{{(isEdit) ?
+                                "बदल करा" : "जतन करा"}}</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>रीसेट करा</strong></button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,3 @@
-<div *ngIf="isLoading">
-    <app-skeleton-loader></app-skeleton-loader>
-</div>
-<app-confirmation-dialog #confirmationDialog (confirmed)="onConfirmed($event)"></app-confirmation-dialog>
 <div class="card card-default" *ngIf="!isLoading">
     <div class="card-header card-header-nk">
         <h2 class="card-header-label"><strong>मिलकत वापर</strong></h2>
@@ -10,11 +6,12 @@
         <form [formGroup]="milkatVaparForm">
             <div class="row">
                 <div class="col-sm-4">
-                    <label class="text-dark font-weight-medium">मालमत्तेचे वर्णन</label>
+                    <label class="text-dark font-weight-medium">मालमत्तेचे
+                        वर्णन</label>
                     <div class="form-group">
                         <select formControlName="malmatteche_prakar_id" name="selectedOption" id="mySelect"
                             class="form-control my-select2" placeholder="malmatteche prakar">
-                            <option value="">-- मालमत्तेचे वर्णन निवडा -- </option>
+                            <option value>-- मालमत्तेचे वर्णन निवडा -- </option>
                             <option *ngFor="let mPrakar of malmattechePrakarsList" [value]="mPrakar.MILKAT_VAPAR_ID">{{
                                 mPrakar.MILKAT_VAPAR_NAME }}</option>
                         </select>
@@ -31,10 +28,11 @@
                 <div class="col-sm-4">
                     <div class="form-group mt-6">
                         <button type="button" class="btn btn-pill btn-primary" title="Save"
-                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit) ? "बदल करा" : "जतन
+                            (click)="(!isEdit)  ? submitData() : updateData()"><strong>{{(isEdit)
+                                ? "बदल करा" : "जतन
                                 करा"}}</strong></button>
-                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा रचना
-                                करा</strong></button>
+                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
+                            (click)="reset()"><strong>रीसेट करा</strong></button>
                     </div>
                 </div>
             </div>
@@ -67,14 +65,12 @@
                 </span>{{totalItems}}</div>
         </div>
 
-
         <br>
         <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
             (pageChange)="onPageChange($event)">
         </app-pagination>
     </div>
 </div>
-
 
 <!-- <div class="card card-default">
     <div class="card-body">

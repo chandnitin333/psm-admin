@@ -36,6 +36,8 @@ export class DistrictComponent implements OnInit {
     currentPage: number = 1;
     itemsPerPage: number = ITEM_PER_PAGE;
     isSubmitted: boolean = false;
+    errorMessage: string | null = null;
+    errorButton: boolean = false;
 
     isEdit: boolean = false;
     items: any[] = [];
@@ -46,6 +48,7 @@ export class DistrictComponent implements OnInit {
     });
     private marathiText: string = '';
     private districtId: number = 0;
+    
 
     constructor(
         private titleService: Title,
@@ -126,7 +129,8 @@ export class DistrictComponent implements OnInit {
     reset() {
         this.districtForm.reset();
         this.isEdit = false;
-
+        this.errorMessage = "";
+        this.errorButton = false;
     }
 
     resetFilter(event: Event) {
@@ -261,6 +265,21 @@ export class DistrictComponent implements OnInit {
                 func.apply(this, args);
             }, wait);
         };
+    }
+
+    async onValidate(event:any)
+    {
+        let status = this.util.validateStringWithSpaces(event.target.value);
+        if(await status){
+            this.errorMessage = "Please enter string only";
+            this.errorButton = false;
+        } else if(event.target.value == ""){
+            this.errorButton = false;
+            this.errorMessage = "जिल्हा must be required";
+        } else {
+            this.errorButton = true;
+            this.errorMessage = "";
+        }
     }
 }
 
