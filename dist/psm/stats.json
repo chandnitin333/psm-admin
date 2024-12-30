@@ -5795,7 +5795,7 @@
       "format": "esm"
     },
     "src/app/modules/admin/constants/admin.constant.ts": {
-      "bytes": 264,
+      "bytes": 270,
       "imports": [],
       "format": "esm"
     },
@@ -6246,7 +6246,7 @@
       "format": "esm"
     },
     "src/app/services/api.service.ts": {
-      "bytes": 2030,
+      "bytes": 2036,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -8454,7 +8454,7 @@
       "format": "esm"
     },
     "src/app/modules/admin/services/comman-type.service.ts": {
-      "bytes": 1871,
+      "bytes": 1877,
       "imports": [
         {
           "path": "node_modules/@angular/core/fesm2022/core.mjs",
@@ -10055,23 +10055,23 @@
       "bytes": 185,
       "imports": []
     },
-    "src/app/modules/admin/components/side-menu/side-menu.component.css": {
-      "bytes": 954,
+    "src/app/modules/admin/components/loader/loader.component.css": {
+      "bytes": 527,
       "imports": []
     },
     "src/app/modules/admin/components/admin/admin.component.css": {
       "bytes": 46,
       "imports": []
     },
-    "src/app/modules/admin/components/loader/loader.component.css": {
-      "bytes": 527,
-      "imports": []
-    },
     "src/app/modules/admin/components/bdo/addnewbdo/addnewbdo.component.css": {
       "bytes": 46,
       "imports": []
     },
-    "src/app/modules/admin/components/bharankdar/bharankdar.component.css": {
+    "src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.css": {
+      "bytes": 58,
+      "imports": []
+    },
+    "src/app/modules/admin/components/gatgrampanchayat/gatgrampanchayat.component.css": {
       "bytes": 46,
       "imports": []
     },
@@ -10079,31 +10079,39 @@
       "bytes": 332,
       "imports": []
     },
-    "src/app/modules/admin/components/bdo/bdo.component.css": {
+    "src/app/modules/admin/components/side-menu/side-menu.component.css": {
+      "bytes": 954,
+      "imports": []
+    },
+    "src/app/modules/admin/components/floor/floor.component.css": {
+      "bytes": 49,
+      "imports": []
+    },
+    "src/app/modules/admin/components/district/district.component.css": {
+      "bytes": 46,
+      "imports": []
+    },
+    "src/app/modules/admin/components/grampanchayat/grampanchayat.component.css": {
+      "bytes": 47,
+      "imports": []
+    },
+    "src/app/modules/admin/components/kamkajkameti/kamkajkameti.component.css": {
       "bytes": 198,
-      "imports": []
-    },
-    "src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.css": {
-      "bytes": 58,
-      "imports": []
-    },
-    "src/app/modules/admin/components/milkatvapar/milkatvapar.component.css": {
-      "bytes": 46,
-      "imports": []
-    },
-    "src/app/modules/admin/components/malmattecheprakar/malmattecheprakar.component.css": {
-      "bytes": 46,
       "imports": []
     },
     "src/app/modules/admin/components/home/home.component.css": {
       "bytes": 74,
       "imports": []
     },
-    "src/app/modules/admin/components/prakar/prakar.component.css": {
+    "src/app/modules/admin/components/karyakaranikameti/karyakaranikameti.component.css": {
       "bytes": 46,
       "imports": []
     },
-    "src/app/modules/admin/components/karyakaranikameti/karyakaranikameti.component.css": {
+    "src/app/modules/admin/components/milkatvapar/milkatvapar.component.css": {
+      "bytes": 46,
+      "imports": []
+    },
+    "src/app/modules/admin/components/ghasaradar/ghasaradar.component.css": {
       "bytes": 46,
       "imports": []
     },
@@ -10111,59 +10119,15 @@
       "bytes": 46,
       "imports": []
     },
-    "src/app/modules/admin/components/floor/floor.component.css": {
-      "bytes": 49,
-      "imports": []
-    },
-    "src/app/modules/admin/components/confirmation-dialog/confirmation-dialog.component.css": {
-      "bytes": 1310,
-      "imports": []
-    },
-    "src/app/modules/admin/components/oopsarpanchimages/oopsarpanchimages.component.css": {
-      "bytes": 198,
-      "imports": []
-    },
-    "src/app/modules/admin/components/openplotlist/openplotlist.component.css": {
-      "bytes": 198,
-      "imports": []
-    },
-    "src/app/modules/admin/components/district/district.component.css": {
-      "bytes": 46,
-      "imports": []
-    },
-    "src/app/modules/admin/components/kamkajkameti/kamkajkameti.component.css": {
-      "bytes": 198,
-      "imports": []
-    },
-    "src/app/modules/admin/components/skeleton-loader/skeleton-loader.component.css": {
-      "bytes": 1003,
-      "imports": []
-    },
-    "src/app/modules/admin/components/ghasaradar/ghasaradar.component.css": {
-      "bytes": 46,
-      "imports": []
-    },
     "src/app/modules/admin/components/tax/annualtax/annualtax.component.css": {
       "bytes": 225,
       "imports": []
     },
-    "src/app/modules/admin/components/grampanchayat/grampanchayat.component.css": {
-      "bytes": 47,
-      "imports": []
-    },
-    "src/app/modules/admin/components/gatgrampanchayat/gatgrampanchayat.component.css": {
+    "src/app/modules/admin/components/malmattecheprakar/malmattecheprakar.component.css": {
       "bytes": 46,
       "imports": []
     },
-    "src/app/modules/admin/components/taluka/taluka.component.css": {
-      "bytes": 46,
-      "imports": []
-    },
-    "src/app/modules/admin/components/tax/tax.component.css": {
-      "bytes": 46,
-      "imports": []
-    },
-    "src/app/modules/admin/components/tower/tower.component.css": {
+    "src/app/modules/admin/components/prakar/prakar.component.css": {
       "bytes": 46,
       "imports": []
     },
@@ -10171,12 +10135,40 @@
       "bytes": 177,
       "imports": []
     },
-    "src/app/modules/admin/components/sarpanchimages/sarpanchimages.component.css": {
+    "src/app/modules/admin/components/skeleton-loader/skeleton-loader.component.css": {
+      "bytes": 1003,
+      "imports": []
+    },
+    "src/app/modules/admin/components/bdo/bdo.component.css": {
+      "bytes": 198,
+      "imports": []
+    },
+    "src/app/modules/admin/components/taluka/taluka.component.css": {
+      "bytes": 46,
+      "imports": []
+    },
+    "src/app/modules/admin/components/openplotlist/openplotlist.component.css": {
+      "bytes": 198,
+      "imports": []
+    },
+    "src/app/modules/admin/components/tower/tower.component.css": {
+      "bytes": 46,
+      "imports": []
+    },
+    "src/app/modules/admin/components/oopsarpanchimages/oopsarpanchimages.component.css": {
       "bytes": 198,
       "imports": []
     },
     "src/app/modules/admin/components/sachivimages/sachivimages.component.css": {
       "bytes": 905,
+      "imports": []
+    },
+    "src/app/modules/admin/components/bharankdar/bharankdar.component.css": {
+      "bytes": 46,
+      "imports": []
+    },
+    "src/app/modules/admin/components/confirmation-dialog/confirmation-dialog.component.css": {
+      "bytes": 1310,
       "imports": []
     },
     "src/app/modules/admin/components/uploadfile/uploadfile.component.css": {
@@ -10185,6 +10177,14 @@
     },
     "src/app/modules/admin/components/users/users.component.css": {
       "bytes": 839,
+      "imports": []
+    },
+    "src/app/modules/admin/components/sarpanchimages/sarpanchimages.component.css": {
+      "bytes": 198,
+      "imports": []
+    },
+    "src/app/modules/admin/components/tax/tax.component.css": {
+      "bytes": 46,
       "imports": []
     },
     "node_modules/zone.js/fesm2015/zone.js": {
@@ -10623,14 +10623,14 @@
     }
   },
   "outputs": {
-    "main-2UFRF5TS.js": {
+    "main-DNGCVKGH.js": {
       "imports": [
         {
           "path": "chunk-E4B72BHR.js",
           "kind": "import-statement"
         },
         {
-          "path": "chunk-U64D7F4E.js",
+          "path": "chunk-WEUH24FX.js",
           "kind": "import-statement"
         },
         {
@@ -10642,7 +10642,7 @@
           "kind": "import-statement"
         },
         {
-          "path": "chunk-DTITK65U.js",
+          "path": "chunk-KNFC6DQX.js",
           "kind": "dynamic-import"
         },
         {
@@ -10793,10 +10793,10 @@
       "inputs": {},
       "bytes": 83
     },
-    "chunk-DTITK65U.js": {
+    "chunk-KNFC6DQX.js": {
       "imports": [
         {
-          "path": "chunk-U64D7F4E.js",
+          "path": "chunk-WEUH24FX.js",
           "kind": "import-statement"
         },
         {
@@ -10987,7 +10987,7 @@
           "bytesInOutput": 427
         },
         "src/app/modules/admin/services/comman-type.service.ts": {
-          "bytesInOutput": 861
+          "bytesInOutput": 867
         },
         "src/app/modules/admin/components/sachivimages/addnewsachiv/addnewsachiv.component.ts": {
           "bytesInOutput": 9762
@@ -11056,9 +11056,9 @@
           "bytesInOutput": 483
         }
       },
-      "bytes": 464751
+      "bytes": 464757
     },
-    "chunk-U64D7F4E.js": {
+    "chunk-WEUH24FX.js": {
       "imports": [
         {
           "path": "chunk-CT5S43OZ.js",
@@ -11128,7 +11128,7 @@
           "bytesInOutput": 742
         },
         "src/app/services/api.service.ts": {
-          "bytesInOutput": 774
+          "bytesInOutput": 780
         },
         "src/app/modules/admin/services/taluka.service.ts": {
           "bytesInOutput": 556
@@ -11137,7 +11137,7 @@
           "bytesInOutput": 72990
         },
         "src/app/modules/admin/constants/admin.constant.ts": {
-          "bytesInOutput": 164
+          "bytesInOutput": 170
         },
         "src/app/services/auth.service.ts": {
           "bytesInOutput": 785
@@ -11146,7 +11146,7 @@
           "bytesInOutput": 39472
         }
       },
-      "bytes": 168003
+      "bytes": 168015
     },
     "chunk-CT5S43OZ.js": {
       "imports": [
@@ -11666,14 +11666,14 @@
       "bytes": 160,
       "ng-component": true
     },
-    "side-menu.component-Z6GCEY7H.css": {
+    "loader.component-HEDEI7T4.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/side-menu/side-menu.component.css": {
-          "bytesInOutput": 419
+        "src/app/modules/admin/components/loader/loader.component.css": {
+          "bytesInOutput": 361
         }
       },
-      "bytes": 420,
+      "bytes": 362,
       "ng-component": true
     },
     "admin.component-DA36PZDQ.css": {
@@ -11686,16 +11686,6 @@
       "bytes": 38,
       "ng-component": true
     },
-    "loader.component-HEDEI7T4.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/loader/loader.component.css": {
-          "bytesInOutput": 361
-        }
-      },
-      "bytes": 362,
-      "ng-component": true
-    },
     "addnewbdo.component-4OCFBLXY.css": {
       "imports": [],
       "inputs": {
@@ -11706,10 +11696,20 @@
       "bytes": 38,
       "ng-component": true
     },
-    "bharankdar.component-Q75N3Z3U.css": {
+    "admin-dashboard.component-RQJDYW5B.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/bharankdar/bharankdar.component.css": {
+        "src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.css": {
+          "bytesInOutput": 39
+        }
+      },
+      "bytes": 40,
+      "ng-component": true
+    },
+    "gatgrampanchayat.component-47PLFZ2R.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/gatgrampanchayat/gatgrampanchayat.component.css": {
           "bytesInOutput": 37
         }
       },
@@ -11726,84 +11726,14 @@
       "bytes": 182,
       "ng-component": true
     },
-    "bdo.component-DGAYZIMP.css": {
+    "side-menu.component-Z6GCEY7H.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/bdo/bdo.component.css": {
-          "bytesInOutput": 153
+        "src/app/modules/admin/components/side-menu/side-menu.component.css": {
+          "bytesInOutput": 419
         }
       },
-      "bytes": 154,
-      "ng-component": true
-    },
-    "admin-dashboard.component-RQJDYW5B.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/admin-dashboard/admin-dashboard.component.css": {
-          "bytesInOutput": 39
-        }
-      },
-      "bytes": 40,
-      "ng-component": true
-    },
-    "milkatvapar.component-K3SYGBQM.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/milkatvapar/milkatvapar.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "malmattecheprakar.component-DKNMZULP.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/malmattecheprakar/malmattecheprakar.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "home.component-BKMTBYRI.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/home/home.component.css": {
-          "bytesInOutput": 59
-        }
-      },
-      "bytes": 60,
-      "ng-component": true
-    },
-    "prakar.component-PPOSTTUJ.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/prakar/prakar.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "karyakaranikameti.component-RPCU5PFM.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/karyakaranikameti/karyakaranikameti.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "malmatta.component-AUQSXSLF.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/malmatta/malmatta.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
+      "bytes": 420,
       "ng-component": true
     },
     "floor.component-SLAJANPC.css": {
@@ -11816,40 +11746,20 @@
       "bytes": 38,
       "ng-component": true
     },
-    "confirmation-dialog.component-YGNAZLMV.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/confirmation-dialog/confirmation-dialog.component.css": {
-          "bytesInOutput": 928
-        }
-      },
-      "bytes": 929,
-      "ng-component": true
-    },
-    "oopsarpanchimages.component-BAJEXEDG.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/oopsarpanchimages/oopsarpanchimages.component.css": {
-          "bytesInOutput": 153
-        }
-      },
-      "bytes": 154,
-      "ng-component": true
-    },
-    "openplotlist.component-624A67AR.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/openplotlist/openplotlist.component.css": {
-          "bytesInOutput": 153
-        }
-      },
-      "bytes": 154,
-      "ng-component": true
-    },
     "district.component-IZCH6LQP.css": {
       "imports": [],
       "inputs": {
         "src/app/modules/admin/components/district/district.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "grampanchayat.component-I33J7SLN.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/grampanchayat/grampanchayat.component.css": {
           "bytesInOutput": 37
         }
       },
@@ -11866,20 +11776,50 @@
       "bytes": 154,
       "ng-component": true
     },
-    "skeleton-loader.component-LGQKBYG5.css": {
+    "home.component-BKMTBYRI.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/skeleton-loader/skeleton-loader.component.css": {
-          "bytesInOutput": 634
+        "src/app/modules/admin/components/home/home.component.css": {
+          "bytesInOutput": 59
         }
       },
-      "bytes": 635,
+      "bytes": 60,
+      "ng-component": true
+    },
+    "karyakaranikameti.component-RPCU5PFM.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/karyakaranikameti/karyakaranikameti.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "milkatvapar.component-K3SYGBQM.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/milkatvapar/milkatvapar.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
       "ng-component": true
     },
     "ghasaradar.component-CWHFXITM.css": {
       "imports": [],
       "inputs": {
         "src/app/modules/admin/components/ghasaradar/ghasaradar.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "malmatta.component-AUQSXSLF.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/malmatta/malmatta.component.css": {
           "bytesInOutput": 37
         }
       },
@@ -11896,50 +11836,20 @@
       "bytes": 174,
       "ng-component": true
     },
-    "grampanchayat.component-I33J7SLN.css": {
+    "malmattecheprakar.component-DKNMZULP.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/grampanchayat/grampanchayat.component.css": {
+        "src/app/modules/admin/components/malmattecheprakar/malmattecheprakar.component.css": {
           "bytesInOutput": 37
         }
       },
       "bytes": 38,
       "ng-component": true
     },
-    "gatgrampanchayat.component-47PLFZ2R.css": {
+    "prakar.component-PPOSTTUJ.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/gatgrampanchayat/gatgrampanchayat.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "taluka.component-LSEEGZRD.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/taluka/taluka.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "tax.component-OMPKZTCJ.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/tax/tax.component.css": {
-          "bytesInOutput": 37
-        }
-      },
-      "bytes": 38,
-      "ng-component": true
-    },
-    "tower.component-OMXIERAE.css": {
-      "imports": [],
-      "inputs": {
-        "src/app/modules/admin/components/tower/tower.component.css": {
+        "src/app/modules/admin/components/prakar/prakar.component.css": {
           "bytesInOutput": 37
         }
       },
@@ -11956,10 +11866,60 @@
       "bytes": 116,
       "ng-component": true
     },
-    "sarpanchimages.component-JM4MU2SH.css": {
+    "skeleton-loader.component-LGQKBYG5.css": {
       "imports": [],
       "inputs": {
-        "src/app/modules/admin/components/sarpanchimages/sarpanchimages.component.css": {
+        "src/app/modules/admin/components/skeleton-loader/skeleton-loader.component.css": {
+          "bytesInOutput": 634
+        }
+      },
+      "bytes": 635,
+      "ng-component": true
+    },
+    "bdo.component-DGAYZIMP.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/bdo/bdo.component.css": {
+          "bytesInOutput": 153
+        }
+      },
+      "bytes": 154,
+      "ng-component": true
+    },
+    "taluka.component-LSEEGZRD.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/taluka/taluka.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "openplotlist.component-624A67AR.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/openplotlist/openplotlist.component.css": {
+          "bytesInOutput": 153
+        }
+      },
+      "bytes": 154,
+      "ng-component": true
+    },
+    "tower.component-OMXIERAE.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/tower/tower.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "oopsarpanchimages.component-BAJEXEDG.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/oopsarpanchimages/oopsarpanchimages.component.css": {
           "bytesInOutput": 153
         }
       },
@@ -11974,6 +11934,26 @@
         }
       },
       "bytes": 712,
+      "ng-component": true
+    },
+    "bharankdar.component-Q75N3Z3U.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/bharankdar/bharankdar.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
+      "ng-component": true
+    },
+    "confirmation-dialog.component-YGNAZLMV.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/confirmation-dialog/confirmation-dialog.component.css": {
+          "bytesInOutput": 928
+        }
+      },
+      "bytes": 929,
       "ng-component": true
     },
     "uploadfile.component-4LLVXLI7.css": {
@@ -11994,6 +11974,26 @@
         }
       },
       "bytes": 657,
+      "ng-component": true
+    },
+    "sarpanchimages.component-JM4MU2SH.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/sarpanchimages/sarpanchimages.component.css": {
+          "bytesInOutput": 153
+        }
+      },
+      "bytes": 154,
+      "ng-component": true
+    },
+    "tax.component-OMPKZTCJ.css": {
+      "imports": [],
+      "inputs": {
+        "src/app/modules/admin/components/tax/tax.component.css": {
+          "bytesInOutput": 37
+        }
+      },
+      "bytes": 38,
       "ng-component": true
     },
     "polyfills-EJ46DL77.js": {
