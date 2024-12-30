@@ -8,10 +8,4 @@ services:
       - "80:80"
     restart: always
 
-  node:
-    build:
-      context: ./node
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    restart: always
+  
