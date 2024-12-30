@@ -2,7 +2,7 @@ version: '3.9'
 services:
   angular:
     build:
-      context: ./angular
+      context: .
       dockerfile: Dockerfile
     ports:
       - "80:80"
