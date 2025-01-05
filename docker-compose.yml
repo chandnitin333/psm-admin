@@ -10,6 +10,7 @@ services:
     networks:
       - psm_default
 
+
 networks:
   psm_default:
     external: true
