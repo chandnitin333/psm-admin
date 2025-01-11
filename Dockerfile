@@ -8,7 +8,7 @@ RUN npm install --legacy-peer-deps
 
 # Copy all project files and build the application
 COPY . .
-RUN ng build --configuration production --base-href "/"
+RUN npm run build
 
 
 
