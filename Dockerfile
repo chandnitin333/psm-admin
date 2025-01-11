@@ -25,7 +25,7 @@ CMD ["ls"]
 COPY dist/psm/browser /usr/share/nginx/html
 
 # Expose port 80 to serve the app
-EXPOSE 4001
+EXPOSE 4222
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]
