@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "4222:4222"
+      - "4222:80"  # Map container's port 80 to host's port 4222
     restart: always
     networks:
       - psm_default
