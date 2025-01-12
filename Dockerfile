@@ -1,29 +1,32 @@
-# Step 1: Use Node.js to build the Angular app
-FROM node:18-alpine AS build-stage
+# Use an official Node.js runtime as the base image
+FROM node:18 AS build
+
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json for dependency installation
+# Copy the package.json and package-lock.json (or yarn.lock) files
 COPY package*.json ./
-RUN npm install --legacy-peer-deps
 
-# Copy all project files and build the application
+# Install the Angular dependencies
+RUN npm install
+
+# Copy the rest of the Angular application code
 COPY . .
-RUN npm run build --prod  # or npm run build for non-prod builds
 
-# Step 2: Use official NGINX image
+# Build the Angular application for production
+RUN npm run build --prod
+
+# Use an official NGINX image to serve the built Angular app
 FROM nginx:alpine
 
-# Remove the default NGINX page
-RUN rm -rf /usr/share/nginx/html/*
+# Copy the build output to the NGINX HTML directory
+COPY --from=build /app/dist/your-angular-app /usr/share/nginx/html
 
-# Copy the Angular build output to NGINX's html directory
-COPY --from=build-stage /app/dist/psm/browser /usr/share/nginx/html
+# Expose port 4222
+EXPOSE 4222
 
-# Copy the custom nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+# Update NGINX configuration to listen on port 4222
+RUN sed -i 's/listen       80;/listen       4222;/g' /etc/nginx/conf.d/default.conf
 
-# Expose port 80 (NGINX default) for serving the app
-EXPOSE 80
-
-# Start NGINX to serve the app
+# Start NGINX in the foreground
 CMD ["nginx", "-g", "daemon off;"]
