@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the build output to the NGINX HTML directory
-COPY --from=build /app/dist/browser /usr/share/nginx/html
+COPY --from=build /app/dist/psm/browser /usr/share/nginx/html
 
 # Expose port 4222
 EXPOSE 4222
