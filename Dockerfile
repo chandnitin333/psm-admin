@@ -10,21 +10,19 @@ RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-
-
-
-# Use official NGINX image
+# Step 2: Use official NGINX image
 FROM nginx:alpine
 
 # Remove the default NGINX page
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the Angular build output to NGINX's html directory
-CMD ["ls"]
+COPY --from=build-stage /app/dist/psm/browser /usr/share/nginx/html
 
-COPY dist/psm/browser /usr/share/nginx/html
+# Copy the custom NGINX config with the corrected structure
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80 to serve the app
+# Expose port 4222 to serve the app
 EXPOSE 4222
 
 # Start NGINX
