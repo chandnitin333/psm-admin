@@ -196,47 +196,47 @@ export class Util {
 
     // check only integer entered
     async validateInteger(input: any): Promise<boolean> {
-        const parsedInput = Number(input);
-        if (isNaN(parsedInput) || !Number.isInteger(parsedInput)) {
-            return false;
-        }
+        // const parsedInput = Number(input);
+        // if (isNaN(parsedInput) || !Number.isInteger(parsedInput)) {
+        //     return false;
+        // }
         return true; 
     }
 
     // accept only decimal digit
     async validateFloat(input: any): Promise<boolean> {
-        const parsedInput = parseFloat(input); // Try to parse the input as a float
-        if (isNaN(parsedInput) || !input.includes('.') || parsedInput === Math.floor(parsedInput)) {
-            return false;
-        }
+        // const parsedInput = parseFloat(input); // Try to parse the input as a float
+        // if (isNaN(parsedInput) || !input.includes('.') || parsedInput === Math.floor(parsedInput)) {
+        //     return false;
+        // }
         return true;
     }
 
     async validateString(input: any): Promise<boolean> {
-        if (typeof input !== 'string' || input.trim() === '') {
-            return false;
-        }
+        // if (typeof input !== 'string' || input.trim() === '') {
+        //     return false;
+        // }
         return true;
     }
 
     async validateStringWithSpaces(input: any): Promise<boolean> {
         // Regular Expression to allow only letters and spaces
-        const stringPattern = /^[a-zA-Z\s]*$/;
+        // const stringPattern = /^[a-zA-Z\s]*$/;
 
-        if (!stringPattern.test(input)) {
-            return true;
-        } 
-        return false;
+        // if (!stringPattern.test(input)) {
+        //     return true;
+        // } 
+        return true;
   }
 }
 
 
 export function onlyStringAndSpacesValidator(control: AbstractControl): ValidationErrors | null {
   // Allow spaces and letters only (regular expression)
-  const regex = /^[A-Za-z\s]*$/;
-  if (control.value && !regex.test(control.value)) {
-    return { 'invalidInput': true };  // Returns error if invalid characters are found
-  }
+//   const regex = /^[A-Za-z\s]*$/;
+//   if (control.value && !regex.test(control.value)) {
+//     return { 'invalidInput': true };  // Returns error if invalid characters are found
+//   }
   return null;  // No error if input is valid
 }
 

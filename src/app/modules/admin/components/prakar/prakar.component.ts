@@ -22,7 +22,7 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
 })
 export class PrakarComponent {
     errorMessage: string | null = null;
-    errorButton: boolean = false;
+    errorButton: boolean = true;
     isLoading: boolean = true;
     isEdit: boolean = false;
     isSubmitted: boolean = false;
@@ -235,11 +235,11 @@ export class PrakarComponent {
     {
         let status = this.util.validateStringWithSpaces(event.target.value);
         if(await status){
-            this.errorMessage = "Please enter string only";
-            this.errorButton = false;
+            // this.errorMessage = "Please enter string only";
+            this.errorButton = true;
         }  else if(event.target.value == ""){
-			this.errorButton = false;
-            this.errorMessage = "This field must be required";
+			this.errorButton = true;
+            // this.errorMessage = "This field must be required";
 		} else {
             this.errorButton = true;
             this.errorMessage = "";
