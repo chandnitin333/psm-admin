@@ -135,10 +135,10 @@ export class Util {
 
     async getDistrictDDL(url: string = "district-list-ddl") {
         const cacheKey = 'districts';
-        const cachedData = localStorage.getItem(cacheKey);
-        if (cachedData) {
-            return JSON.parse(cachedData);
-        }
+        // const cachedData = localStorage.getItem(cacheKey);
+        // if (cachedData) {
+        //     return JSON.parse(cachedData);
+        // }
 
         try {
             const headers = {
@@ -147,7 +147,7 @@ export class Util {
             };
             const res: any = await this.http.post(`${API_URL}${url}`, {}, { headers }).toPromise();
             const data = res?.data ?? [];
-            localStorage.setItem(cacheKey, JSON.stringify(data));
+            // localStorage.setItem(cacheKey, JSON.stringify(data));
             return data;
         } catch (err) {
             console.error('Error getting districts:', err);
@@ -157,10 +157,10 @@ export class Util {
 
     async getMalmattechePrakartDDL(url: string = "get-malmatteche-prakar-all-list") {
         const cacheKey = 'malmatteche-prakar';
-        const cachedData = localStorage.getItem(cacheKey);
-        if (cachedData) {
-            return JSON.parse(cachedData);
-        }
+        // const cachedData = localStorage.getItem(cacheKey);
+        // if (cachedData) {
+        //     return JSON.parse(cachedData);
+        // }
 
         try {
             const headers = {
@@ -169,7 +169,7 @@ export class Util {
             };
             const res: any = await this.http.post(`${API_URL}${url}`, {}, { headers }).toPromise();
             const data = res?.data ?? [];
-            localStorage.setItem(cacheKey, JSON.stringify(data));
+            // localStorage.setItem(cacheKey, JSON.stringify(data));
             return data;
         } catch (err) {
             console.error('Error getting malmatteche prakar:', err);
