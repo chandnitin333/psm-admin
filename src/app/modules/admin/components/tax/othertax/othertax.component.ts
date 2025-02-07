@@ -12,6 +12,8 @@ import Util from '../../../utils/utils';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../../skeleton-loader/skeleton-loader.component';
 import { SortingTableComponent } from '../../sorting-table/sorting-table.component';
+import { UsersService } from '../../../services/users.service';
+import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 @Component({
     selector: 'app-othertax',
     standalone: true,
@@ -34,6 +36,27 @@ export class OthertaxComponent {
     otherTaxList: any = [];
     currentPage: number = 1;
     taxList: any = [];
+
+    userDistrict: any = [];
+    selectedDistrict: any;
+    collapsedDistricts: { [district: string]: boolean } = {};
+    searchValue: string = '';
+    taxDistrictList: any = [];
+    items: any = [];
+    totalItems: number = 0;
+    itemsPerPage: number = ITEM_PER_PAGE
+    displayedColumns: any = [
+        { key: 'sr_no', label: 'अनुक्रमांक' },
+        { key: 'DISTRICT_NAME', label: 'जिल्हा1' },
+        { key: 'TALUKA_NAME', label: 'तालुका' },
+        { key: 'PANCHAYAT_NAME', label: 'ग्राम पंचायत' },
+        { key: 'GATGRAMPANCHAYAT_NAME', label: 'गट ग्राम पंचायत' },
+        { key: 'NAME', label: 'नाव' },
+        { key: 'USERNAME', label: 'युजरनेम' },
+        { key: 'pwd', label: 'पासवर्ड' },
+
+    ];
+
 
     taxtNameList: any = []
     taxtNameSet: any;
@@ -82,16 +105,23 @@ export class OthertaxComponent {
         taxrate5: new FormControl<number | string>('')
     })
     isSubmitted: boolean = false;
-    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder, private toastr: ToastrService) {
+    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder, private toastr: ToastrService, private user: UsersService,) {
 
     }
     ngOnInit(): void {
         this.titleService.setTitle('Other Tax');
         this.getDistrictList();
+        this.getUserDistrict();
         this.getTaxList();
         console.log("this.taxData====-", this.taxData)
     }
 
+    getUserDistrict() {
+        this.user.getUserDistrict({ "user_type": "other_tax" }).subscribe((res: any) => {
+            this.userDistrict = res?.data ?? [];
+
+        })
+    }
     ngAfterViewInit(): void {
         $('.my-select2').select2();
 
@@ -153,7 +183,7 @@ export class OthertaxComponent {
 
             });
 
-            console.log("First taxtNameList ====", this.taxtNameList)
+            // console.log("First taxtNameList ====", this.taxtNameList)
 
         })
 
@@ -205,7 +235,7 @@ export class OthertaxComponent {
                 }
                 // const data1 = this.taxtNameList.sort((a: any, b: any) => Number(a.id) - Number(b.id));
                 // this.taxtNameList = data1
-                console.log("taxtNameList===", this.taxtNameList)
+                // console.log("taxtNameList===", this.taxtNameList)
                 this.isEdit = true
             }
         });
@@ -331,5 +361,51 @@ export class OthertaxComponent {
         $('#taluka').val('').trigger('change');
         $('#gramPanchayat').val('').trigger('change');
         this.getTaxList();
+    }
+     toggleCollapse(district: string) {
+        console.log("district==", district)
+        if (this.selectedDistrict != district) {
+            this.collapsedDistricts[district] = !this.collapsedDistricts[district];
+            this.currentPage = 1;
+            this.selectedDistrict = district;
+            this.getDistrictWiseList(district);
+        } else {
+
+            this.collapsedDistricts[district] = !this.collapsedDistricts[district];
+        }
+        // this.getDistrictWiseList(district);
+        // console.log("collapsedDistricts==", this.collapsedDistricts)
+    }
+     getDistrictWiseList(districtId: any) {
+        // console.log("districtId==", districtId)
+        this.setValueToggle(districtId);
+        try {
+            this.otherTax.fetchOtherTaxListbyDistrict({
+                "page_number": this.currentPage,
+                "search_text": this.searchValue,
+                "district_id": districtId
+            }).subscribe((res: any) => {
+                this.taxDistrictList = res?.data ?? [];
+                this.items = res.data ?? [];
+                this.totalItems = res.totalRecords ?? 0;
+                // console.log("userList==", this.userList)
+            })
+        } catch (error) {
+            console.log("getUserList:: error :: ", error)
+        }
+
+    }
+    setValueToggle(district: string) {
+
+        for (const key in this.collapsedDistricts) {
+
+            if (key.toString() == district) {
+                this.collapsedDistricts[key] = true;
+
+            } else {
+                this.collapsedDistricts[key] = false;
+            }
+        }
+
     }
 }
