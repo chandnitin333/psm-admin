@@ -55,6 +55,7 @@ export class UsersComponent {
         { key: 'GATGRAMPANCHAYAT_NAME', label: 'गट ग्राम पंचायत' },
         { key: 'NAME', label: 'नाव' },
         { key: 'USERNAME', label: 'युजरनेम' },
+        { key: 'pwd', label: 'पासवर्ड' },
 
     ];
 
