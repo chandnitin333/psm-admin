@@ -190,7 +190,7 @@
                             (click)="toggleCollapse(ele?.DISTRICT_ID,ele?.TALUKA_ID,ele.PANCHAYAT_ID)">
                             <i
                                 class=" toggle-nested "
-                                [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                                [ngClass]="collapsedDistricts[ele.DISTRICT_ID+''+ele?.TALUKA_ID+''+ele.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
                             <span class="text-dark font-weight-bold ml-2 ">{{
                                 ele?.DISTRICT_NAME }}</span>
 
