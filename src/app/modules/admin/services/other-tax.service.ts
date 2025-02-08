@@ -23,4 +23,16 @@ export class OtherTaxService {
     updateOtherTax(params: any) {
         return this.api.put(`update-other-tax`, params)
     }
+
+    fetchOtherTaxListbyDistrict(params:any) {
+        let  {page_number,search_text,district_id, talika_id, panchayat_id} = params;
+        return this.api.post('get-other-tax-list-by-district-id', {
+            "page_number": page_number,
+            "search_text": search_text,
+            "district_id": district_id,
+            "talika_id": talika_id,
+            "panchayat_id": panchayat_id,
+             "user_type":"other_tax"
+        });
+    }
 }

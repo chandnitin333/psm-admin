@@ -3,17 +3,17 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 import { ConfirmationDialogModule } from '../../../module/confirmation-dialog/confirmation-dialog.module';
 import { GatGramPanchayatService } from '../../../services/gat-gram-panchayat.service';
 import { GramPanchayatService } from '../../../services/gram-panchayat.service';
 import { OtherTaxService } from '../../../services/other-tax.service';
 import { TalukaService } from '../../../services/taluka.service';
+import { UsersService } from '../../../services/users.service';
 import Util from '../../../utils/utils';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../../skeleton-loader/skeleton-loader.component';
 import { SortingTableComponent } from '../../sorting-table/sorting-table.component';
-import { UsersService } from '../../../services/users.service';
-import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 @Component({
     selector: 'app-othertax',
     standalone: true,
@@ -57,7 +57,7 @@ export class OthertaxComponent {
 
     ];
 
-
+    keyName: string = 'CREATEOTHERTAX_ID';
     taxtNameList: any = []
     taxtNameSet: any;
     isManula: boolean = true
@@ -88,6 +88,7 @@ export class OthertaxComponent {
 
     };
     isEdit: boolean = false;
+
     otherTaxFrm = new FormGroup({
         district_id: new FormControl<string | null>(null, Validators.required),
         panchayat_id: new FormControl<string | null>(null, Validators.required),
@@ -196,7 +197,7 @@ export class OthertaxComponent {
             this.otherTaxList = res?.data ?? [];
             console.log("otherTaxList====  ", this.otherTaxList)
 
-            
+
             if (this.otherTaxList.length == 0) {
                 this.isManula = false;
                 this.taxData = this.taxDataFormate;
@@ -362,38 +363,51 @@ export class OthertaxComponent {
         $('#gramPanchayat').val('').trigger('change');
         this.getTaxList();
     }
-     toggleCollapse(district: string) {
-        console.log("district==", district)
+    toggleCollapse(district: string, talika: number, panachayt: number) {
+       
         if (this.selectedDistrict != district) {
-            this.collapsedDistricts[district] = !this.collapsedDistricts[district];
+            this.collapsedDistricts[district+''+talika+''+panachayt] = !this.collapsedDistricts[district+''+talika+''+panachayt];
             this.currentPage = 1;
             this.selectedDistrict = district;
-            this.getDistrictWiseList(district);
+            this.getDistrictWiseList(district, talika, panachayt);
         } else {
 
-            this.collapsedDistricts[district] = !this.collapsedDistricts[district];
+            this.collapsedDistricts[district+''+talika+''+panachayt] = !this.collapsedDistricts[district+''+talika+''+panachayt];
         }
         // this.getDistrictWiseList(district);
         // console.log("collapsedDistricts==", this.collapsedDistricts)
     }
-     getDistrictWiseList(districtId: any) {
-        // console.log("districtId==", districtId)
-        this.setValueToggle(districtId);
+    getDistrictWiseList(districtId: any, talika_id: number, panchayat_id: number) {
+         console.log("districtId==", {
+                "page_number": this.currentPage,
+                "search_text": this.searchValue,
+                "district_id": districtId,
+                "talika_id": talika_id,
+                "panchayat_id": panchayat_id
+            })
+        this.setValueToggle(districtId+''+talika_id+''+panchayat_id);
         try {
             this.otherTax.fetchOtherTaxListbyDistrict({
                 "page_number": this.currentPage,
                 "search_text": this.searchValue,
-                "district_id": districtId
+                "district_id": districtId,
+                "talika_id": talika_id,
+                "panchayat_id": panchayat_id
             }).subscribe((res: any) => {
-                this.taxDistrictList = res?.data ?? [];
+                this.taxDistrictList = res?.data[0] ?? [];
                 this.items = res.data ?? [];
                 this.totalItems = res.totalRecords ?? 0;
-                // console.log("userList==", this.userList)
+
             })
         } catch (error) {
             console.log("getUserList:: error :: ", error)
         }
 
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.getTaxList();
     }
     setValueToggle(district: string) {
 
@@ -407,5 +421,12 @@ export class OthertaxComponent {
             }
         }
 
+    }
+
+    editTax(ele:any){
+        console.log("Here==", ele)
+    }
+    deleteTax(ele:any){
+        console.log("Here==", ele)
     }
 }

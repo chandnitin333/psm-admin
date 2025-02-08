@@ -8,11 +8,14 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
-                        <select formControlName="district_id" name="selectedOption" id="mySelect"
-                            class="form-control my-select2 col-sm-12" placeholder="Select district"
+                        <select formControlName="district_id"
+                            name="selectedOption" id="mySelect"
+                            class="form-control my-select2 col-sm-12"
+                            placeholder="Select district"
                             (change)="getTalukaByDistrict($event)">
                             <option value selected>-- जिल्हा निवडा -- </option>
-                            <option *ngFor="let district of districts" [value]="district.DISTRICT_ID">{{
+                            <option *ngFor="let district of districts"
+                                [value]="district.DISTRICT_ID">{{
                                 district.DISTRICT_NAME }}</option>
                         </select>
                         <!-- <span class="text-danger" *ngIf="isSubmitted && !gramFrom.value.districtName">Please select district</span> -->
@@ -21,10 +24,13 @@
                 <div class="col-sm-3">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
-                        <select class="js-example-basic-multiple1 form-control   my-select2" name="talukas" id="taluka"
+                        <select
+                            class="js-example-basic-multiple1 form-control   my-select2"
+                            name="talukas" id="taluka"
                             formControlName="taluka_id">
                             <option value selected>-- तालुका निवडा -- </option>
-                            <option *ngFor="let taluka of talukas" value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}
+                            <option *ngFor="let taluka of talukas"
+                                value="{{taluka.TALUKA_ID}}">{{taluka.TALUKA_NAME}}
                             </option>
 
                         </select>
@@ -34,11 +40,13 @@
                     <label class="text-dark font-weight-medium">ग्राम
                         पंचायत</label>
                     <div class="form-group">
-                        <select class="form-control my-select2" name="gramPanchayat" id="gramPanchayat"
+                        <select class="form-control my-select2"
+                            name="gramPanchayat" id="gramPanchayat"
                             formControlName="panchayat_id">
                             <option value selected="selected">- ग्राम पंचायत
                                 निवडा -- </option>
-                            <option *ngFor="let gramPanchayat of gramPanchayatList"
+                            <option
+                                *ngFor="let gramPanchayat of gramPanchayatList"
                                 value="{{gramPanchayat.PANCHAYAT_ID}}">{{gramPanchayat.PANCHAYAT_NAME}}</option>
 
                         </select>
@@ -105,22 +113,29 @@
                 </thead>
                 <tbody>
 
-                    <tr class="font-weight-bold" *ngFor="let ele of taxtNameList  let i = index">
+                    <tr class="font-weight-bold"
+                        *ngFor="let ele of taxtNameList  let i = index">
 
                         <td class="text-center">
                             <div class="form-check d-inline-block">
-                                <input class="form-check-input" type="checkbox" value id="{{ele.id}}"
-                                    [checked]="ele.isChecked" (click)="toggleChecktax($event,ele)">
+                                <input class="form-check-input" type="checkbox"
+                                    value id="{{ele.id}}"
+                                    [checked]="ele.isChecked"
+                                    (click)="toggleChecktax($event,ele)">
                             </div>
                         </td>
                         <td>{{ele.tax_name}}</td>
 
                         <td style="padding: 0px;">
                             <input type="hidden" [attr.name]="'taxid' + (i + 1)"
-                                [(ngModel)]="taxData['taxid' + (i + 1)]" value="{{ele.id}}" />
-                            <input *ngIf="ele.isChecked" type="text" class="form-control"
-                                [attr.name]="'taxrate' + (i + 1)" [(ngModel)]="taxData['taxrate' + (i + 1)]"
-                                [attr.id]="ele.id" [value]="ele.tax_rate" (input)="restrictText($event,ele,i)"
+                                [(ngModel)]="taxData['taxid' + (i + 1)]"
+                                value="{{ele.id}}" />
+                            <input *ngIf="ele.isChecked" type="text"
+                                class="form-control"
+                                [attr.name]="'taxrate' + (i + 1)"
+                                [(ngModel)]="taxData['taxrate' + (i + 1)]"
+                                [attr.id]="ele.id" [value]="ele.tax_rate"
+                                (input)="restrictText($event,ele,i)"
                                 style="margin: 0px; height: 55px; font-weight: 600; border: none" />
 
                             <span *ngIf="!ele.isChecked"
@@ -136,11 +151,13 @@
         </div>
         <div class="row mt-4">
             <div class="col-sm-12">
-                <button type="button col-sm-2" class="btn btn-pill btn-primary" title="Save"
+                <button type="button col-sm-2" class="btn btn-pill btn-primary"
+                    title="Save"
                     (click)="(!isEdit)  ? submit() : update()"><strong>{{(isEdit)
                         ? "बदल करा" :
                         "जतन करा"}}</strong></button>
-                <button type="button" class="btn btn-pill btn-info ml-1" title="Update" (click)="reset()"><strong>पुन्हा
+                <button type="button" class="btn btn-pill btn-info ml-1"
+                    title="Update" (click)="reset()"><strong>पुन्हा
                         रचना
                         करा</strong></button>
             </div>
@@ -150,59 +167,117 @@
         <div>
 
             <div>
-                <table class="table ">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="text-center" style="width:2%">#</th>
-                            <th>जिल्हा</th>
-                            <!-- <th class="text-center" style="width:2%">#</th> -->
-                            <th>Taluka</th>
-                            <!-- <th class="text-center" style="width:2%">#</th> -->
-                            <th>Gram panchayat</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div *ngFor="let ele of userDistrict" class="m-0">
+                <div class="row m-1  border p-2 bg-dark "
+                    style="color: #fff; margin-left: 5px;">
+                    <div class="col-4  p-1" style="color: #fff; "><span
+                            class="font-weight-bold  " style="margin-left:5px;">
+                            # &nbsp;
+                        </span> <span
+                            class=" font-weight-bold ml-2 "
+                            style="color: #fff;">
+                            जिल्हा</span> </div>
+                    <div class="col-4  p-1" style="color: #fff;"> <span
+                            class="font-weight-bold ml-2 ">तालुका</span>
+                    </div>
+                    <div class="col-4  p-1" style="color: #fff;"> <span
+                            class=" font-weight-bold ml-2 ">ग्रामपंचायत</span>
+                    </div>
+                </div>
+                <div *ngFor="let ele of userDistrict"
+                    class="m-0 row m-1 ml-2 border p-2">
                     <div class="row mt-0">
-
-                        <div class="col-md-12 mb-0">
-                            <table class="table">
-                                <thead class>
-                                    <tr>
-                                        <th class="text-center border" (click)="toggleCollapse(ele?.DISTRICT_ID)"
-                                            style="width:2%"><i class=" toggle-nested "
-                                                [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
-                                        </th>
-                                        <th class="border"> <span class="text-dark font-weight-bold ml-2 ">{{
-                                                ele?.DISTRICT_NAME
-                                                }}</span></th>
-                                            
-                                        <th class="border"> <span class="text-dark font-weight-bold ml-2 ">{{
-                                                ele?.TALUKA_NAME
-                                                }}</span></th>
-                                    </tr>
-                                </thead>
-                            </table>
+                        <div class="col-4  p-1"
+                            (click)="toggleCollapse(ele?.DISTRICT_ID,ele?.TALUKA_ID,ele.PANCHAYAT_ID)">
+                            <i
+                                class=" toggle-nested "
+                                [ngClass]="collapsedDistricts[ele.DISTRICT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                            <span class="text-dark font-weight-bold ml-2 ">{{
+                                ele?.DISTRICT_NAME }}</span>
 
                         </div>
+                        <div class="col-4  p-1"> <span
+                                class="text-dark font-weight-bold ml-2 ">{{
+                                ele?.TALUKA_NAME
+                                }}</span></div>
+                        <div class="col-4  p-1"> <span
+                                class="text-dark font-weight-bold ml-2 ">{{
+                                ele?.PANCHAYAT_NAME
+                                }}</span></div>
+
                     </div>
-                    <div *ngIf="collapsedDistricts[ele.DISTRICT_ID]" class="mt-0 mb-2">
+                    <div
+                        *ngIf="collapsedDistricts[ele.DISTRICT_ID+''+ ele.TALUKA_ID+''+ele.PANCHAYAT_ID]"
+                        class="mt-0 mb-2">
 
                         <div class=" mt-0">
 
-                            <app-sorting-table [data]="items" [columns]="displayedColumns" [currentPage]="currentPage"
-                                [keyName]="keyName">
-                            </app-sorting-table>
-                            <div class="float-left font-weight-bold mt-1"><span class="font-weight-bold">Total
-                                    Records :
-                                </span>{{totalItems}}</div>
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center"
+                                            style="width:2%">#</th>
+                                        <th style="width:10%">करांची नावे</th>
+                                        <th style="width:30%">दर (editable field
+                                            column)</th>
+                                        <th style="width:10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr class="font-weight-bold"
+                                        *ngFor="let ele of taxtNameList  let i = index">
+
+                                        <td class="text-center">
+                                            <div
+                                                class="form-check d-inline-block">
+                                                <input class="form-check-input"
+                                                    type="checkbox"
+                                                    value id="{{ele.id}}"
+                                                    [checked]="ele.isChecked"
+                                                    (click)="toggleChecktax($event,ele)">
+                                            </div>
+                                        </td>
+                                        <td>{{ele.tax_name}}</td>
+
+                                        <td style="padding: 0px;">
+                                            <input type="hidden"
+                                                [attr.name]="'TAXID' + (i + 1)"
+                                                [(ngModel)]="taxDistrictList['TAXID' + (i + 1)]"
+                                                value="{{ele.id}}" />
+                                            <input *ngIf="ele.isChecked"
+                                                type="text"
+                                                class="form-control"
+                                                [attr.name]="'TAXRATE' + (i + 1)"
+                                                [(ngModel)]="taxDistrictList['TAXRATE' + (i + 1)]"
+                                                [attr.id]="ele.id"
+                                                [value]="ele.tax_rate"
+                                                (input)="restrictText($event,ele,i)"
+                                                style="margin: 0px; height: 55px; font-weight: 600; border: none" />
+
+                                            <span *ngIf="!ele.isChecked"
+                                                style="display: block;  margin-top: 20px; margin-left: 12px; height: 39px; ">{{
+                                                ele.tax_rate || 0
+                                                }} </span>
+                                        </td>
+                                        <td>
+
+                                            <button
+                                                class="btn btn-sm btn-outline-success font-weight-bold"
+                                                (click)="editTax({ele,taxDistrictList})"><i
+                                                    class="mdi mdi-square-edit-outline"></i>
+                                                एडिट</button> &nbsp;<button
+                                                class="btn btn-sm btn-outline-danger font-weight-bold"
+                                                (click)="deleteTax({ele,taxDistrictList})"><i
+                                                    class="mdi mdi-trash-can-outline"></i>
+                                                डिलीट</button></td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
                         </div>
 
-                        <div class="col-md-12 p-2">
-                            <app-pagination class="float-right " [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
-                                (pageChange)="onPageChange($event)">
-                            </app-pagination>
-                        </div>
                         <br />
 
                     </div>
