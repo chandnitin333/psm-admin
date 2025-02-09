@@ -23,6 +23,12 @@ export class OtherTaxService {
     updateOtherTax(params: any) {
         return this.api.put(`update-other-tax`, params)
     }
+    updateOtherTaxNew(params: any) {
+        return this.api.put(`update-other-tax-new`, params)
+    }
+    deleteOtherTax(id: number) {
+        return this.api.delete(`delete-other-tax/${id}`);
+    }
 
     fetchOtherTaxListbyDistrict(params:any) {
         let  {page_number,search_text,district_id, talika_id, panchayat_id} = params;
