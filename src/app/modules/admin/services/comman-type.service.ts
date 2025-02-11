@@ -6,7 +6,7 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CommanTypeService {
-  private baseUrl: string = 'http://localhost:4444/api/admin';
+  private baseUrl: string = 'http://103.102.234.151:4444/api/admin';
   constructor(private http: HttpClient) { }
 
 

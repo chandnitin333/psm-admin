@@ -24,7 +24,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         gramPanchayatName: new FormControl<string | null>(null),
     });
     errorMessage: string | null = null;
-    errorButton: boolean = false;
+    errorButton: boolean = true;
 
     isSubmitted: boolean = false;
     private currentPage: number = 1;
@@ -130,7 +130,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         this.isEdit = false;
          $('.my-select2').select2();
          this.errorMessage = "";
-        this.errorButton = false;
+        this.errorButton = true;
     }
 
     srNo(index: number): number {
@@ -266,11 +266,11 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     {
         let status = this.util.validateStringWithSpaces(event.target.value);
         if(await status){
-            this.errorMessage = "Please enter string only";
-            this.errorButton = false;
+            // this.errorMessage = "Please enter string only";
+            this.errorButton = true;
         }  else if(event.target.value == ""){
-			this.errorButton = false;
-            this.errorMessage = "This field must be required";
+			this.errorButton = true;
+            // this.errorMessage = "This field must be required";
 		} else {
             this.errorButton = true;
             this.errorMessage = "";
