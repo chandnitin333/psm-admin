@@ -59,7 +59,7 @@ export class UsersComponent {
 
     ];
 
-    keysList: any = ['USER_ID', 'FERFARUSER_ID', 'FERFARUSERPDF_ID', 'VASULIUSER_ID']
+    keysList: any = ['USER_ID', 'FERFARUSER_ID', 'FERFARUSERPDF_ID', 'VASULIUSER_ID', 'PANCHAYATUSER_ID']
     keyName: string = 'USER_ID';
     marathiText: string = '';
     userList: any = [];
@@ -73,9 +73,9 @@ export class UsersComponent {
     ferfar_pdf_user: boolean = false;
     vasuli_user: boolean = false;
     selectedTabInd: number = 1;
-    userTypeList = ['', 'new_user', 'ferfar_user', 'ferfar_pdf_user', 'vasuli_user'];
+    userTypeList = ['', 'new_user', 'ferfar_user', 'ferfar_pdf_user', 'vasuli_user', 'new_user_edit_joda'];
     selectUserType: string = 'new_user'
-    tabTitleList: any = ['नविन यूजर जोडा', 'फेरफार यूजर जोडा', 'फेरफार PDF यूजर जोडा', 'वसुली यूजर जोडा']
+    tabTitleList: any = ['नविन यूजर जोडा', 'फेरफार यूजर जोडा', 'फेरफार PDF यूजर जोडा', 'वसुली यूजर जोडा','नवीन यूजर एडिट जोडा']
     tabTitle: string = 'नविन यूजर जोडा'
     constructor(private titleService: Title,
         private util: Util,
