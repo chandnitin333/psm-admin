@@ -21,11 +21,14 @@ on:
 
 jobs:
   build-and-deploy:
+    name: Build and Deploy Angular App
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show selected branch
-        run: echo "Deploying from branch: ${{ github.event.inputs.branch }}"
+      - name: Show selected branch and environment
+        run: |
+          echo "Deploying from branch: ${{ github.event.inputs.branch }}"
+          echo "Target environment: ${{ github.event.inputs.environment }}"
 
       - name: Checkout selected branch
         uses: actions/checkout@v3
@@ -41,7 +44,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app
-        run: npm run build -- --configuration=${{ github.event.inputs.environment }}
+        run: npm run build --configuration=${{ github.event.inputs.environment }}
 
       - name: Deploy to VPS via SCP
         uses: appleboy/scp-action@v0.1.3
