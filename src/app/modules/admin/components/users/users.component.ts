@@ -361,6 +361,9 @@ export class UsersComponent {
 
         this.selectedTabInd = tabId;
         this.selectUserType = this.userTypeList[this.selectedTabInd].toString();
+        console.log('selected Tab Ind', this.selectedTabInd);
+        console.log("selectUseType", this.selectUserType);
+        console.log('this.selectedDistrict', this.selectedDistrict);
         setTimeout(() => {
             this.usrFrm.get('user_type')?.setValue(this.selectUserType);
             this.tabTitle = this.tabTitleList[tabId - 1];
