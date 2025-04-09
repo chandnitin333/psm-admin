@@ -1,6 +1,5 @@
 name: Deploy Angular to VPS
 
-
 on:
   workflow_dispatch:
     inputs:
