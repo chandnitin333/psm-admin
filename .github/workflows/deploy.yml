@@ -19,14 +19,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show selected environment
+      - name: Show current branch and selected environment
         run: |
-          echo "Deploying to environment: ${{ github.event.inputs.environment }}"
+          echo "Deploying from branch: ${{ github.ref_name }}"
+          echo "Target environment: ${{ github.event.inputs.environment }}"
 
-      - name: Checkout the fixed branch (e.g., 'main')
+      - name: Checkout the current branch
         uses: actions/checkout@v3
         with:
-          ref: main  # Hardcoded branch
+          ref: ${{ github.ref_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
