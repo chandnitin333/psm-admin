@@ -6,10 +6,12 @@ on:
       branch:
         description: "Git Branch"
         required: true
-        default: "dev"
+        default: "main"
         type: choice
-        
-         
+        options:
+          - main
+          - dev
+          - staging
       environment:
         description: "Target Environment"
         required: true
@@ -25,12 +27,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout branch
+      - name: Checkout selected branch
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.branch }}
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -50,7 +52,7 @@ jobs:
           source: "dist/**"
           target: "/var/www/html/${{ github.event.inputs.environment }}"
 
-      - name: Restart Nginx (Optional)
+      - name: Restart Nginx (optional)
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
