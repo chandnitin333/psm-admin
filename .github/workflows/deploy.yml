@@ -6,12 +6,10 @@ on:
       branch:
         description: "Git Branch"
         required: true
-        default: "main"
+        default: "dev"
         type: choice
-        options:
-          - main
-          - dev
-          - staging
+        
+         
       environment:
         description: "Target Environment"
         required: true
