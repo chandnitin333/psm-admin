@@ -26,14 +26,21 @@ jobs:
 
     strategy:
       matrix:
-        branch: ${{ fromJSON('["main", "dev", "feature/login"]') }} # Example branches
-        environment: [development, staging, production] # Environments
+        branch: ${{ fromJSON('[${{ github.event.inputs.branches }}]') }} # Converts user input into matrix dynamically
+        environment: [development, staging, production] # Runs for all environments
 
     steps:
       - name: Show selected branch and environment
         run: |
-          echo "Deploying from branch: ${{ matrix.branch }}"
-          echo "Target environment: ${{ matrix.environment }}"
+          echo "🚀 Deploying from branch: ${{ matrix.branch }}"
+          echo "🌍 Target environment: ${{ matrix.environment }}"
+
+      - name: Generate Deployment Summary
+        run: |
+          echo "### 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** \`${{ matrix.branch }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** \`${{ matrix.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ✅ Deployment Started" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout selected branch
         uses: actions/checkout@v3
