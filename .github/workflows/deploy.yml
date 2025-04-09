@@ -7,7 +7,7 @@ on:
         description: "Git Branch (type the name, e.g. main, dev, feature/login)"
         required: true
         default: "main"
-        type: string  # 👈 Changed from 'choice' to 'string'
+        type: string
 
       environment:
         description: "Target Environment"
@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Show selected branch
+        run: echo "Deploying from branch: ${{ github.event.inputs.branch }}"
+
       - name: Checkout selected branch
         uses: actions/checkout@v3
         with:
