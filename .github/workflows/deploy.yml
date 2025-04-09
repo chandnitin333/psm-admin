@@ -4,14 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: "Git Branch"
+        description: "Git Branch (type the name, e.g. main, dev, feature/login)"
         required: true
         default: "main"
-        type: choice
-        options:
-          - main
-          - dev
-          - staging
+        type: string  # 👈 Changed from 'choice' to 'string'
+
       environment:
         description: "Target Environment"
         required: true
