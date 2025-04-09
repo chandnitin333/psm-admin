@@ -1,9 +1,23 @@
 name: Deploy Angular to VPS
 
 on:
-  push:
-    branches:
-      - '**'  # Runs on all branches automatically when code is pushed
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Git Branch (type the name, e.g. main, dev, feature/login)"
+        required: true
+        default: "main"
+        type: string
+
+      environment:
+        description: "Target Environment"
+        required: true
+        default: "production"
+        type: choice
+        options:
+          - development
+          - staging
+          - production
 
 jobs:
   build-and-deploy:
@@ -11,14 +25,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show current branch and selected environment
+      - name: Show selected branch and environment
         run: |
-          echo "Deploying from branch: ${{ github.ref_name }}"
+          echo "Deploying from branch: ${{ github.event.inputs.branch }}"
+          echo "Target environment: ${{ github.event.inputs.environment }}"
 
-      - name: Checkout the current branch
+      - name: Checkout selected branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref_name }}
+          ref: ${{ github.event.inputs.branch }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -29,7 +44,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app
-        run: npm run build --configuration=production
+        run: npm run build --configuration=${{ github.event.inputs.environment }}
 
       - name: Deploy to VPS via SCP
         uses: appleboy/scp-action@v0.1.3
@@ -38,7 +53,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/**"
-          target: "/var/www/html/production"
+          target: "/var/www/html/${{ github.event.inputs.environment }}"
 
       - name: Restart Nginx (optional)
         uses: appleboy/ssh-action@v1.0.0
