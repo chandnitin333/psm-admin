@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branches:
-        description: "Git Branches (comma-separated, e.g. main, dev, feature/login)"
+        description: "Git Branch (e.g. main, dev, feature/login)"
         required: true
         default: "main"
         type: string
@@ -24,11 +24,6 @@ jobs:
     name: Build and Deploy Angular App
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        branch: ${{ fromJSON('["main","dev","feature/login"]') }} # Dynamically parses user input
-        environment: [development, staging, production] # Runs across all environments
-
     steps:
       - name: Validate Input
         run: |
@@ -36,24 +31,16 @@ jobs:
             echo "❌ Error: Branch input is empty!"
             exit 1
           fi
-          echo "✅ Input validated successfully."
 
-      - name: Show selected branch and environment
+      - name: Show selected inputs
         run: |
-          echo "🚀 Deploying from branch: ${{ matrix.branch }}"
-          echo "🌍 Target environment: ${{ matrix.environment }}"
-
-      - name: Generate Deployment Summary
-        run: |
-          echo "### 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
-          echo "**Branch:** \`${{ matrix.branch }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Environment:** \`${{ matrix.environment }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Status:** ✅ Deployment Started" >> $GITHUB_STEP_SUMMARY
+          echo "🚀 Branch: ${{ github.event.inputs.branches }}"
+          echo "🌍 Environment: ${{ github.event.inputs.environment }}"
 
       - name: Checkout selected branch
         uses: actions/checkout@v3
         with:
-          ref: ${{ matrix.branch }}
+          ref: ${{ github.event.inputs.branches }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -63,19 +50,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Angular app
-        run: npm run build --configuration=${{ matrix.environment }}
+      - name: Build Angular App
+        run: npm run build --configuration=${{ github.event.inputs.environment }}
 
-      - name: Deploy to VPS via SCP
+      - name: Deploy via SCP
         uses: appleboy/scp-action@v0.1.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }} 
+          key: ${{ secrets.SERVER_SSH_KEY }}
           source: "dist/**"
-          target: "/var/www/html/${{ matrix.environment }}"
+          target: "/var/www/html/${{ github.event.inputs.environment }}"
 
-      - name: Restart Nginx (optional)
+      - name: Restart Nginx
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SERVER_HOST }}
