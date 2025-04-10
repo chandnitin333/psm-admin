@@ -26,10 +26,18 @@ jobs:
 
     strategy:
       matrix:
-        branch: ${{ fromJSON('["main", "dev", "feature/login"]') }} # Converts user input into a matrix dynamically
-        environment: [development, staging, production] # Runs for all environments
+        branch: ${{ fromJSON('["main","dev","feature/login"]') }} # Dynamically parses user input
+        environment: [development, staging, production] # Runs across all environments
 
     steps:
+      - name: Validate Input
+        run: |
+          if [[ -z "${{ github.event.inputs.branches }}" ]]; then
+            echo "❌ Error: Branch input is empty!"
+            exit 1
+          fi
+          echo "✅ Input validated successfully."
+
       - name: Show selected branch and environment
         run: |
           echo "🚀 Deploying from branch: ${{ matrix.branch }}"
@@ -63,7 +71,7 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }} # ✅ Fixed this: Using key for authentication
+          key: ${{ secrets.SERVER_SSH_KEY }} 
           source: "dist/**"
           target: "/var/www/html/${{ matrix.environment }}"
 
@@ -72,6 +80,6 @@ jobs:
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }} # ✅ Fixed this: Using key for authentication
+          key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             sudo systemctl restart nginx
