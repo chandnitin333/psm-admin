@@ -3,11 +3,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { ITEM_PER_PAGE } from '../../../constants/admin.constant';
 import { ConfirmationDialogModule } from '../../../module/confirmation-dialog/confirmation-dialog.module';
 import { GatGramPanchayatService } from '../../../services/gat-gram-panchayat.service';
 import { GramPanchayatService } from '../../../services/gram-panchayat.service';
 import { OtherTaxService } from '../../../services/other-tax.service';
 import { TalukaService } from '../../../services/taluka.service';
+import { UsersService } from '../../../services/users.service';
 import Util from '../../../utils/utils';
 import { PaginationComponent } from '../../pagination/pagination.component';
 import { SkeletonLoaderComponent } from '../../skeleton-loader/skeleton-loader.component';
@@ -35,6 +37,27 @@ export class OthertaxComponent {
     currentPage: number = 1;
     taxList: any = [];
 
+    userDistrict: any = [];
+    selectedDistrict: any;
+    collapsedDistricts: { [district: string]: boolean } = {};
+    searchValue: string = '';
+    taxDistrictList: any = [];
+    items: any = [];
+    totalItems: number = 0;
+    itemsPerPage: number = ITEM_PER_PAGE
+    displayedColumns: any = [
+        { key: 'sr_no', label: 'अनुक्रमांक' },
+        { key: 'DISTRICT_NAME', label: 'जिल्हा1' },
+        { key: 'TALUKA_NAME', label: 'तालुका' },
+        { key: 'PANCHAYAT_NAME', label: 'ग्राम पंचायत' },
+        { key: 'GATGRAMPANCHAYAT_NAME', label: 'गट ग्राम पंचायत' },
+        { key: 'NAME', label: 'नाव' },
+        { key: 'USERNAME', label: 'युजरनेम' },
+        { key: 'pwd', label: 'पासवर्ड' },
+
+    ];
+
+    keyName: string = 'CREATEOTHERTAX_ID';
     taxtNameList: any = []
     taxtNameSet: any;
     isManula: boolean = true
@@ -65,6 +88,7 @@ export class OthertaxComponent {
 
     };
     isEdit: boolean = false;
+
     otherTaxFrm = new FormGroup({
         district_id: new FormControl<string | null>(null, Validators.required),
         panchayat_id: new FormControl<string | null>(null, Validators.required),
@@ -82,16 +106,24 @@ export class OthertaxComponent {
         taxrate5: new FormControl<number | string>('')
     })
     isSubmitted: boolean = false;
-    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder, private toastr: ToastrService) {
+    constructor(private titleService: Title, private taluka: TalukaService, private util: Util, private gramPanchayt: GramPanchayatService, private gatGramPanchayatService: GatGramPanchayatService, private otherTax: OtherTaxService, private fb: FormBuilder, private toastr: ToastrService, private user: UsersService,) {
 
     }
     ngOnInit(): void {
         this.titleService.setTitle('Other Tax');
         this.getDistrictList();
+        this.getUserDistrict();
         this.getTaxList();
-        console.log("this.taxData====-", this.taxData)
+        // console.log("this.taxData====-", this.taxData)
     }
 
+    getUserDistrict() {
+        this.user.getUserDistrict({ "user_type": "other_tax" }).subscribe((res: any) => {
+            this.userDistrict = res?.data ?? [];
+            // console.log("userDistrict", this.userDistrict)
+
+        })
+    }
     ngAfterViewInit(): void {
         $('.my-select2').select2();
 
@@ -141,10 +173,12 @@ export class OthertaxComponent {
                         tax_name: element['OTHERTAX_NAME'] ?? '',
                         isChecked: false
                     };
+                    // console.log("data", data)
 
                     if (!this.taxtNameSet.has(data.id)) {
                         this.taxtNameList.push(data);
                         this.taxtNameSet.add(data.id); // Add ID to the Set
+
                     }
 
                 }
@@ -153,7 +187,7 @@ export class OthertaxComponent {
 
             });
 
-            console.log("First taxtNameList ====", this.taxtNameList)
+            // console.log("First taxtNameList ====", this.taxtNameList)
 
         })
 
@@ -166,7 +200,7 @@ export class OthertaxComponent {
             this.otherTaxList = res?.data ?? [];
             console.log("otherTaxList====  ", this.otherTaxList)
 
-            
+
             if (this.otherTaxList.length == 0) {
                 this.isManula = false;
                 this.taxData = this.taxDataFormate;
@@ -205,7 +239,7 @@ export class OthertaxComponent {
                 }
                 // const data1 = this.taxtNameList.sort((a: any, b: any) => Number(a.id) - Number(b.id));
                 // this.taxtNameList = data1
-                console.log("taxtNameList===", this.taxtNameList)
+                // console.log("taxtNameList===", this.taxtNameList)
                 this.isEdit = true
             }
         });
@@ -268,7 +302,7 @@ export class OthertaxComponent {
 
     changeTaxById(event: KeyboardEvent): void {
         const content = (event.target as HTMLElement).innerText;
-        console.log('Contenteditable value:', content);
+        // console.log('Contenteditable value:', content);
     }
 
     submit() {
@@ -290,7 +324,7 @@ export class OthertaxComponent {
             },
             error: (err: any) => {
                 this.toastr.error('Failed to Add Other tax', 'Error');
-                console.log("error:  Other Tax ::", err);
+                // console.log("error:  Other Tax ::", err);
                 this.isSubmitted = false;
             }
 
@@ -304,7 +338,7 @@ export class OthertaxComponent {
             return;
         }
         const data = this.otherTaxFrm.value;
-        console.log("from data", data)
+        // console.log("from data", data)
         this.otherTax.updateOtherTax(data).subscribe({
             next: (res: any) => {
                 if (res.status == 200) {
@@ -318,7 +352,7 @@ export class OthertaxComponent {
             },
             error: (err: any) => {
                 this.toastr.error('Failed to Add Other tax', 'Error');
-                console.log("error:  Other Tax ::", err);
+                // console.log("error:  Other Tax ::", err);
                 this.isSubmitted = false;
             }
 
@@ -331,5 +365,124 @@ export class OthertaxComponent {
         $('#taluka').val('').trigger('change');
         $('#gramPanchayat').val('').trigger('change');
         this.getTaxList();
+    }
+    toggleCollapse(district: string, talika: number, panachayt: number) {
+       
+        // console.log("district", district ,"talika", talika,"panachayt", panachayt)
+        if (this.selectedDistrict != district) {
+            this.collapsedDistricts[district+''+talika+''+panachayt] = !this.collapsedDistricts[district+''+talika+''+panachayt];
+            this.currentPage = 1;
+            this.selectedDistrict = district;
+            this.getDistrictWiseList(district, talika, panachayt);
+        } else {
+
+            this.collapsedDistricts[district+''+talika+''+panachayt] = !this.collapsedDistricts[district+''+talika+''+panachayt];
+        }
+        // this.getDistrictWiseList(district);
+        // console.log("collapsedDistricts==", this.collapsedDistricts)
+    }
+    getDistrictWiseList(districtId: any, talika_id: number, panchayat_id: number) {
+        //  console.log("districtId==", {
+        //         "page_number": this.currentPage,
+        //         "search_text": this.searchValue,
+        //         "district_id": districtId,
+        //         "talika_id": talika_id,
+        //         "panchayat_id": panchayat_id
+        //     })
+        this.setValueToggle(districtId+''+talika_id+''+panchayat_id);
+        try {
+            this.otherTax.fetchOtherTaxListbyDistrict({
+                "page_number": this.currentPage,
+                "search_text": this.searchValue,
+                "district_id": districtId,
+                "talika_id": talika_id,
+                "panchayat_id": panchayat_id
+            }).subscribe((res: any) => {
+                this.taxDistrictList = res?.data[0] ?? [];
+                this.items = res.data ?? [];
+                this.totalItems = res.totalRecords ?? 0;
+
+            })
+        } catch (error) {
+            console.log("getUserList:: error :: ", error)
+        }
+
+    }
+
+    onPageChange(page: number) {
+        this.currentPage = page;
+        this.getTaxList();
+    }
+    setValueToggle(district: string) {
+
+        for (const key in this.collapsedDistricts) {
+
+            if (key.toString() == district) {
+                this.collapsedDistricts[key] = true;
+
+            } else {
+                this.collapsedDistricts[key] = false;
+            }
+        }
+
+    }
+
+    editTax(ele:any){
+        // console.log("Here taxDistrictList==", ele)
+
+        const param = {
+            "taxrate1" : ele.taxDistrictList.TAXRATE1,
+            "taxrate2" : ele.taxDistrictList.TAXRATE2,
+            "taxrate3" : ele.taxDistrictList.TAXRATE3,
+            "taxrate4" : ele.taxDistrictList.TAXRATE4,
+            "taxrate5" : ele.taxDistrictList.TAXRATE5,
+            "othertax_id": ele.taxDistrictList.CREATEOTHERTAX_ID 
+
+        }
+        
+        const data = param;
+        // console.log("from data", data)
+        this.otherTax.updateOtherTaxNew(data).subscribe({
+            next: (res: any) => {
+                if (res.status == 200) {
+
+                    this.toastr.success(res?.message, 'Success');
+                    this.reset();
+                    this.isSubmitted = false;
+                } else {
+                    this.toastr.success(res?.message, 'Error');
+                }
+            },
+            error: (err: any) => {
+                this.toastr.error('Failed to Add Other tax', 'Error');
+                // console.log("error:  Other Tax ::", err);
+                this.isSubmitted = false;
+            }
+
+        });
+    }
+    deleteTax(ele:any){
+        // console.log("Here==", ele)
+        const id = ele.taxDistrictList.CREATEOTHERTAX_ID;
+        this.util.showConfirmAlert().then((res) => {
+			if (res) {
+				if (id === 0) {
+					this.toastr.error('This other tax cannot be deleted.', 'Error');
+					return;
+				}
+				this.otherTax.deleteOtherTax(id).subscribe({
+					next: () => {
+						this.toastr.success('Other tax has been successfully deleted.', 'Success');
+						this.getUserDistrict();
+
+					},
+					error: (err: Error) => {
+						console.error('Error deleting other tax:', err);
+						this.toastr.error('There was an error deleting the other tax.', 'Error');
+
+					}
+				});
+			}
+        });
     }
 }
