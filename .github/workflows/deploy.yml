@@ -64,7 +64,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app
-        run: npm run build --configuration=${{ matrix.environment }}
+        run: ng build --configuration=production --aot
 
       - name: Deploy to VPS via SCP
         uses: appleboy/scp-action@v0.1.3
