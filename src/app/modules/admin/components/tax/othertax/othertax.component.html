@@ -162,25 +162,25 @@
                             class=" font-weight-bold ml-2 ">ग्रामपंचायत</span>
                     </div>
                 </div>
-                <div *ngFor="let ele of userDistrict" class="m-0 row m-1 ml-2 border p-2">
+                <div *ngFor="let districtEle of userDistrict" class="m-0 row m-1 ml-2 border p-2">
                     <div class="row mt-0">
                         <div class="col-4  p-1"
-                            (click)="toggleCollapse(ele?.DISTRICT_ID,ele?.TALUKA_ID,ele.PANCHAYAT_ID)">
+                            (click)="toggleCollapse(districtEle?.DISTRICT_ID,districtEle?.TALUKA_ID,districtEle.PANCHAYAT_ID)">
                             <i class=" toggle-nested "
-                                [ngClass]="collapsedDistricts[ele.DISTRICT_ID+''+ele?.TALUKA_ID+''+ele.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
+                                [ngClass]="collapsedDistricts[districtEle.DISTRICT_ID+''+districtEle?.TALUKA_ID+''+districtEle.PANCHAYAT_ID] ? 'mdi mdi-minus-circle' : 'mdi mdi-plus-circle' "></i>
                             <span class="text-dark font-weight-bold ml-2 ">{{
-                                ele?.DISTRICT_NAME }}</span>
+                                districtEle?.DISTRICT_NAME }}</span>
 
                         </div>
                         <div class="col-4  p-1"> <span class="text-dark font-weight-bold ml-2 ">{{
-                                ele?.TALUKA_NAME
+                                districtEle?.TALUKA_NAME
                                 }}</span></div>
                         <div class="col-4  p-1"> <span class="text-dark font-weight-bold ml-2 ">{{
-                                ele?.PANCHAYAT_NAME
+                                districtEle?.PANCHAYAT_NAME
                                 }}</span></div>
 
                     </div>
-                    <div *ngIf="collapsedDistricts[ele.DISTRICT_ID+''+ ele.TALUKA_ID+''+ele.PANCHAYAT_ID]"
+                    <div *ngIf="collapsedDistricts[districtEle.DISTRICT_ID+''+ districtEle.TALUKA_ID+''+districtEle.PANCHAYAT_ID]"
                         class="mt-0 mb-2">
 
                         <div class=" mt-0">
@@ -201,8 +201,9 @@
 
                                         <td class="text-center">
                                             <div class="form-check d-inline-block">
-                                                <input class="form-check-input" type="checkbox" value id="{{ele.id}}"
-                                                    [checked]="ele.isChecked" (click)="toggleChecktax($event,ele)">
+                                                <input class="form-check-input" type="checkbox" value id="district_{{districtEle.DISTRICT_ID}}_{{districtEle.TALUKA_ID}}_{{districtEle.PANCHAYAT_ID}}_{{ele.id}}"
+                                                    [checked]="getDistrictTableCheckboxState(ele.id, districtEle.DISTRICT_ID, districtEle.TALUKA_ID, districtEle.PANCHAYAT_ID)"
+                                                    (click)="toggleDistrictTableCheckbox($event, ele.id, districtEle.DISTRICT_ID, districtEle.TALUKA_ID, districtEle.PANCHAYAT_ID)">
                                             </div>
                                         </td>
                                         <td>{{ele.tax_name}}</td>
@@ -210,13 +211,13 @@
                                         <td style="padding: 0px;">
                                             <input type="hidden" [attr.name]="'TAXID' + (i + 1)"
                                                 [(ngModel)]="taxDistrictList['TAXID' + (i + 1)]" value="{{ele.id}}" />
-                                            <input *ngIf="ele.isChecked" type="text" class="form-control"
+                                            <input *ngIf="getDistrictTableCheckboxState(ele.id, districtEle.DISTRICT_ID, districtEle.TALUKA_ID, districtEle.PANCHAYAT_ID)" type="text" class="form-control"
                                                 [attr.name]="'TAXRATE' + (i + 1)"
                                                 [(ngModel)]="taxDistrictList['TAXRATE' + (i + 1)]" [attr.id]="ele.id"
                                                 [value]="ele.tax_rate" (input)="restrictText($event,ele,i)"
                                                 style="margin: 0px; height: 55px; font-weight: 600; border: none" />
 
-                                            <span *ngIf="!ele.isChecked"
+                                            <span *ngIf="!getDistrictTableCheckboxState(ele.id, districtEle.DISTRICT_ID, districtEle.TALUKA_ID, districtEle.PANCHAYAT_ID)"
                                                 style="display: block;  margin-top: 20px; margin-left: 12px; height: 39px; ">{{
                                                 ele.tax_rate || 0
                                                 }} </span>

@@ -88,6 +88,7 @@ export class OthertaxComponent {
 
     };
     isEdit: boolean = false;
+    districtTableCheckboxState: { [key: string]: boolean } = {};
 
     otherTaxFrm = new FormGroup({
         district_id: new FormControl<string | null>(null, Validators.required),
@@ -272,13 +273,24 @@ export class OthertaxComponent {
     }
 
     toggleChecktax(event: Event, data: any) {
-
         const isChecked = (event.target as HTMLInputElement).checked;
         const tax = this.taxtNameList.find((el: any) => el.id === data?.id);
         if (tax) {
             tax.isChecked = isChecked;
         }
     }
+
+    toggleDistrictTableCheckbox(event: Event, taxId: any, districtId: any, talukaId: any, panchayatId: any) {
+        const isChecked = (event.target as HTMLInputElement).checked;
+        const uniqueKey = `${districtId}_${talukaId}_${panchayatId}_${taxId}`;
+        this.districtTableCheckboxState[uniqueKey] = isChecked;
+    }
+
+    getDistrictTableCheckboxState(taxId: any, districtId: any, talukaId: any, panchayatId: any): boolean {
+        const uniqueKey = `${districtId}_${talukaId}_${panchayatId}_${taxId}`;
+        return this.districtTableCheckboxState[uniqueKey] || false;
+    }
+
     restrictText(event: Event, ele: any, i: number): void {
         const element = event.target as HTMLInputElement;
         element.value = element.value.replace(/[^0-9n.]/g, '');
@@ -364,6 +376,7 @@ export class OthertaxComponent {
         $('#mySelect').val('').trigger('change');
         $('#taluka').val('').trigger('change');
         $('#gramPanchayat').val('').trigger('change');
+        this.districtTableCheckboxState = {};
         this.getTaxList();
     }
     toggleCollapse(district: string, talika: number, panachayt: number) {
