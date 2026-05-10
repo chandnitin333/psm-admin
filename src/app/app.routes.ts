@@ -14,7 +14,7 @@ export const routes: Routes = [
         path: 'admin',
         canActivate: [authGuard],
         loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule)
-    }, // part of lazy loading 
+    }, // part of lazy loading
     { path: '**', component: NotFoundComponent, pathMatch: 'full' }
 
 
