@@ -12,12 +12,12 @@ export class GramPanchayatService {
     return this.api.post(`taluka-list-by-district-id`, params);
   }
 
-  createGramPanchayat(params: any) {
-    return this.api.post(`gram-panchayat`, params);
+  createGramPanchayat(params: FormData) {
+    return this.api.postFormData(`gram-panchayat`, params);
   }
 
-  updateGramPanchayat(params: any) {
-    return this.api.put(`update-gram-panchayat`, params);
+  updateGramPanchayat(params: FormData) {
+    return this.api.putFormData(`update-gram-panchayat`, params);
   }
 
   deleteGramPanchayat(id: any) {

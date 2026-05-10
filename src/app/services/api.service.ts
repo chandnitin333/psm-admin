@@ -6,6 +6,9 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class ApiService {
   private baseUrl: string = 'http://103.102.234.151:4444/api/admin';
+  // private baseUrl: string = 'http://localhost:4444/api/admin';
+  public file_baseUrl: string = 'http://103.102.234.151:4444/uploads/';
+  // public file_baseUrl: string = 'http://localhost:4444/uploads/';
   constructor(private http: HttpClient) { }
 
 
@@ -19,13 +22,17 @@ export class ApiService {
     return this.http.post<T>(`${this.baseUrl}/${endpoint}`, data);
   }
 
-  // postFormData<T>(endpoint: string, formData: any): Observable<T> {
-  //   return this.http.post<T>(`${this.baseUrl}/${endpoint}`, formData, {
-  //     headers: { 'Content-Type': 'multipart/form-data' }
-  //   }).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  postFormData<T>(endpoint: string, formData: FormData): Observable<T> {
+    const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+    return this.http.post<T>(`${this.baseUrl}/${endpoint}`, formData, { headers })
+      .pipe(catchError(this.handleError));
+  }
+
+  putFormData<T>(endpoint: string, formData: FormData): Observable<T> {
+    const headers = { Authorization: `Bearer ${localStorage.getItem('token')}` };
+    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, formData, { headers })
+      .pipe(catchError(this.handleError));
+  }
 
   // PUT request
   put<T>(endpoint: string, data: any): Observable<T> {

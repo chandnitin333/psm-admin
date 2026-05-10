@@ -7,14 +7,16 @@ import { catchError } from 'rxjs/operators';
 export class HttpHeaderInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-   
+
     let token = localStorage.getItem('token');
-    const modifiedReq = req.clone({
-      setHeaders: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
+    const isFormData = req.body instanceof FormData;
+    const headers: Record<string, string> = {
+      'Authorization': `Bearer ${token}`
+    };
+    if (!isFormData) {
+      headers['Content-Type'] = 'application/json';
+    }
+    const modifiedReq = req.clone({ setHeaders: headers });
   
     return next.handle(modifiedReq).pipe(
       catchError((error: HttpErrorResponse) => {
