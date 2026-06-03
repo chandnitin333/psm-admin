@@ -23,7 +23,24 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         districtName: new FormControl<string | null>(null),
         talukaName: new FormControl<string | null>(null),
         gramPanchayatName: new FormControl<string | null>(null),
+        // घरकर bank details
+        ghar_bank_name: new FormControl<string | null>(null),
+        ghar_ifsc: new FormControl<string | null>(null),
+        ghar_account_no: new FormControl<string | null>(null),
+        ghar_account_holder: new FormControl<string | null>(null),
+        ghar_upi_id: new FormControl<string | null>(null),
+        // पाणी कर bank details
+        pani_bank_name: new FormControl<string | null>(null),
+        pani_ifsc: new FormControl<string | null>(null),
+        pani_account_no: new FormControl<string | null>(null),
+        pani_account_holder: new FormControl<string | null>(null),
+        pani_upi_id: new FormControl<string | null>(null),
     });
+
+    bankFieldKeys: string[] = [
+        'ghar_bank_name', 'ghar_ifsc', 'ghar_account_no', 'ghar_account_holder', 'ghar_upi_id',
+        'pani_bank_name', 'pani_ifsc', 'pani_account_no', 'pani_account_holder', 'pani_upi_id',
+    ];
     errorMessage: string | null = null;
     errorButton: boolean = true;
 
@@ -119,6 +136,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
             if (this.paniTaxScannerFile) {
                 formData.set('pani_tax_scanner', this.paniTaxScannerFile, this.paniTaxScannerFile.name);
             }
+            this.appendBankFields(formData);
             this.gramPanchayt.createGramPanchayat(formData).subscribe((res: any) => {
                 if (res.status == 201) {
                     this.toastr.success(res.message, "Success");
@@ -156,6 +174,13 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     scannerUrl(filename: string): string {
         return this.apiService.file_baseUrl + filename;
+    }
+
+    private appendBankFields(formData: FormData): void {
+        for (const key of this.bankFieldKeys) {
+            const val = (this.gramFrom.value as any)[key];
+            formData.set(key, val != null ? String(val) : '');
+        }
     }
 
     onGharTaxScannerSelected(event: Event): void {
@@ -205,6 +230,19 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                     ? this.apiService.file_baseUrl + res.data.GHAR_TAX_SCANNER : '';
                 this.existingPaniTaxScannerUrl = res.data.PANI_TAX_SCANNER
                     ? this.apiService.file_baseUrl + res.data.PANI_TAX_SCANNER : '';
+                // Bank/UPI details
+                this.gramFrom.patchValue({
+                    ghar_bank_name: res.data.GHAR_BANK_NAME ?? null,
+                    ghar_ifsc: res.data.GHAR_IFSC ?? null,
+                    ghar_account_no: res.data.GHAR_ACCOUNT_NO ?? null,
+                    ghar_account_holder: res.data.GHAR_ACCOUNT_HOLDER ?? null,
+                    ghar_upi_id: res.data.GHAR_UPI_ID ?? null,
+                    pani_bank_name: res.data.PANI_BANK_NAME ?? null,
+                    pani_ifsc: res.data.PANI_IFSC ?? null,
+                    pani_account_no: res.data.PANI_ACCOUNT_NO ?? null,
+                    pani_account_holder: res.data.PANI_ACCOUNT_HOLDER ?? null,
+                    pani_upi_id: res.data.PANI_UPI_ID ?? null,
+                });
                 const gharInput = document.getElementById('ghar_tax_scanner') as HTMLInputElement | null;
                 if (gharInput) gharInput.value = '';
                 const paniInput = document.getElementById('pani_tax_scanner') as HTMLInputElement | null;
@@ -230,6 +268,7 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
             if (this.paniTaxScannerFile) {
                 formData.set('pani_tax_scanner', this.paniTaxScannerFile, this.paniTaxScannerFile.name);
             }
+            this.appendBankFields(formData);
             this.gramPanchayt.updateGramPanchayat(formData).subscribe({
                 next: (res: any) => {
                     if (res.status == 200) {

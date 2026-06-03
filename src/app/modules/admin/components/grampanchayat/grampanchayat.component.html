@@ -80,6 +80,58 @@
                     </div>
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-sm-6">
+                    <div class="bank-box">
+                        <h5 class="bank-title">घरकर बँक तपशील</h5>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">बँकेचे नाव</label>
+                            <input type="text" class="form-control" formControlName="ghar_bank_name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">IFSC कोड</label>
+                            <input type="text" class="form-control" formControlName="ghar_ifsc" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खाते क्रमांक</label>
+                            <input type="text" class="form-control" formControlName="ghar_account_no" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खातेधारकाचे नाव</label>
+                            <input type="text" class="form-control" formControlName="ghar_account_holder" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">UPI ID</label>
+                            <input type="text" class="form-control" formControlName="ghar_upi_id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="bank-box">
+                        <h5 class="bank-title">पाणी कर बँक तपशील</h5>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">बँकेचे नाव</label>
+                            <input type="text" class="form-control" formControlName="pani_bank_name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">IFSC कोड</label>
+                            <input type="text" class="form-control" formControlName="pani_ifsc" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खाते क्रमांक</label>
+                            <input type="text" class="form-control" formControlName="pani_account_no" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खातेधारकाचे नाव</label>
+                            <input type="text" class="form-control" formControlName="pani_account_holder" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">UPI ID</label>
+                            <input type="text" class="form-control" formControlName="pani_upi_id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="col-sm-12 text-center">
                     <button type="button" class="btn btn-pill btn-primary" title="Save" [disabled]="!errorButton"
