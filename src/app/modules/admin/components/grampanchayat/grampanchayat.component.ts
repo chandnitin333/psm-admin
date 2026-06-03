@@ -154,6 +154,10 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         if (paniInput) paniInput.value = '';
     }
 
+    scannerUrl(filename: string): string {
+        return this.apiService.file_baseUrl + filename;
+    }
+
     onGharTaxScannerSelected(event: Event): void {
         this.gharTaxScannerFile = this.readFile(event, (preview) => this.gharTaxScannerPreview = preview);
     }

@@ -112,10 +112,12 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
-                        <th style="width:10%">अनुक्रमांक</th>
-                        <th style="width:20%">जिल्हा</th>
-                        <th style="width:20%">तालुका</th>
-                        <th style="width:20%">ग्राम पंचायत</th>
+                        <th style="width:8%">अनुक्रमांक</th>
+                        <th style="width:16%">जिल्हा</th>
+                        <th style="width:16%">तालुका</th>
+                        <th style="width:18%">ग्राम पंचायत</th>
+                        <th style="width:11%">घर कर स्कॅनर</th>
+                        <th style="width:11%">पाणी कर स्कॅनर</th>
                         <th style="width:20%">क्रिया</th>
                     </tr>
                 </thead>
@@ -127,6 +129,22 @@
                         <td>{{item.DISTRICT_NAME}}</td>
                         <td>{{item.TALUKA_NAME}}</td>
                         <td>{{item.PANCHAYAT_NAME}}</td>
+                        <td class="text-center">
+                            <a *ngIf="item.GHAR_TAX_SCANNER" [href]="scannerUrl(item.GHAR_TAX_SCANNER)"
+                                target="_blank" title="मोठे पाहण्यासाठी क्लिक करा">
+                                <img [src]="scannerUrl(item.GHAR_TAX_SCANNER)" alt="घर कर स्कॅनर"
+                                    class="scanner-thumb" />
+                            </a>
+                            <span *ngIf="!item.GHAR_TAX_SCANNER" class="text-muted">—</span>
+                        </td>
+                        <td class="text-center">
+                            <a *ngIf="item.PANI_TAX_SCANNER" [href]="scannerUrl(item.PANI_TAX_SCANNER)"
+                                target="_blank" title="मोठे पाहण्यासाठी क्लिक करा">
+                                <img [src]="scannerUrl(item.PANI_TAX_SCANNER)" alt="पाणी कर स्कॅनर"
+                                    class="scanner-thumb" />
+                            </a>
+                            <span *ngIf="!item.PANI_TAX_SCANNER" class="text-muted">—</span>
+                        </td>
                         <td><button class="btn btn-sm btn-outline-success font-weight-bold"
                                 (click)="editInfo(item.PANCHAYAT_ID)"><i class="mdi mdi-square-edit-outline"></i>
                                 एडिट</button> &nbsp;<button href=""
