@@ -5,9 +5,9 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl: string = 'http://103.102.234.151:4444/api/admin';
+  private baseUrl: string = 'https://103.102.234.151:4444/api/admin';
   // private baseUrl: string = 'http://localhost:4444/api/admin';
-  public file_baseUrl: string = 'http://103.102.234.151:4444/uploads/';
+  public file_baseUrl: string = 'https://103.102.234.151:4444/uploads/';
   // public file_baseUrl: string = 'http://localhost:4444/uploads/';
   constructor(private http: HttpClient) { }
 
