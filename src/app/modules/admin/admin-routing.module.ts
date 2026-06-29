@@ -31,6 +31,7 @@ import { SachivimagesComponent } from './components/sachivimages/sachivimages.co
 import { AddnewsarpanchComponent } from './components/sarpanchimages/addnewsarpanch/addnewsarpanch.component';
 import { SarpanchimagesComponent } from './components/sarpanchimages/sarpanchimages.component';
 import { ServiceComponent } from './components/service/service.component';
+import { SutDandComponent } from './components/sutdand/sutdand.component';
 import { TalukaComponent } from './components/taluka/taluka.component';
 import { AnnualtaxComponent } from './components/tax/annualtax/annualtax.component';
 import { OthertaxComponent } from './components/tax/othertax/othertax.component';
@@ -67,6 +68,7 @@ const routes: Routes = [
       { path: 'karya-karani-kameti', component: KaryakaranikametiComponent },
       { path: 'kamkaj-kameti', component: KamkajkametiComponent },
       { path: 'new-kamkaj-kameti', component: AddnewkamkajkametiComponent },
+      { path: 'sut-dand', component: SutDandComponent },
       { path: 'upload-file', component: UploadfileComponent },
       { path: 'bdo', component: BdoComponent },
       { path: 'add-new-bdo', component: AddnewbdoComponent },

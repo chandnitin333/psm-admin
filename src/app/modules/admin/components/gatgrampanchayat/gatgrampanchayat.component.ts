@@ -19,7 +19,7 @@ import { SortingTableComponent } from '../sorting-table/sorting-table.component'
 })
 export class GatgrampanchayatComponent {
 	errorMessage: string | null = null;
-    errorButton: boolean = false;
+    errorButton: boolean = true;
 	isSubmitted: boolean = false;
 	currentPage: number = 1;
 	districts: any = [];
@@ -158,7 +158,7 @@ export class GatgrampanchayatComponent {
 		this.gramPanchayatList = [];
 		this.isEdit = false;
 		this.errorMessage = "";
-        this.errorButton = false;
+        this.errorButton = true;
 	}
 	fetchGatGramPanchayatData() {
 		this.gatGramPanchayatService.getGatGramPanchayatList({ page_number: this.currentPage, search_text: this.searchValue }).subscribe({
@@ -323,11 +323,11 @@ export class GatgrampanchayatComponent {
     {
         let status = this.util.validateStringWithSpaces(event.target.value);
         if(await status){
-            this.errorMessage = "Please enter string only";
-            this.errorButton = false;
+            // this.errorMessage = "Please enter string only";
+            this.errorButton = true;
         }  else if(event.target.value == ""){
-			this.errorButton = false;
-            this.errorMessage = "This field must be required";
+			this.errorButton = true;
+            // this.errorMessage = "This field must be required";
 		} else {
             this.errorButton = true;
             this.errorMessage = "";

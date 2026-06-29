@@ -12,10 +12,12 @@
             <li class="tab-link" data-tab="tab-4" (click)="activeTab(4)" [ngClass]="{'active': selectedTabInd === 4}">
                 वसुली
                 यूजर जोडा</li>
+            <li class="tab-link" data-tab="tab-4" (click)="activeTab(5)" [ngClass]="{'active': selectedTabInd === 5}">
+                नवीन यूजर एडिट जोडा</li>
 
         </ul>
         <div id="tab-1" class="tab-content  bg-white"
-            [ngClass]="{'active-tab': (selectedTabInd === 1 ||selectedTabInd === 2 || selectedTabInd === 3 || selectedTabInd === 4 )}">
+            [ngClass]="{'active-tab': (selectedTabInd === 1 ||selectedTabInd === 2 || selectedTabInd === 3 || selectedTabInd === 4 || selectedTabInd === 5 )}">
             <div class="card card-default">
                 <div class="card-header card-header-nk">
                     <h2 class="card-header-label"><strong>{{tabTitle}}</strong></h2>

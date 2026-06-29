@@ -1,0 +1,155 @@
+<div class="card card-default">
+    <div class="card-header card-header-nk">
+        <h2 class="card-header-label"><strong>सूट दंड</strong></h2>
+    </div>
+    <div class="px-6 py-4">
+        <form [formGroup]="sutDandForm">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">जिल्हा</label>
+                    <div class="form-group">
+                        <select id="district_id" class="form-control my-select2" formControlName="district_id">
+                            <option value="">-- जिल्हा निवडा --</option>
+                            <option *ngFor="let d of districts" [value]="d.DISTRICT_ID">{{ d.DISTRICT_NAME }}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !sutDandForm.value.district_id">जिल्हा आवश्यक आहे</span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">तालुका</label>
+                    <div class="form-group">
+                        <select id="taluka_id" class="form-control my-select2" formControlName="taluka_id">
+                            <option value="">-- तालुका निवडा --</option>
+                            <option *ngFor="let t of talukas" [value]="t.TALUKA_ID">{{ t.TALUKA_NAME }}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !sutDandForm.value.taluka_id">तालुका आवश्यक आहे</span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
+                    <div class="form-group">
+                        <select id="grampanchayat_id" class="form-control my-select2" formControlName="grampanchayat_id">
+                            <option value="">-- ग्राम पंचायत निवडा --</option>
+                            <option *ngFor="let p of panchayats" [value]="p.PANCHAYAT_ID">{{ p.PANCHAYAT_NAME }}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !sutDandForm.value.grampanchayat_id">ग्राम पंचायत आवश्यक आहे</span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <label class="text-dark font-weight-medium">कर प्रकार</label>
+                    <div class="form-group">
+                        <select id="kar_type" class="form-control my-select2" formControlName="kar_type">
+                            <option value="">-- निवडा --</option>
+                            <option *ngFor="let k of karTypes" [value]="k.value">{{ k.label }}</option>
+                        </select>
+                        <span class="text-danger" *ngIf="isSubmitted && !sutDandForm.value.kar_type">कर प्रकार आवश्यक आहे</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-sm-12">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width:60%">कर</th>
+                                <th>5% सूट / दंड</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let f of taxFields">
+                                <td>{{ f.label }}</td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" [formControlName]="f.field"
+                                        placeholder="0.00" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-sm-12 text-center">
+                    <button type="button" class="btn btn-pill btn-primary" (click)="submit()">
+                        <strong>{{ isEdit ? 'बदल करा' : 'जतन करा' }}</strong>
+                    </button>
+                    <button type="button" class="btn btn-pill btn-info ml-2" (click)="reset()">
+                        <strong>रीसेट करा</strong>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card card-default">
+    <div class="card-body">
+        <div class="col-md-4" id="input-group-search">
+            <div class="input-group">
+                <input type="text" autocomplete="off" class="form-control" placeholder="Search..."
+                    (input)="currentPage = 1; fetchData()" [(ngModel)]="searchValue"
+                    [ngModelOptions]="{ standalone: true }" />
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"
+                        (click)="searchValue = ''; fetchData()"><i class="mdi mdi-close"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width:5%">अनु.</th>
+                        <th>जिल्हा</th>
+                        <th>तालुका</th>
+                        <th>ग्राम पंचायत</th>
+                        <th>कर प्रकार</th>
+                        <th>गृहकर</th>
+                        <th>विज</th>
+                        <th>आरोग्य</th>
+                        <th>सफाई</th>
+                        <th>सामान्य पाणी</th>
+                        <th>विशेष पाणी</th>
+                        <th style="width:14%">क्रिया</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of items; let i = index">
+                        <td>{{ srNo(i) }}</td>
+                        <td>{{ item.DISTRICT_NAME }}</td>
+                        <td>{{ item.TALUKA_NAME }}</td>
+                        <td>{{ item.PANCHAYAT_NAME }}</td>
+                        <td>{{ karTypeLabel(item.kar_type) }}</td>
+                        <td>{{ item.gruhkar_v_bhumikar_5 }}</td>
+                        <td>{{ item.viz_v_divabatti_kar_5 }}</td>
+                        <td>{{ item.aarogya_rakshan_kar_5 }}</td>
+                        <td>{{ item.safae_kar_5 }}</td>
+                        <td>{{ item.samanya_pani_kar_5 }}</td>
+                        <td>{{ item.vishesh_pani_kar_5 }}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-success font-weight-bold" (click)="edit(item.id)">
+                                <i class="mdi mdi-square-edit-outline"></i> एडिट
+                            </button>
+                            &nbsp;
+                            <button class="btn btn-sm btn-outline-danger font-weight-bold" (click)="deleteItem(item.id)">
+                                <i class="mdi mdi-trash-can-outline"></i> डिलीट
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="items.length === 0">
+                        <td colspan="12" class="text-center">कोणतीही नोंद आढळली नाही</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="float-left font-weight-bold mt-1">
+                <span class="font-weight-bold">Total Records: </span>{{ totalItems }}
+            </div>
+        </div>
+        <br />
+        <app-pagination class="float-right" [totalItems]="totalItems" [itemsPerPage]="itemsPerPage"
+            (pageChange)="onPageChange($event)"></app-pagination>
+    </div>
+</div>

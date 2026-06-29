@@ -25,3 +25,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+docker build -t psm
+
+docker run -p 3001:80 psm
+
+docker build -t angular-app .
+
+docker run -d -p 8080:80 angular-app
+docker run -d -p 4001:80 angular-app

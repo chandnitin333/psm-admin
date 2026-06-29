@@ -9,7 +9,7 @@
     <div class="px-6 py-4">
         <form [formGroup]="gramFrom">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">जिल्हा</label>
                     <div class="form-group">
                         <select formControlName="district_id" name="selectedOption" id="mySelect"
@@ -23,7 +23,7 @@
                             district</span>
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">तालुका</label>
                     <div class="form-group">
                         <select class="js-example-basic-multiple1 form-control   my-select2" name="taluka" id="taluka"
@@ -35,7 +35,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <label class="text-dark font-weight-medium">ग्राम पंचायत</label>
                     <div class="form-group">
                         <input type="text" class="form-control" id="gramPanchayat" name="gramPanchayat"
@@ -45,15 +45,99 @@
                         <div *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</div>
                     </div>
                 </div>
-
-                <div class="col-sm-5">
-                    <div class="form-group mt-6">
-                        <button type="button" class="btn btn-pill btn-primary" title="Save" [disabled]="!errorButton"
-                            (click)="(!isEdit)  ? addGramPanyachayt() : updateGramPanchayat()"><strong>{{(isEdit) ? "बदल
-                                करा" : "जतन करा"}}</strong></button>
-                        <button type="button" class="btn btn-pill btn-info ml-1" title="Update"
-                            (click)="reset()"><strong>रीसेट करा</strong></button>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">घर कर स्कॅनर</label>
+                    <div class="form-group">
+                        <input type="file" id="ghar_tax_scanner" name="ghar_tax_scanner" accept="image/*"
+                            class="form-control" (change)="onGharTaxScannerSelected($event)" />
                     </div>
+                    <div *ngIf="gharTaxScannerPreview" class="mt-2">
+                        <img [src]="gharTaxScannerPreview" alt="Ghar Tax Scanner Preview"
+                            style="max-width:200px; max-height:200px; border:1px solid #ccc; border-radius:4px;" />
+                    </div>
+                    <div *ngIf="!gharTaxScannerPreview && existingGharTaxScannerUrl" class="mt-2">
+                        <small class="text-muted d-block">सद्य प्रतिमा</small>
+                        <img [src]="existingGharTaxScannerUrl" alt="Current Ghar Tax Scanner"
+                            style="max-width:200px; max-height:200px; border:1px solid #ccc; border-radius:4px;" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="text-dark font-weight-medium">पाणी कर स्कॅनर</label>
+                    <div class="form-group">
+                        <input type="file" id="pani_tax_scanner" name="pani_tax_scanner" accept="image/*"
+                            class="form-control" (change)="onPaniTaxScannerSelected($event)" />
+                    </div>
+                    <div *ngIf="paniTaxScannerPreview" class="mt-2">
+                        <img [src]="paniTaxScannerPreview" alt="Pani Tax Scanner Preview"
+                            style="max-width:200px; max-height:200px; border:1px solid #ccc; border-radius:4px;" />
+                    </div>
+                    <div *ngIf="!paniTaxScannerPreview && existingPaniTaxScannerUrl" class="mt-2">
+                        <small class="text-muted d-block">सद्य प्रतिमा</small>
+                        <img [src]="existingPaniTaxScannerUrl" alt="Current Pani Tax Scanner"
+                            style="max-width:200px; max-height:200px; border:1px solid #ccc; border-radius:4px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-6">
+                    <div class="bank-box">
+                        <h5 class="bank-title">घरकर बँक तपशील</h5>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">बँकेचे नाव</label>
+                            <input type="text" class="form-control" formControlName="ghar_bank_name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">IFSC कोड</label>
+                            <input type="text" class="form-control" formControlName="ghar_ifsc" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खाते क्रमांक</label>
+                            <input type="text" class="form-control" formControlName="ghar_account_no" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खातेधारकाचे नाव</label>
+                            <input type="text" class="form-control" formControlName="ghar_account_holder" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">UPI ID</label>
+                            <input type="text" class="form-control" formControlName="ghar_upi_id" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="bank-box">
+                        <h5 class="bank-title">पाणी कर बँक तपशील</h5>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">बँकेचे नाव</label>
+                            <input type="text" class="form-control" formControlName="pani_bank_name" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">IFSC कोड</label>
+                            <input type="text" class="form-control" formControlName="pani_ifsc" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खाते क्रमांक</label>
+                            <input type="text" class="form-control" formControlName="pani_account_no" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">खातेधारकाचे नाव</label>
+                            <input type="text" class="form-control" formControlName="pani_account_holder" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-dark font-weight-medium">UPI ID</label>
+                            <input type="text" class="form-control" formControlName="pani_upi_id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-12 text-center">
+                    <button type="button" class="btn btn-pill btn-primary" title="Save" [disabled]="!errorButton"
+                        (click)="(!isEdit) ? addGramPanyachayt() : updateGramPanchayat()"><strong>{{(isEdit) ? "बदल करा" : "जतन करा"}}</strong></button>
+                    <button type="button" class="btn btn-pill btn-info ml-2" title="Reset"
+                        (click)="reset()"><strong>रीसेट करा</strong></button>
                 </div>
             </div>
         </form>
@@ -80,10 +164,12 @@
             <table class="table table-bordered">
                 <thead class="thead-light">
                     <tr>
-                        <th style="width:10%">अनुक्रमांक</th>
-                        <th style="width:20%">जिल्हा</th>
-                        <th style="width:20%">तालुका</th>
-                        <th style="width:20%">ग्राम पंचायत</th>
+                        <th style="width:8%">अनुक्रमांक</th>
+                        <th style="width:16%">जिल्हा</th>
+                        <th style="width:16%">तालुका</th>
+                        <th style="width:18%">ग्राम पंचायत</th>
+                        <th style="width:11%">घर कर स्कॅनर</th>
+                        <th style="width:11%">पाणी कर स्कॅनर</th>
                         <th style="width:20%">क्रिया</th>
                     </tr>
                 </thead>
@@ -95,6 +181,22 @@
                         <td>{{item.DISTRICT_NAME}}</td>
                         <td>{{item.TALUKA_NAME}}</td>
                         <td>{{item.PANCHAYAT_NAME}}</td>
+                        <td class="text-center">
+                            <a *ngIf="item.GHAR_TAX_SCANNER" [href]="scannerUrl(item.GHAR_TAX_SCANNER)"
+                                target="_blank" title="मोठे पाहण्यासाठी क्लिक करा">
+                                <img [src]="scannerUrl(item.GHAR_TAX_SCANNER)" alt="घर कर स्कॅनर"
+                                    class="scanner-thumb" />
+                            </a>
+                            <span *ngIf="!item.GHAR_TAX_SCANNER" class="text-muted">—</span>
+                        </td>
+                        <td class="text-center">
+                            <a *ngIf="item.PANI_TAX_SCANNER" [href]="scannerUrl(item.PANI_TAX_SCANNER)"
+                                target="_blank" title="मोठे पाहण्यासाठी क्लिक करा">
+                                <img [src]="scannerUrl(item.PANI_TAX_SCANNER)" alt="पाणी कर स्कॅनर"
+                                    class="scanner-thumb" />
+                            </a>
+                            <span *ngIf="!item.PANI_TAX_SCANNER" class="text-muted">—</span>
+                        </td>
                         <td><button class="btn btn-sm btn-outline-success font-weight-bold"
                                 (click)="editInfo(item.PANCHAYAT_ID)"><i class="mdi mdi-square-edit-outline"></i>
                                 एडिट</button> &nbsp;<button href=""

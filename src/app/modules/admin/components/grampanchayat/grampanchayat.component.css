@@ -1,3 +1,36 @@
 .card-header-label{
     margin-top: -0.5rem;
 }
+
+.scanner-thumb {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.scanner-thumb:hover {
+    transform: scale(2.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 10;
+}
+
+.bank-box {
+    border: 1px solid #dbe3ef;
+    border-radius: 8px;
+    padding: 14px;
+    background: #f8fafc;
+    height: 100%;
+}
+
+.bank-title {
+    color: #214162;
+    font-weight: 700;
+    border-bottom: 1px solid #dbe3ef;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+}

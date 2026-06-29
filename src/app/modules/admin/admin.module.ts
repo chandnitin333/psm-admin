@@ -23,6 +23,7 @@ import { OpenPlotRatesService } from './services/open-plot-rates.service';
 import { OtherTaxService } from './services/other-tax.service';
 import { PrakarService } from './services/prakar.service';
 import { SachiveImagesService } from './services/sachive-images.service';
+import { SutDandService } from './services/sut-dand.service';
 import { TalukaService } from './services/taluka.service';
 import { TawarService } from './services/tawar.service';
 import { TaxService } from './services/tax.service';
@@ -79,7 +80,8 @@ import { UsersService } from './services/users.service';
     SachiveImagesService,
     UploadFileService,
     UsersService,
-    TowerService
+    TowerService,
+    SutDandService
     ,
     {
       provide: HTTP_INTERCEPTORS,

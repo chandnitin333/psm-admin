@@ -9,6 +9,7 @@ import Util from '../../utils/utils';
 import { PaginationComponent } from "../pagination/pagination.component";
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 import { LoaderComponent } from '../loader/loader.component';
+import { ApiService } from '../../../../services/api.service';
 
 @Component({
     selector: 'app-grampanchayat',
@@ -22,9 +23,26 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         districtName: new FormControl<string | null>(null),
         talukaName: new FormControl<string | null>(null),
         gramPanchayatName: new FormControl<string | null>(null),
+        // घरकर bank details
+        ghar_bank_name: new FormControl<string | null>(null),
+        ghar_ifsc: new FormControl<string | null>(null),
+        ghar_account_no: new FormControl<string | null>(null),
+        ghar_account_holder: new FormControl<string | null>(null),
+        ghar_upi_id: new FormControl<string | null>(null),
+        // पाणी कर bank details
+        pani_bank_name: new FormControl<string | null>(null),
+        pani_ifsc: new FormControl<string | null>(null),
+        pani_account_no: new FormControl<string | null>(null),
+        pani_account_holder: new FormControl<string | null>(null),
+        pani_upi_id: new FormControl<string | null>(null),
     });
+
+    bankFieldKeys: string[] = [
+        'ghar_bank_name', 'ghar_ifsc', 'ghar_account_no', 'ghar_account_holder', 'ghar_upi_id',
+        'pani_bank_name', 'pani_ifsc', 'pani_account_no', 'pani_account_holder', 'pani_upi_id',
+    ];
     errorMessage: string | null = null;
-    errorButton: boolean = false;
+    errorButton: boolean = true;
 
     isSubmitted: boolean = false;
     private currentPage: number = 1;
@@ -38,7 +56,15 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     panchayatId: number = 0;
     marathiText: string = '';
     isLoading: boolean = true;
-    constructor(private titleService: Title, private util: Util, private gramPanchayt: GramPanchayatService, private toastr: ToastrService) {
+
+    gharTaxScannerFile: File | null = null;
+    paniTaxScannerFile: File | null = null;
+    gharTaxScannerPreview: string | null = null;
+    paniTaxScannerPreview: string | null = null;
+    existingGharTaxScannerUrl: string = '';
+    existingPaniTaxScannerUrl: string = '';
+
+    constructor(private titleService: Title, private util: Util, private gramPanchayt: GramPanchayatService, private toastr: ToastrService, private apiService: ApiService) {
         this.titleService.setTitle('Gram Panchayat');
     }
     ngOnInit(): void {
@@ -99,21 +125,24 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     addGramPanyachayt() {
         this.isSubmitted = true;
-        // console.log(this.gramFrom.value);
-        //  this.isLoading = true;
         if (this.gramFrom.valid && this.gramFrom.value.districtName && this.gramFrom.value.talukaName && this.gramFrom.value.gramPanchayatName) {
-            let params: any = {
-                district_id: this.gramFrom.value.districtName,
-                taluka_id: this.gramFrom.value.talukaName,
-                name: this.gramFrom.value.gramPanchayatName
+            const formData = new FormData();
+            formData.set('district_id', String(this.gramFrom.value.districtName));
+            formData.set('taluka_id', String(this.gramFrom.value.talukaName));
+            formData.set('name', String(this.gramFrom.value.gramPanchayatName));
+            if (this.gharTaxScannerFile) {
+                formData.set('ghar_tax_scanner', this.gharTaxScannerFile, this.gharTaxScannerFile.name);
             }
-            this.gramPanchayt.createGramPanchayat(params).subscribe((res: any) => {
+            if (this.paniTaxScannerFile) {
+                formData.set('pani_tax_scanner', this.paniTaxScannerFile, this.paniTaxScannerFile.name);
+            }
+            this.appendBankFields(formData);
+            this.gramPanchayt.createGramPanchayat(formData).subscribe((res: any) => {
                 if (res.status == 201) {
                     this.toastr.success(res.message, "Success");
                     this.reset();
                     this.isSubmitted = false;
                     this.fetchGramPanchayatData();
-                    // this.isLoading = false;
                 } else {
                     this.toastr.error(res.message, "Error");
                 }
@@ -130,7 +159,46 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
         this.isEdit = false;
          $('.my-select2').select2();
          this.errorMessage = "";
-        this.errorButton = false;
+        this.errorButton = true;
+        this.gharTaxScannerFile = null;
+        this.paniTaxScannerFile = null;
+        this.gharTaxScannerPreview = null;
+        this.paniTaxScannerPreview = null;
+        this.existingGharTaxScannerUrl = '';
+        this.existingPaniTaxScannerUrl = '';
+        const gharInput = document.getElementById('ghar_tax_scanner') as HTMLInputElement | null;
+        if (gharInput) gharInput.value = '';
+        const paniInput = document.getElementById('pani_tax_scanner') as HTMLInputElement | null;
+        if (paniInput) paniInput.value = '';
+    }
+
+    scannerUrl(filename: string): string {
+        return this.apiService.file_baseUrl + filename;
+    }
+
+    private appendBankFields(formData: FormData): void {
+        for (const key of this.bankFieldKeys) {
+            const val = (this.gramFrom.value as any)[key];
+            formData.set(key, val != null ? String(val) : '');
+        }
+    }
+
+    onGharTaxScannerSelected(event: Event): void {
+        this.gharTaxScannerFile = this.readFile(event, (preview) => this.gharTaxScannerPreview = preview);
+    }
+
+    onPaniTaxScannerSelected(event: Event): void {
+        this.paniTaxScannerFile = this.readFile(event, (preview) => this.paniTaxScannerPreview = preview);
+    }
+
+    private readFile(event: Event, setPreview: (val: string) => void): File | null {
+        const input = event.target as HTMLInputElement;
+        if (!input?.files?.length) return null;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = () => setPreview(String(reader.result));
+        reader.readAsDataURL(file);
+        return file;
     }
 
     srNo(index: number): number {
@@ -143,8 +211,6 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     }
     editInfo(id: number) {
-        
-        // this.isLoading = true;
         this.gramPanchayt.getGramPanchayatById(id).subscribe((res: any) => {
             this.panchayatId = id;
             this.isEdit = true;
@@ -155,9 +221,32 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
                     this.gramFrom.get('talukaName')?.setValue(res.data.TALUKA_ID);
                     this.gramFrom.get('gramPanchayatName')?.setValue(res.data.PANCHAYAT_NAME);
                 }, 300)
-                // this.isLoading = false;
-               
-                
+
+                this.gharTaxScannerFile = null;
+                this.paniTaxScannerFile = null;
+                this.gharTaxScannerPreview = null;
+                this.paniTaxScannerPreview = null;
+                this.existingGharTaxScannerUrl = res.data.GHAR_TAX_SCANNER
+                    ? this.apiService.file_baseUrl + res.data.GHAR_TAX_SCANNER : '';
+                this.existingPaniTaxScannerUrl = res.data.PANI_TAX_SCANNER
+                    ? this.apiService.file_baseUrl + res.data.PANI_TAX_SCANNER : '';
+                // Bank/UPI details
+                this.gramFrom.patchValue({
+                    ghar_bank_name: res.data.GHAR_BANK_NAME ?? null,
+                    ghar_ifsc: res.data.GHAR_IFSC ?? null,
+                    ghar_account_no: res.data.GHAR_ACCOUNT_NO ?? null,
+                    ghar_account_holder: res.data.GHAR_ACCOUNT_HOLDER ?? null,
+                    ghar_upi_id: res.data.GHAR_UPI_ID ?? null,
+                    pani_bank_name: res.data.PANI_BANK_NAME ?? null,
+                    pani_ifsc: res.data.PANI_IFSC ?? null,
+                    pani_account_no: res.data.PANI_ACCOUNT_NO ?? null,
+                    pani_account_holder: res.data.PANI_ACCOUNT_HOLDER ?? null,
+                    pani_upi_id: res.data.PANI_UPI_ID ?? null,
+                });
+                const gharInput = document.getElementById('ghar_tax_scanner') as HTMLInputElement | null;
+                if (gharInput) gharInput.value = '';
+                const paniInput = document.getElementById('pani_tax_scanner') as HTMLInputElement | null;
+                if (paniInput) paniInput.value = '';
             } else {
                 this.toastr.error(res.message, "Error");
             }
@@ -167,15 +256,20 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
 
     updateGramPanchayat() {
         this.isSubmitted = true;
-        // this.isLoading = true;
         if (this.gramFrom.valid && this.gramFrom.value.districtName && this.gramFrom.value.talukaName && this.gramFrom.value.gramPanchayatName) {
-            let params: any = {
-                district_id: this.gramFrom.value.districtName,
-                taluka_id: this.gramFrom.value.talukaName,
-                name: this.gramFrom.value.gramPanchayatName,
-                grampanchayat_id: this.panchayatId
+            const formData = new FormData();
+            formData.set('district_id', String(this.gramFrom.value.districtName));
+            formData.set('taluka_id', String(this.gramFrom.value.talukaName));
+            formData.set('name', String(this.gramFrom.value.gramPanchayatName));
+            formData.set('grampanchayat_id', String(this.panchayatId));
+            if (this.gharTaxScannerFile) {
+                formData.set('ghar_tax_scanner', this.gharTaxScannerFile, this.gharTaxScannerFile.name);
             }
-            this.gramPanchayt.updateGramPanchayat(params).subscribe({
+            if (this.paniTaxScannerFile) {
+                formData.set('pani_tax_scanner', this.paniTaxScannerFile, this.paniTaxScannerFile.name);
+            }
+            this.appendBankFields(formData);
+            this.gramPanchayt.updateGramPanchayat(formData).subscribe({
                 next: (res: any) => {
                     if (res.status == 200) {
                         this.reset();
@@ -266,11 +360,11 @@ export class GrampanchayatComponent implements OnInit, AfterViewInit {
     {
         let status = this.util.validateStringWithSpaces(event.target.value);
         if(await status){
-            this.errorMessage = "Please enter string only";
-            this.errorButton = false;
+            // this.errorMessage = "Please enter string only";
+            this.errorButton = true;
         }  else if(event.target.value == ""){
-			this.errorButton = false;
-            this.errorMessage = "This field must be required";
+			this.errorButton = true;
+            // this.errorMessage = "This field must be required";
 		} else {
             this.errorButton = true;
             this.errorMessage = "";

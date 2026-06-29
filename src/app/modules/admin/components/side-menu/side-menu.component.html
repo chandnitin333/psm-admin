@@ -207,6 +207,13 @@
           </a>
         </li>
 
+        <li [ngClass]="{'active': router.url.includes('sut-dand')}">
+          <a href="javascript:void(0)" class="sidenav-item-link" routerLink="sut-dand">
+            <i class="mdi mdi-cash-multiple"></i>
+            <span class="nav-text">सूट दंड</span>
+          </a>
+        </li>
+
         <li [ngClass]="{'active': router.url.includes('upload-file')}">
           <a href="javascript:void(0)" class="sidenav-item-link" routerLink="upload-file">
             <i class="mdi mdi-file-upload"></i>
